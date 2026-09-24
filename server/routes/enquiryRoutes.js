@@ -1,0 +1,1 @@
+import {Router} from 'express';import {createEnquiry,getEnquiries,updateEnquiry} from '../controllers/enquiryController.js';import auth from '../middleware/auth.js';const r=Router();r.post('/',createEnquiry);r.get('/',auth,getEnquiries);r.patch('/:id',auth,updateEnquiry);export default r;

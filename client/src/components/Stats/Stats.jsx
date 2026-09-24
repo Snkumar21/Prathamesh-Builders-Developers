@@ -1,0 +1,1 @@
+import './Stats.css';export default function Stats(){return <section className="stats"><div className="container stats-grid">{[['12+','Years Experience'],['180+','Projects Delivered'],['28','Quality Checkpoints'],['96%','Referral-led Growth']].map(x=><div key={x[1]}><strong>{x[0]}</strong><span>{x[1]}</span></div>)}</div></section>}

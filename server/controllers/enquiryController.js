@@ -1,0 +1,1 @@
+import Enquiry from '../models/Enquiry.js';export const createEnquiry=async(req,res)=>{const item=await Enquiry.create(req.body);res.status(201).json(item)};export const getEnquiries=async(req,res)=>res.json(await Enquiry.find().sort({createdAt:-1}));export const updateEnquiry=async(req,res)=>res.json(await Enquiry.findByIdAndUpdate(req.params.id,req.body,{new:true}));

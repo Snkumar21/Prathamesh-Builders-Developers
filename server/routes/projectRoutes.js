@@ -1,0 +1,1 @@
+import {Router} from 'express';import {list,create,update,remove} from '../controllers/projectController.js';import auth from '../middleware/auth.js';const r=Router();r.get('/',list);r.post('/',auth,create);r.put('/:id',auth,update);r.delete('/:id',auth,remove);export default r;
