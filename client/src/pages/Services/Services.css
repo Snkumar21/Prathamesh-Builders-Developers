@@ -1,1 +1,474 @@
- .services-hero{padding:100px 0;background:#e8e1d4}.services-hero h1{font:800 clamp(3rem,7vw,6rem) Manrope;margin:10px 0}.services-hero p{color:#606b64;font-size:1.1rem}
+/* =========================================
+   SERVICES PAGE HERO
+========================================= */
+
+.services-page-hero {
+    position: relative;
+
+    width: 100%;
+
+    padding: 115px 0 105px;
+
+    overflow: hidden;
+
+    background: #ffffff;
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.services-page-container {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 1000px;
+}
+
+
+/* =========================================
+   BACKGROUND DECORATION
+========================================= */
+
+.services-page-glow {
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+.services-page-glow-blue {
+    width: 600px;
+    height: 600px;
+
+    top: -360px;
+    right: -180px;
+
+    background: radial-gradient(
+        circle,
+        rgba(0, 174, 240, 0.10) 0%,
+        rgba(23, 92, 255, 0.04) 38%,
+        transparent 70%
+    );
+}
+
+
+.services-page-glow-pink {
+    width: 500px;
+    height: 500px;
+
+    left: -300px;
+    bottom: -300px;
+
+    background: radial-gradient(
+        circle,
+        rgba(237, 12, 174, 0.07) 0%,
+        rgba(118, 38, 232, 0.03) 42%,
+        transparent 70%
+    );
+}
+
+
+/* =========================================
+   EYEBROW
+========================================= */
+
+.services-page-eyebrow {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #e7eaf0;
+
+    border-radius: 999px;
+
+    box-shadow:
+        0 4px 15px rgba(15, 23, 42, 0.04);
+}
+
+
+.services-page-eyebrow-dot {
+    display: block;
+
+    width: 8px;
+    height: 8px;
+
+    flex: 0 0 8px;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #00aef0,
+        #175cff,
+        #7626e8,
+        #ed0cae
+    );
+
+    box-shadow:
+        0 0 0 4px rgba(23, 92, 255, 0.08);
+}
+
+
+.services-page-eyebrow-text {
+    font-family: "Manrope", sans-serif;
+
+    font-size: 0.76rem;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.8px;
+
+    background: linear-gradient(
+        90deg,
+        #009eea,
+        #175cff,
+        #7626e8,
+        #ed0cae
+    );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* =========================================
+   MAIN HEADING
+========================================= */
+
+.services-page-hero h1 {
+    max-width: 900px;
+
+    margin: 22px 0 22px;
+
+    color: #101828;
+
+    font-family: "Manrope", sans-serif;
+
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+
+    font-weight: 800;
+
+    line-height: 0.98;
+
+    letter-spacing: -0.065em;
+}
+
+
+/* =========================================
+   GRADIENT HEADING
+========================================= */
+
+.services-page-gradient {
+    background: linear-gradient(
+        100deg,
+        #00aef0 0%,
+        #175cff 30%,
+        #7626e8 65%,
+        #ed0cae 100%
+    );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+.services-page-description {
+    max-width: 720px;
+
+    margin: 0;
+
+    color: #667085;
+
+    font-size: 1.05rem;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   SERVICE TYPES
+========================================= */
+
+.services-page-types {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 35px;
+}
+
+
+.services-page-type {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 9px 14px 9px 9px;
+
+    background: #ffffff;
+
+    border: 1px solid #e7eaf0;
+
+    border-radius: 11px;
+
+    color: #344054;
+
+    font-family: "Manrope", sans-serif;
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 5px 16px rgba(15, 23, 42, 0.035);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.services-page-type:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(23, 92, 255, 0.22);
+
+    box-shadow:
+        0 10px 25px rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================================
+   TYPE ICON
+========================================= */
+
+.services-type-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    color: #175cff;
+
+    background: rgba(23, 92, 255, 0.07);
+}
+
+
+.services-page-type:nth-child(1)
+.services-type-icon {
+    color: #00aef0;
+
+    background: rgba(0, 174, 240, 0.08);
+}
+
+
+.services-page-type:nth-child(2)
+.services-type-icon {
+    color: #7626e8;
+
+    background: rgba(118, 38, 232, 0.07);
+}
+
+
+.services-page-type:nth-child(3)
+.services-type-icon {
+    color: #ed0cae;
+
+    background: rgba(237, 12, 174, 0.07);
+}
+
+
+/* =========================================
+   SCROLL BUTTON
+========================================= */
+
+.services-scroll-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    margin-top: 38px;
+
+    padding: 13px 18px;
+
+    color: #ffffff;
+
+    background: linear-gradient(
+        100deg,
+        #00aef0,
+        #175cff,
+        #7626e8,
+        #ed0cae
+    );
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-family: "Manrope", sans-serif;
+
+    font-size: 0.8rem;
+
+    font-weight: 800;
+
+    box-shadow:
+        0 9px 25px rgba(23, 92, 255, 0.16);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.services-scroll-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 14px 30px rgba(23, 92, 255, 0.22);
+}
+
+
+.services-scroll-btn svg {
+    transition: transform 0.25s ease;
+}
+
+
+.services-scroll-btn:hover svg {
+    transform: translateY(3px);
+}
+
+
+/* =========================================
+   SERVICES LIST ANCHOR
+========================================= */
+
+#services-list {
+    scroll-margin-top: 75px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 850px) {
+
+    .services-page-hero {
+        padding: 90px 0 80px;
+    }
+
+
+    .services-page-hero h1 {
+        font-size: clamp(
+            3.2rem,
+            9vw,
+            5.2rem
+        );
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .services-page-hero {
+        padding: 75px 0 65px;
+    }
+
+
+    .services-page-hero h1 {
+        margin-top: 19px;
+
+        font-size: 3rem;
+
+        line-height: 1.02;
+    }
+
+
+    .services-page-description {
+        font-size: 0.93rem;
+
+        line-height: 1.7;
+    }
+
+
+    .services-page-types {
+        margin-top: 28px;
+    }
+
+
+    .services-page-type {
+        padding: 8px 12px 8px 8px;
+    }
+
+
+    .services-scroll-btn {
+        margin-top: 30px;
+    }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+
+    .services-page-hero h1 {
+        font-size: 2.65rem;
+    }
+
+
+    .services-page-types {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+}
