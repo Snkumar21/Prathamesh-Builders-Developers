@@ -13,9 +13,8 @@ export default function Hero() {
 
                 {/* ================= LEFT CONTENT ================= */}
                 <div className="hero-content">
-
-                    <div className="eyebrow">
-                        <span className="eyebrow-dot"></span>
+                    <div className="hero-eyebrow">
+                        <span className="hero-eyebrow-dot"></span>
                         Built with precision. Delivered with trust.
                     </div>
 
