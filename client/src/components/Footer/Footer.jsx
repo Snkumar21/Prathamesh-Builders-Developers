@@ -1,6 +1,7 @@
-import {HardHat} from 'lucide-react';
-import {Link} from 'react-router-dom';
-import './Footer.css';
+import { Link } from "react-router-dom";
+import logo from "../../assets/logo.png";
+import "./Footer.css";
+
 
 const InstagramIcon = ({ size = 20 }) => (
     <svg
@@ -57,38 +58,174 @@ const FacebookIcon = ({ size = 20 }) => (
     </svg>
 );
 
-export default function Footer(){
-    return <footer>
-        <div className="container footer-grid">
-            <div>
-                <div className="brand footer-brand">
-                    <span><HardHat/></span>
-                    <b>Prathamesh Builders & Developers</b>
+export default function Footer() {
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    };
+
+
+    return (
+        <footer className="footer">
+            {/* Gradient top border */}
+            <div className="footer-gradient-line"></div>
+
+            <div className="container footer-grid">
+                {/* COMPANY */}
+                <div className="footer-company">
+                    <Link
+                        to="/"
+                        className="footer-brand"
+                        onClick={scrollToTop}
+                    >
+                        <img
+                            src={logo}
+                            alt="Prathamesh Builders & Developers"
+                            className="footer-logo"
+                        />
+
+                        <div className="footer-brand-text">
+                            <h3>Prathamesh Builders</h3>
+                            <span>& Developers</span>
+                        </div>
+                    </Link>
+
+                    <p className="footer-description">
+                        Building quality spaces with trust, thoughtful
+                        design and reliable construction solutions for
+                        homes and businesses.
+                    </p>
+
+                    <div className="footer-socials">
+                        <a
+                            href="#"
+                            aria-label="Instagram"
+                            className="social-link"
+                        >
+                            <InstagramIcon size={19} />
+                        </a>
+
+                        <a
+                            href="#"
+                            aria-label="LinkedIn"
+                            className="social-link"
+                        >
+                            <LinkedinIcon size={19} />
+                        </a>
+
+                        <a
+                            href="#"
+                            aria-label="Facebook"
+                            className="social-link"
+                        >
+                            <FacebookIcon size={19} />
+                        </a>
+                    </div>
                 </div>
-                <p>Original, quality-led construction experiences for homes and businesses.</p>
-            </div>
-            <div>
-                <h4>Explore</h4>
-                <Link to="/about">About</Link>
-                <Link to="/services">Services</Link>
-                <Link to="/projects">Projects</Link>
-                <Link to="/packages">Packages</Link>
-            </div>
-            <div>
-                <h4>Contact</h4>
-                <p>hello@buildcraft.example</p>
-                <p>+91 84216 75782</p>
-                <p>Pune, Maharashtra</p>
-            </div>
-            <div>
-                <h4>Social</h4>
-                <div className="social">
-                    <InstagramIcon/>
-                    <LinkedinIcon/>
-                    <FacebookIcon/>
+
+                {/* EXPLORE */}
+                <div className="footer-column">
+                    <h4>Explore</h4>
+
+                    <Link to="/" onClick={scrollToTop}>
+                        Home
+                    </Link>
+
+                    <Link to="/about" onClick={scrollToTop}>
+                        About Us
+                    </Link>
+
+                    <Link to="/services" onClick={scrollToTop}>
+                        Services
+                    </Link>
+
+                    <Link to="/projects" onClick={scrollToTop}>
+                        Projects
+                    </Link>
+
+                    <Link to="/packages" onClick={scrollToTop}>
+                        Packages
+                    </Link>
+                </div>
+
+                {/* SERVICES */}
+                <div className="footer-column">
+                    <h4>Our Services</h4>
+
+                    <Link to="/services" onClick={scrollToTop}>
+                        Residential Construction
+                    </Link>
+
+                    <Link to="/services" onClick={scrollToTop}>
+                        Commercial Construction
+                    </Link>
+
+                    <Link to="/services" onClick={scrollToTop}>
+                        Renovation
+                    </Link>
+
+                    <Link to="/services" onClick={scrollToTop}>
+                        Architecture & Planning
+                    </Link>
+
+                    <Link to="/services" onClick={scrollToTop}>
+                        Interior Solutions
+                    </Link>
+                </div>
+
+                {/* CONTACT */}
+                <div className="footer-column footer-contact">
+                    <h4>Get In Touch</h4>
+
+                    <div className="contact-item">
+                        <span className="contact-label">Phone</span>
+
+                        <a href="tel:+918421675782">
+                            +91 84216 75782
+                        </a>
+                    </div>
+
+                    <div className="contact-item">
+                        <span className="contact-label">Location</span>
+
+                        <p>
+                            Pune, Maharashtra, India
+                        </p>
+                    </div>
+
+                    <Link
+                        to="/contact"
+                        className="footer-estimate-btn"
+                        onClick={scrollToTop}
+                    >
+                        Get Free Estimate
+                        <span>→</span>
+                    </Link>
                 </div>
             </div>
-        </div>
-        <div className="container copyright">© 2026 BuildCraft Constructions. All rights reserved.</div>
-    </footer>
+
+            {/* BOTTOM */}
+            <div className="container footer-bottom">
+                <p>
+                    © 2026 Prathamesh Builders & Developers.
+                    All rights reserved.
+                </p>
+
+                <div className="footer-bottom-links">
+                    <Link to="/contact" onClick={scrollToTop}>
+                        Contact
+                    </Link>
+
+                    <span>•</span>
+
+                    <Link to="/about" onClick={scrollToTop}>
+                        About
+                    </Link>
+                </div>
+            </div>
+        </footer>
+    );
 }
