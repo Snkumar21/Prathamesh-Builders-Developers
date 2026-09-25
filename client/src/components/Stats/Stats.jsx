@@ -1,1 +1,49 @@
-import './Stats.css';export default function Stats(){return <section className="stats"><div className="container stats-grid">{[['12+','Years Experience'],['180+','Projects Delivered'],['28','Quality Checkpoints'],['96%','Referral-led Growth']].map(x=><div key={x[1]}><strong>{x[0]}</strong><span>{x[1]}</span></div>)}</div></section>}
+import "./Stats.css";
+
+export default function Stats() {
+    const stats = [
+        {
+            value: "12+",
+            label: "Years Experience"
+        },
+        {
+            value: "180+",
+            label: "Projects Delivered"
+        },
+        {
+            value: "28",
+            label: "Quality Checkpoints"
+        },
+        {
+            value: "96%",
+            label: "Referral-led Growth"
+        }
+    ];
+
+    return (
+        <section className="stats">
+            <div className="container">
+                <div className="stats-wrapper">
+                    <div className="stats-grid">
+                        {stats.map((stat, index) => (
+                            <div
+                                className="stat-card"
+                                key={stat.label}
+                            >
+                                <div className="stat-number">
+                                    {stat.value}
+                                </div>
+
+                                <span className="stat-label">
+                                    {stat.label}
+                                </span>
+
+                                <div className="stat-dot"></div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}

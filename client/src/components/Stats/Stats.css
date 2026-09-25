@@ -1,1 +1,210 @@
- .stats{background:#173b2b;color:#fff}.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}.stats-grid div{padding:34px 25px;border-right:1px solid #ffffff20;text-align:center}.stats strong{display:block;font:800 2rem Manrope}.stats span{color:#d5ded8;font-size:.88rem}@media(max-width:650px){.stats-grid{grid-template-columns:1fr 1fr}.stats-grid div{border-bottom:1px solid #ffffff20}}
+.stats {
+    position: relative;
+    width: 100%;
+    padding: 35px 0 75px;
+    background: #ffffff;
+}
+
+/* MAIN STATS CONTAINER */
+.stats-wrapper {
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e7eaf0;
+    border-radius: 22px;
+    box-shadow: 0 12px 40px rgba(15, 23, 42, 0.06);
+}
+
+/* Logo gradient line */
+.stats-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient( 90deg,#00aef0 0%,#175cff 30%,#7626e8 65%,#ed0cae 100% );
+}
+
+/* GRID */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+}
+
+/* STAT CARD */
+.stat-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 155px;
+    padding: 32px 20px;
+    text-align: center;
+    background: #ffffff;
+    border-right: 1px solid #eaecf0;
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+/* Remove border from last item */
+.stat-card:last-child {
+    border-right: none;
+}
+
+/* Hover */
+.stat-card:hover {
+    background: #fafbff;
+}
+
+/* STAT NUMBER */
+.stat-number {
+    display: inline-block;
+    margin-bottom: 9px;
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(2rem, 3vw, 2.65rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    background: linear-gradient( 110deg,#00aef0 0%,#175cff 32%,#7626e8 65%,#ed0cae 100% );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.3s ease;
+}
+
+/* Number subtle zoom */
+.stat-card:hover .stat-number {
+    transform: translateY(-3px);
+}
+
+/* LABEL */
+.stat-label {
+    color: #667085;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 650;
+    letter-spacing: 0.1px;
+}
+
+/* SMALL BRAND DOT */
+.stat-dot {
+    width: 5px;
+    height: 5px;
+    margin-top: 16px;
+    border-radius: 50%;
+    background: #175cff;
+    opacity: 0.35;
+    transition:
+        width 0.3s ease,
+        opacity 0.3s ease,
+        background 0.3s ease;
+}
+
+/* Different brand colors */
+.stat-card:nth-child(1) .stat-dot {
+    background: #00aef0;
+}
+
+.stat-card:nth-child(2) .stat-dot {
+    background: #175cff;
+}
+
+.stat-card:nth-child(3) .stat-dot {
+    background: #7626e8;
+}
+
+.stat-card:nth-child(4) .stat-dot {
+    background: #ed0cae;
+}
+
+/* Hover line effect */
+.stat-card:hover .stat-dot {
+    width: 35px;
+    border-radius: 20px;
+    opacity: 1;
+    background: linear-gradient(
+        90deg,
+        #00aef0,
+        #175cff,
+        #7626e8,
+        #ed0cae
+    );
+}
+
+/* TABLET */
+@media (max-width: 850px) {
+    .stats {
+        padding: 25px 0 60px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-card {
+        min-height: 145px;
+    }
+
+    .stat-card:nth-child(2) {
+        border-right: none;
+    }
+
+    .stat-card:nth-child(1),
+    .stat-card:nth-child(2) {
+        border-bottom: 1px solid #eaecf0;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 500px) {
+    .stats {
+        padding: 20px 0 50px;
+    }
+
+    .stats-wrapper {
+        border-radius: 16px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-card {
+        min-height: 125px;
+        padding: 25px 12px;
+    }
+
+    .stat-number {
+        font-size: 1.9rem;
+    }
+
+    .stat-label {
+        font-size: 0.72rem;
+        line-height: 1.4;
+    }
+
+    .stat-dot {
+        margin-top: 12px;
+    }
+}
+
+/* VERY SMALL MOBILE */
+@media (max-width: 360px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+        border-right: none;
+        border-bottom: 1px solid #eaecf0;
+    }
+
+    .stat-card:last-child {
+        border-bottom: none;
+    }
+}
