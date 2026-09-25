@@ -6,9 +6,7 @@ import {
     Warehouse,
     RefreshCcw
 } from "lucide-react";
-
 import "./ServicesGrid.css";
-
 
 const items = [
     [
@@ -43,32 +41,23 @@ const items = [
     ]
 ];
 
-
 export default function ServicesGrid() {
-
     return (
         <section className="section services">
-
             {/* Decorative background */}
             <div className="services-glow services-glow-left"></div>
             <div className="services-glow services-glow-right"></div>
 
-
             <div className="container services-container">
-
                 {/* HEADER */}
                 <div className="services-header">
-
                     <div className="services-eyebrow">
-
                         <span className="services-eyebrow-dot"></span>
 
                         <span className="services-eyebrow-text">
                             What We Build
                         </span>
-
                     </div>
-
 
                     <h2 className="section-title">
                         One team. Every stage of
@@ -77,59 +66,44 @@ export default function ServicesGrid() {
                         </span>
                     </h2>
 
-
                     <p className="services-intro">
                         From planning and design to construction and
                         final handover, our team provides complete
                         solutions for residential and commercial projects.
                     </p>
-
                 </div>
-
 
                 {/* SERVICES */}
                 <div className="service-grid">
-
                     {items.map(([Icon, title, description], index) => (
-
                         <article
                             className="service-card"
                             key={title}
                         >
-
                             {/* Number */}
                             <span className="service-num">
                                 {String(index + 1).padStart(2, "0")}
                             </span>
-
 
                             {/* Icon */}
                             <div className="service-icon">
                                 <Icon />
                             </div>
 
-
                             <h3>
                                 {title}
                             </h3>
-
 
                             <p>
                                 {description}
                             </p>
 
-
                             {/* Bottom accent */}
                             <div className="service-accent"></div>
-
                         </article>
-
                     ))}
-
                 </div>
-
             </div>
-
         </section>
     );
 }
