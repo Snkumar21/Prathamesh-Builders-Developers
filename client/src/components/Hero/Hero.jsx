@@ -1,36 +1,127 @@
-import {ArrowRight,CheckCircle2} from 'lucide-react';
-import {Link} from 'react-router-dom';
-import './Hero.css';
-export default function Hero(){
-    return <section className="hero">
-        <div className="container hero-grid">
-            <div>
-                <div className="eyebrow">Built with precision. Delivered with trust.</div>
-                <h1>Spaces engineered for the way you want to live.</h1>
-                <p>
-                    From first sketch to final handover, we manage residential and commercial construction with transparent planning, quality checks and thoughtful execution.
-                </p>
-                <div className="hero-actions">
-                    <Link className="btn btn-accent" to="/contact">
-                        Start your project <ArrowRight size={18}/>
-                    </Link>
-                    <Link className="btn btn-outline" to="/projects">
-                        View projects
-                    </Link>
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import "./Hero.css";
+
+export default function Hero() {
+    return (
+        <section className="hero">
+            {/* Decorative brand glow */}
+            <div className="hero-glow hero-glow-blue"></div>
+            <div className="hero-glow hero-glow-pink"></div>
+
+            <div className="container hero-grid">
+
+                {/* ================= LEFT CONTENT ================= */}
+                <div className="hero-content">
+
+                    <div className="eyebrow">
+                        <span className="eyebrow-dot"></span>
+                        Built with precision. Delivered with trust.
+                    </div>
+
+                    <h1>
+                        Building spaces that
+                        <span className="hero-gradient-text">
+                            {" "}inspire better living.
+                        </span>
+                    </h1>
+
+                    <p className="hero-description">
+                        From the first sketch to final handover,
+                        Prathamesh Builders & Developers delivers
+                        residential and commercial construction with
+                        transparent planning, quality workmanship and
+                        reliable execution.
+                    </p>
+
+                    <div className="hero-actions">
+
+                        <Link
+                            className="hero-primary-btn"
+                            to="/contact"
+                        >
+                            Start Your Project
+
+                            <span className="hero-btn-icon">
+                                <ArrowRight size={18} />
+                            </span>
+                        </Link>
+
+                        <Link
+                            className="hero-secondary-btn"
+                            to="/projects"
+                        >
+                            View Projects
+                        </Link>
+
+                    </div>
+
+                    {/* TRUST POINTS */}
+                    <div className="hero-points">
+
+                        <span>
+                            <CheckCircle2 />
+                            Transparent Costing
+                        </span>
+
+                        <span>
+                            <CheckCircle2 />
+                            Dedicated Team
+                        </span>
+
+                        <span>
+                            <CheckCircle2 />
+                            Quality Execution
+                        </span>
+
+                    </div>
+
                 </div>
-                <div className="hero-points">
-                    <span><CheckCircle2/> Transparent costing</span>
-                    <span><CheckCircle2/> Dedicated engineer</span>
-                    <span><CheckCircle2/> Quality-led execution</span>
+
+
+                {/* ================= RIGHT IMAGE ================= */}
+                <div className="hero-visual">
+
+                    <div className="hero-image-wrapper">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85"
+                            alt="Modern residential construction by Prathamesh Builders and Developers"
+                        />
+
+                        {/* Gradient border decoration */}
+                        <div className="hero-image-accent"></div>
+
+                    </div>
+
+
+                    {/* FLOATING CARD */}
+                    <div className="floating">
+
+                        <div className="floating-icon">
+                            <CheckCircle2 size={20} />
+                        </div>
+
+                        <div>
+                            <b>End-to-End Construction</b>
+
+                            <small>
+                                Design • Build • Handover
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    {/* EXPERIENCE CARD */}
+                    <div className="hero-experience">
+                        <strong>Quality</strong>
+                        <span>you can trust</span>
+                    </div>
+
                 </div>
+
             </div>
-            <div className="hero-visual">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85" alt="Modern house"/>
-                <div className="floating">
-                    <b>End-to-end construction</b>
-                    <small>Design • Build • Handover</small>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    );
 }
