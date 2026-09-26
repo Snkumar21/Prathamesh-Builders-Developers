@@ -1,1 +1,261 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:'DM Sans',sans-serif;color:#17201b;background:#f7f6f2}a{text-decoration:none;color:inherit}button,input,textarea,select{font:inherit}img{max-width:100%;display:block}.container{width:min(1160px,calc(100% - 40px));margin:auto}.section{padding:90px 0}.eyebrow{color:#b77b35;font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem}.section-title{font-family:Manrope,sans-serif;font-size:clamp(2rem,4vw,3.3rem);line-height:1.08;margin:10px 0 18px}.muted{color:#667069;line-height:1.8}.btn{border:0;border-radius:999px;padding:14px 22px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px}.btn-primary{background:#173b2b;color:white}.btn-accent{background:#d49a54;color:#17201b}.btn-outline{border:1px solid #c9cec9;background:transparent;color:#17201b}@media(max-width:700px){.container{width:min(100% - 24px,1160px)}.section{padding:64px 0}}
+/* GOOGLE FONTS */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap");
+
+/* GLOBAL RESET */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    font-family: "DM Sans", sans-serif;
+    color: #101828;
+    background: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+    min-height: 100vh;
+}
+
+main {
+    width: 100%;
+}
+
+/* TYPOGRAPHY */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Manrope", sans-serif;
+    color: #101828;
+}
+
+p {
+    margin-top: 0;
+}
+
+/* LINKS */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* FORM ELEMENTS */
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+input,
+textarea,
+select {
+    color: #101828;
+}
+
+/* IMAGES */
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* CONTAINER */
+.container {
+    width: min(
+        1160px,
+        calc(100% - 40px)
+    );
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* SECTION */
+.section {
+    padding: 90px 0;
+    background: #ffffff;
+}
+
+/* SECTION TITLE */
+.section-title {
+    margin: 10px 0 18px;
+    font-family: "Manrope", sans-serif;
+    font-size: clamp( 2rem, 4vw, 3.3rem );
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    color: #101828;
+}
+
+/* MUTED TEXT */
+.muted {
+    color: #667085;
+    line-height: 1.8;
+}
+
+/* BUTTON BASE */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 13px 22px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+    transform: none;
+}
+
+/* PRIMARY BUTTON */
+.btn-primary {
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        #00aef0 0%,
+        #175cff 40%,
+        #7626e8 72%,
+        #ed0cae 100%
+    );
+    box-shadow:
+        0 10px 25px rgba(
+            23,
+            92,
+            255,
+            0.18
+        );
+}
+
+.btn-primary:hover {
+    box-shadow:
+        0 14px 32px rgba(
+            23,
+            92,
+            255,
+            0.24
+        );
+}
+
+/* ACCENT BUTTON */
+.btn-accent {
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        #175cff,
+        #7626e8
+    );
+    box-shadow:
+        0 10px 24px rgba(
+            118,
+            38,
+            232,
+            0.18
+        );
+}
+
+/* OUTLINE BUTTON */
+.btn-outline {
+    color: #101828;
+    background: #ffffff;
+    border: 1px solid #dfe3eb;
+}
+
+.btn-outline:hover {
+    color: #175cff;
+    border-color: rgba(
+        23,
+        92,
+        255,
+        0.35
+    );
+    background: #f8faff;
+}
+
+/* SELECTION */
+::selection {
+    color: #ffffff;
+    background: #175cff;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f5f7fa;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c9cfda;
+    border-radius: 20px;
+    border: 2px solid #f5f7fa;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #aeb6c4;
+}
+
+/* ACCESSIBILITY */
+:focus-visible {
+    outline: 3px solid rgba(
+        23,
+        92,
+        255,
+        0.28
+    );
+    outline-offset: 3px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+    .container {
+        width: min(
+            calc(100% - 24px),
+            1160px
+        );
+    }
+
+    .section {
+        padding: 64px 0;
+    }
+
+    .btn {
+        min-height: 46px;
+        padding: 12px 18px;
+    }
+}
