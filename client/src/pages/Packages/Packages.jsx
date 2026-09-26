@@ -1,6 +1,7 @@
 import { Check, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import useSiteContent from "../../hooks/useSiteContent";
 import "./Packages.css";
 
 
@@ -53,6 +54,11 @@ const plans = [
 
 
 export default function Packages() {
+    const content = useSiteContent("packages", {
+        eyebrow: "Construction Packages", title: "Choose a starting", highlight: "specification.",
+        description: "Explore indicative construction packages designed for different requirements, finishes and budgets. Final pricing depends on project scope, location, drawings, materials and site conditions.",
+        disclaimer: "* Package rates are indicative starting estimates and may vary depending on design, site conditions, specifications, materials and project requirements."
+    });
 
     return (
         <section className="section packages">
@@ -76,25 +82,20 @@ export default function Packages() {
                         <span className="packages-eyebrow-dot"></span>
 
                         <span className="packages-eyebrow-text">
-                            Construction Packages
+                            {content.eyebrow}
                         </span>
 
                     </div>
 
 
                     <h1 className="packages-title">
-                        Choose a starting
-                        <span className="packages-gradient-text">
-                            {" "}specification.
-                        </span>
+                        {content.title}
+                        <span className="packages-gradient-text"> {content.highlight}</span>
                     </h1>
 
 
                     <p className="package-note">
-                        Explore indicative construction packages designed
-                        for different requirements, finishes and budgets.
-                        Final pricing depends on project scope, location,
-                        drawings, materials and site conditions.
+                        {content.description}
                     </p>
 
                 </div>
@@ -215,9 +216,7 @@ export default function Packages() {
                 {/* Disclaimer */}
 
                 <p className="packages-disclaimer">
-                    * Package rates are indicative starting estimates and
-                    may vary depending on design, site conditions,
-                    specifications, materials and project requirements.
+                    {content.disclaimer}
                 </p>
 
             </div>

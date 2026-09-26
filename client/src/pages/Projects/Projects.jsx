@@ -37,17 +37,24 @@ export default function Projects() {
 
     useEffect(() => {
 
-        api.get("/projects")
-            .then((response) => {
-
-                if (response.data?.length) {
-                    setItems(response.data);
-                }
-
-            })
-            .catch(() => {
-                // Fallback projects remain visible
-            });
+        Promise.all([
+            api.get("/projects"),
+            api.get("/client-projects/public")
+        ]).then(([projectsResponse, clientResponse]) => {
+            const portfolio = projectsResponse.data || [];
+            const liveClientProjects = (clientResponse.data || []).map((item) => ({
+                _id: item._id,
+                title: item.projectName,
+                category: item.category,
+                location: item.location,
+                image: item.coverImage,
+                description: item.description
+            }));
+            const combined = [...liveClientProjects, ...portfolio];
+            if (combined.length) setItems(combined);
+        }).catch(() => {
+            // Fallback projects remain visible
+        });
 
     }, []);
 

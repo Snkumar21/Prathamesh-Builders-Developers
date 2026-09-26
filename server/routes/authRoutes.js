@@ -1,15 +1,10 @@
 import { Router } from "express";
-import { login } from "../controllers/authController.js";
+import { login, getMe, updateProfile, changePassword } from "../controllers/authController.js";
+import auth from "../middleware/auth.js";
 
-// AUTH ROUTER
 const router = Router();
-
-// AUTH ROUTES
-// Login Admin
-// POST /api/auth/login
-router.post(
-    "/login",
-    login
-);
-
+router.post("/login", login);
+router.get("/me", auth, getMe);
+router.put("/profile", auth, updateProfile);
+router.put("/change-password", auth, changePassword);
 export default router;

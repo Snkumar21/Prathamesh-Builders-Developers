@@ -68,3 +68,14 @@ export const updateEnquiry = async (req, res) => {
         });
     }
 };
+
+export const deleteEnquiry = async (req, res) => {
+    try {
+        const enquiry = await Enquiry.findByIdAndDelete(req.params.id);
+        if (!enquiry) return res.status(404).json({ message: "Enquiry not found." });
+        res.json({ message: "Enquiry deleted successfully." });
+    } catch (error) {
+        console.error("Delete enquiry error:", error);
+        res.status(500).json({ message: "Unable to delete enquiry." });
+    }
+};

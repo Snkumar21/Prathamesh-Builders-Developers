@@ -1,10 +1,8 @@
-import { Routes, Route } from "react-router-dom";
-
-// Components
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-
-// Pages
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import AdminLayout from "./admin/AdminLayout/AdminLayout";
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Services from "./pages/Services/Services";
@@ -13,69 +11,41 @@ import Packages from "./pages/Packages/Packages";
 import Contact from "./pages/Contact/Contact";
 import AdminLogin from "./pages/AdminLogin/AdminLogin";
 import Dashboard from "./pages/Dashboard/Dashboard";
-
-// Styles
+import ContentEditor from "./admin/pages/ContentEditor/ContentEditor";
+import EnquiriesAdmin from "./admin/pages/EnquiriesAdmin/EnquiriesAdmin";
+import ProjectsAdmin from "./admin/pages/ProjectsAdmin/ProjectsAdmin";
+import ClientProjectsAdmin from "./admin/pages/ClientProjectsAdmin/ClientProjectsAdmin";
+import AccountSettings from "./admin/pages/AccountSettings/AccountSettings";
 import "./App.css";
 
-
 export default function App() {
-    return (
-        <>
-            {/* Navbar */}
-            <Navbar />
+    const location = useLocation();
+    const isAdmin = location.pathname.startsWith("/admin");
 
-            {/* Main Content */}
-            <main>
-                <Routes>
+    return <>
+        {!isAdmin && <Navbar />}
+        <main>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/packages" element={<Packages />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
 
-                    {/* Public Routes */}
-                    <Route
-                        path="/"
-                        element={<Home />}
-                    />
-
-                    <Route
-                        path="/about"
-                        element={<About />}
-                    />
-
-                    <Route
-                        path="/services"
-                        element={<Services />}
-                    />
-
-                    <Route
-                        path="/projects"
-                        element={<Projects />}
-                    />
-
-                    <Route
-                        path="/packages"
-                        element={<Packages />}
-                    />
-
-                    <Route
-                        path="/contact"
-                        element={<Contact />}
-                    />
-
-
-                    {/* Admin Routes */}
-                    <Route
-                        path="/admin/login"
-                        element={<AdminLogin />}
-                    />
-
-                    <Route
-                        path="/admin"
-                        element={<Dashboard />}
-                    />
-
-                </Routes>
-            </main>
-
-            {/* Footer */}
-            <Footer />
-        </>
-    );
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/admin" element={<AdminLayout />}>
+                        <Route index element={<Dashboard />} />
+                        <Route path="content/:page" element={<ContentEditor />} />
+                        <Route path="projects" element={<ProjectsAdmin />} />
+                        <Route path="enquiries" element={<EnquiriesAdmin />} />
+                        <Route path="client-projects" element={<ClientProjectsAdmin />} />
+                        <Route path="account" element={<AccountSettings />} />
+                    </Route>
+                </Route>
+            </Routes>
+        </main>
+        {!isAdmin && <Footer />}
+    </>;
 }

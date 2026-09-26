@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Phone,
     MapPin,
@@ -28,6 +28,11 @@ export default function Contact() {
     const [status, setStatus] = useState("");
     const [statusType, setStatusType] = useState("");
     const [loading, setLoading] = useState(false);
+    const [siteSettings, setSiteSettings] = useState({ businessEmail: "", businessPhone: "+91 84216 75782", address: "Pune, Maharashtra" });
+
+    useEffect(() => {
+        api.get("/settings").then(({ data }) => setSiteSettings(data)).catch(() => {});
+    }, []);
 
 
     const updateField = (event) => {
@@ -134,7 +139,7 @@ export default function Contact() {
                     <div className="contact-info">
 
                         <a
-                            href="tel:+918421675782"
+                            href={`tel:${siteSettings.businessPhone.replace(/\s/g, "")}`}
                             className="contact-info-item"
                         >
 
@@ -148,12 +153,18 @@ export default function Contact() {
                                 </span>
 
                                 <strong>
-                                    +91 84216 75782
+                                    {siteSettings.businessPhone}
                                 </strong>
                             </div>
 
                         </a>
 
+                        {siteSettings.businessEmail && (
+                            <a href={`mailto:${siteSettings.businessEmail}`} className="contact-info-item">
+                                <div className="contact-info-icon"><Send size={20} /></div>
+                                <div><span>Email Us</span><strong>{siteSettings.businessEmail}</strong></div>
+                            </a>
+                        )}
 
                         <div className="contact-info-item">
 
@@ -167,7 +178,7 @@ export default function Contact() {
                                 </span>
 
                                 <strong>
-                                    Pune, Maharashtra
+                                    {siteSettings.address}
                                 </strong>
                             </div>
 

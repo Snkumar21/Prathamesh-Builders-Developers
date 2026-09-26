@@ -1,39 +1,10 @@
 import { Router } from "express";
-
-import {
-    createEnquiry,
-    getEnquiries,
-    updateEnquiry,
-} from "../controllers/enquiryController.js";
-
+import { createEnquiry, getEnquiries, updateEnquiry, deleteEnquiry } from "../controllers/enquiryController.js";
 import auth from "../middleware/auth.js";
 
-// ENQUIRY ROUTER
 const router = Router();
-
-// PUBLIC ROUTES
-// Create New Enquiry
-// POST /api/enquiries
-router.post(
-    "/",
-    createEnquiry
-);
-
-// ADMIN PROTECTED ROUTES
-// Get All Enquiries
-// GET /api/enquiries
-router.get(
-    "/",
-    auth,
-    getEnquiries
-);
-
-// Update Enquiry
-// PATCH /api/enquiries/:id
-router.patch(
-    "/:id",
-    auth,
-    updateEnquiry
-);
-
+router.post("/", createEnquiry);
+router.get("/", auth, getEnquiries);
+router.patch("/:id", auth, updateEnquiry);
+router.delete("/:id", auth, deleteEnquiry);
 export default router;

@@ -5,9 +5,18 @@ import {
     Users,
     BadgeCheck
 } from "lucide-react";
+import useSiteContent from "../../hooks/useSiteContent";
 import "./About.css";
 
 export default function About() {
+    const content = useSiteContent("about", {
+        eyebrow: "About Prathamesh Builders & Developers",
+        title: "Building with precision.",
+        highlight: "Delivering with trust.",
+        intro: "At Prathamesh Builders & Developers, we believe construction is more than building structures. It is about creating reliable, functional and thoughtfully designed spaces that stand the test of time.",
+        approachTitle: "Designed for trust from day one.",
+        approachDescription: "Our approach puts planning, communication, engineering and quality control at the center of every project."
+    });
     const principles = [
         "Clear scope before construction",
         "Responsible material procurement",
@@ -27,23 +36,17 @@ export default function About() {
                     <div className="about-eyebrow">
                         <span className="about-eyebrow-dot"></span>
                         <span className="about-eyebrow-text">
-                            About Prathamesh Builders & Developers
+                            {content.eyebrow}
                         </span>
                     </div>
 
                     <h1 className="about-main-title">
-                        Building with precision.
-                        <span className="about-gradient-text">
-                            {" "}Delivering with trust.
-                        </span>
+                        {content.title}
+                        <span className="about-gradient-text"> {content.highlight}</span>
                     </h1>
 
                     <p className="about-intro">
-                        At Prathamesh Builders & Developers, we believe
-                        construction is more than building structures.
-                        It is about creating reliable, functional and
-                        thoughtfully designed spaces that stand the test
-                        of time.
+                        {content.intro}
                     </p>
                 </div>
 
@@ -81,16 +84,11 @@ export default function About() {
                         </span>
 
                         <h2>
-                            Designed for trust
-                            <span> from day one.</span>
+                            {content.approachTitle}
                         </h2>
 
                         <p>
-                            Our approach puts planning, communication,
-                            engineering and quality control at the center
-                            of every project. We coordinate architects,
-                            engineers, vendors and site teams around one
-                            clear execution plan.
+                            {content.approachDescription}
                         </p>
 
                         <p>

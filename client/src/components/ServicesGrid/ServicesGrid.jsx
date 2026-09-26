@@ -6,6 +6,7 @@ import {
     Warehouse,
     RefreshCcw
 } from "lucide-react";
+import useSiteContent from "../../hooks/useSiteContent";
 import "./ServicesGrid.css";
 
 const items = [
@@ -42,6 +43,7 @@ const items = [
 ];
 
 export default function ServicesGrid() {
+    const content = useSiteContent("services", { gridTitle: "One team. Every stage of", gridHighlight: "construction.", gridIntro: "From planning and design to construction and final handover, our team provides complete solutions for residential and commercial projects." });
     return (
         <section className="section services">
             {/* Decorative background */}
@@ -60,16 +62,12 @@ export default function ServicesGrid() {
                     </div>
 
                     <h2 className="section-title">
-                        One team. Every stage of
-                        <span className="services-gradient-text">
-                            {" "}construction.
-                        </span>
+                        {content.gridTitle}
+                        <span className="services-gradient-text"> {content.gridHighlight}</span>
                     </h2>
 
                     <p className="services-intro">
-                        From planning and design to construction and
-                        final handover, our team provides complete
-                        solutions for residential and commercial projects.
+                        {content.gridIntro}
                     </p>
                 </div>
 

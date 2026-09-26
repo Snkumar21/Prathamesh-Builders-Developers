@@ -12,9 +12,15 @@ import ServicesGrid from "../../components/ServicesGrid/ServicesGrid";
 import CostCalculator from "../../components/CostCalculator/CostCalculator";
 import Process from "../../components/Process/Process";
 
+import useSiteContent from "../../hooks/useSiteContent";
 import "./Home.css";
 
 export default function Home() {
+    const content = useSiteContent("home", {
+        featureTitle: "Construction should feel",
+        featureHighlight: "controlled, not chaotic.",
+        featureDescription: "We combine design coordination, site supervision, material planning and milestone visibility so you always know what's happening, what's completed and what comes next."
+    });
     return (
         <>
             <Hero />
@@ -63,17 +69,12 @@ export default function Home() {
                         </div>
 
                         <h2 className="section-title">
-                            Construction should feel
-                            <span className="feature-gradient-text">
-                                {" "}controlled, not chaotic.
-                            </span>
+                            {content.featureTitle}
+                            <span className="feature-gradient-text"> {content.featureHighlight}</span>
                         </h2>
 
                         <p className="feature-description">
-                            We combine design coordination, site
-                            supervision, material planning and milestone
-                            visibility so you always know what's happening,
-                            what's completed and what comes next.
+                            {content.featureDescription}
                         </p>
 
                         {/* FEATURES */}

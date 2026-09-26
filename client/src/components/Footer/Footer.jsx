@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import api from "../../services/api";
 import "./Footer.css";
 
 
@@ -59,6 +61,8 @@ const FacebookIcon = ({ size = 20 }) => (
 );
 
 export default function Footer() {
+    const [settings, setSettings] = useState({ businessEmail: "", businessPhone: "+91 84216 75782", address: "Pune, Maharashtra, India" });
+    useEffect(() => { api.get("/settings").then(({ data }) => setSettings(data)).catch(() => {}); }, []);
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -183,17 +187,16 @@ export default function Footer() {
                     <div className="contact-item">
                         <span className="contact-label">Phone</span>
 
-                        <a href="tel:+918421675782">
-                            +91 84216 75782
+                        <a href={`tel:${settings.businessPhone.replace(/\s/g, "")}`}>
+                            {settings.businessPhone}
                         </a>
                     </div>
 
                     <div className="contact-item">
                         <span className="contact-label">Location</span>
 
-                        <p>
-                            Pune, Maharashtra, India
-                        </p>
+                        <p>{settings.address}</p>
+                        {settings.businessEmail && <a href={`mailto:${settings.businessEmail}`}>{settings.businessEmail}</a>}
                     </div>
 
                     <Link
