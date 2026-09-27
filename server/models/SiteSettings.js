@@ -22,7 +22,22 @@ const siteSettingsSchema = new mongoose.Schema(
             type: String,
             trim: true,
             default: "Pune, Maharashtra, India"
-        }
+        },
+        instagramUrl: {
+            type: String,
+            trim: true,
+            default: "",
+        },
+        linkedinUrl: {
+            type: String,
+            trim: true,
+            default: "",
+        },
+        facebookUrl: {
+            type: String,
+            trim: true,
+            default: "",
+        },
     },
     { timestamps: true }
 );
