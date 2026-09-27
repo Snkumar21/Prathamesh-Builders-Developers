@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/logo.png";
+import defaultLogo from "../../assets/logo.png";
 import api from "../../services/api";
 import "./Footer.css";
-
 
 const InstagramIcon = ({ size = 20 }) => (
     <svg
@@ -18,9 +17,21 @@ const InstagramIcon = ({ size = 20 }) => (
         strokeLinejoin="round"
         aria-hidden="true"
     >
-        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+        <rect
+            width="20"
+            height="20"
+            x="2"
+            y="2"
+            rx="5"
+            ry="5"
+        />
         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+        <line
+            x1="17.5"
+            x2="17.51"
+            y1="6.5"
+            y2="6.5"
+        />
     </svg>
 );
 
@@ -38,8 +49,17 @@ const LinkedinIcon = ({ size = 20 }) => (
         aria-hidden="true"
     >
         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
-        <rect width="4" height="12" x="2" y="9" />
-        <circle cx="4" cy="4" r="2" />
+        <rect
+            width="4"
+            height="12"
+            x="2"
+            y="9"
+        />
+        <circle
+            cx="4"
+            cy="4"
+            r="2"
+        />
     </svg>
 );
 
@@ -61,21 +81,113 @@ const FacebookIcon = ({ size = 20 }) => (
 );
 
 export default function Footer() {
-    const [settings, setSettings] = useState({ businessEmail: "", businessPhone: "+91 84216 75782", address: "Pune, Maharashtra, India" });
-    useEffect(() => { api.get("/settings").then(({ data }) => setSettings(data)).catch(() => {}); }, []);
+    // STATES
+    const [settings, setSettings] = useState({
+        businessEmail: "",
+        businessPhone: "+91 84216 75782",
+        address: "Pune, Maharashtra, India",
 
+        instagramUrl: "",
+        linkedinUrl: "",
+        facebookUrl: "",
+    });
+
+    // Default logo remains as fallback
+    const [websiteLogo, setWebsiteLogo] = useState(defaultLogo);
+
+    // LOAD FOOTER SETTINGS
+    useEffect(() => {
+        const loadSettings = async () => {
+            try {
+                const { data } = await api.get("/settings");
+
+                setSettings({
+                    businessEmail:
+                        data?.businessEmail || "",
+                    businessPhone:
+                        data?.businessPhone ||
+                        "+91 84216 75782",
+                    address:
+                        data?.address ||
+                        "Pune, Maharashtra, India",
+                    instagramUrl:
+                        data?.instagramUrl || "",
+                    linkedinUrl:
+                        data?.linkedinUrl || "",
+                    facebookUrl:
+                        data?.facebookUrl || "",
+                });
+
+                console.log(
+                    "Footer settings:",
+                    data
+                );
+            } catch (error) {
+                console.error(
+                    "Unable to load footer settings:",
+                    error
+                );
+            }
+        };
+        loadSettings();
+    }, []);
+
+    // LOAD WEBSITE LOGO
+    useEffect(() => {
+        const loadWebsiteLogo = async () => {
+            try {
+                const { data } =
+                    await api.get(
+                        "/content/home"
+                    );
+
+                /*
+                 * Use logo uploaded from
+                 * Admin Panel when available.
+                 */
+                if (
+                    data?.logo &&
+                    typeof data.logo === "string"
+                ) {
+                    setWebsiteLogo(
+                        data.logo
+                    );
+                } else {
+                    setWebsiteLogo(
+                        defaultLogo
+                    );
+                }
+            } catch (error) {
+                console.error(
+                    "Unable to load footer logo:",
+                    error
+                );
+
+                /*
+                 * API fails -> use local logo.
+                 */
+                setWebsiteLogo(
+                    defaultLogo
+                );
+            }
+        };
+
+        loadWebsiteLogo();
+    }, []);
+
+    // SCROLL TO TOP
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
-            behavior: "smooth"
+            behavior: "smooth",
         });
     };
 
-
+    // RENDER
     return (
         <footer className="footer">
             {/* Gradient top border */}
-            <div className="footer-gradient-line"></div>
+            <div className="footer-gradient-line" />
 
             <div className="container footer-grid">
                 {/* COMPANY */}
@@ -86,47 +198,98 @@ export default function Footer() {
                         onClick={scrollToTop}
                     >
                         <img
-                            src={logo}
+                            src={websiteLogo}
                             alt="Prathamesh Builders & Developers"
                             className="footer-logo"
+                            /*
+                             * If stored logo is invalid,
+                             * automatically use local logo.
+                             */
+                            onError={(event) => {
+                                event.currentTarget.onerror =
+                                    null;
+                                event.currentTarget.src =
+                                    defaultLogo;
+                            }}
                         />
 
                         <div className="footer-brand-text">
-                            <h3>Prathamesh Builders</h3>
-                            <span>& Developers</span>
+                            <h3>
+                                Prathamesh Builders
+                            </h3>
+                            <span>
+                                & Developers
+                            </span>
                         </div>
                     </Link>
 
                     <p className="footer-description">
-                        Building quality spaces with trust, thoughtful
-                        design and reliable construction solutions for
-                        homes and businesses.
+                        Building quality spaces with trust,
+                        thoughtful design and reliable
+                        construction solutions for homes and
+                        businesses.
                     </p>
 
                     <div className="footer-socials">
-                        <a
-                            href="#"
-                            aria-label="Instagram"
-                            className="social-link"
-                        >
-                            <InstagramIcon size={19} />
-                        </a>
+                        {/* INSTAGRAM */}
+                        {settings.instagramUrl ? (
+                            <a
+                                href={settings.instagramUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Instagram"
+                                className="social-link"
+                            >
+                                <InstagramIcon size={19} />
+                            </a>
+                        ) : (
+                            <span
+                                className="social-link social-link-disabled"
+                                title="Instagram link not added"
+                            >
+                                <InstagramIcon size={19} />
+                            </span>
+                        )}
 
-                        <a
-                            href="#"
-                            aria-label="LinkedIn"
-                            className="social-link"
-                        >
-                            <LinkedinIcon size={19} />
-                        </a>
+                        {/* LINKEDIN */}
+                        {settings.linkedinUrl ? (
+                            <a
+                                href={settings.linkedinUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="LinkedIn"
+                                className="social-link"
+                            >
+                                <LinkedinIcon size={19} />
+                            </a>
+                        ) : (
+                            <span
+                                className="social-link social-link-disabled"
+                                title="LinkedIn link not added"
+                            >
+                                <LinkedinIcon size={19} />
+                            </span>
+                        )}
 
-                        <a
-                            href="#"
-                            aria-label="Facebook"
-                            className="social-link"
-                        >
-                            <FacebookIcon size={19} />
-                        </a>
+                        {/* FACEBOOK */}
+                        {settings.facebookUrl ? (
+                            <a
+                                href={settings.facebookUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Facebook"
+                                className="social-link"
+                            >
+                                <FacebookIcon size={19} />
+                            </a>
+                        ) : (
+                            <span
+                                className="social-link social-link-disabled"
+                                title="Facebook link not added"
+                            >
+                                <FacebookIcon size={19} />
+                            </span>
+                        )}
                     </div>
                 </div>
 
@@ -134,23 +297,38 @@ export default function Footer() {
                 <div className="footer-column">
                     <h4>Explore</h4>
 
-                    <Link to="/" onClick={scrollToTop}>
+                    <Link
+                        to="/"
+                        onClick={scrollToTop}
+                    >
                         Home
                     </Link>
 
-                    <Link to="/about" onClick={scrollToTop}>
+                    <Link
+                        to="/about"
+                        onClick={scrollToTop}
+                    >
                         About Us
                     </Link>
 
-                    <Link to="/services" onClick={scrollToTop}>
+                    <Link
+                        to="/services"
+                        onClick={scrollToTop}
+                    >
                         Services
                     </Link>
 
-                    <Link to="/projects" onClick={scrollToTop}>
+                    <Link
+                        to="/projects"
+                        onClick={scrollToTop}
+                    >
                         Projects
                     </Link>
 
-                    <Link to="/packages" onClick={scrollToTop}>
+                    <Link
+                        to="/packages"
+                        onClick={scrollToTop}
+                    >
                         Packages
                     </Link>
                 </div>
@@ -159,44 +337,86 @@ export default function Footer() {
                 <div className="footer-column">
                     <h4>Our Services</h4>
 
-                    <Link to="/services" onClick={scrollToTop}>
+                    <Link
+                        to="/services"
+                        onClick={scrollToTop}
+                    >
                         Residential Construction
                     </Link>
 
-                    <Link to="/services" onClick={scrollToTop}>
+                    <Link
+                        to="/services"
+                        onClick={scrollToTop}
+                    >
                         Commercial Construction
                     </Link>
 
-                    <Link to="/services" onClick={scrollToTop}>
+                    <Link
+                        to="/services"
+                        onClick={scrollToTop}
+                    >
                         Renovation
                     </Link>
 
-                    <Link to="/services" onClick={scrollToTop}>
+                    <Link
+                        to="/services"
+                        onClick={scrollToTop}
+                    >
                         Architecture & Planning
                     </Link>
 
-                    <Link to="/services" onClick={scrollToTop}>
+                    <Link
+                        to="/services"
+                        onClick={scrollToTop}
+                    >
                         Interior Solutions
                     </Link>
                 </div>
 
                 {/* CONTACT */}
                 <div className="footer-column footer-contact">
-                    <h4>Get In Touch</h4>
+                    <h4>
+                        Get In Touch
+                    </h4>
 
                     <div className="contact-item">
-                        <span className="contact-label">Phone</span>
+                        <span className="contact-label">
+                            Phone
+                        </span>
 
-                        <a href={`tel:${settings.businessPhone.replace(/\s/g, "")}`}>
+                        <a
+                            href={`tel:${settings.businessPhone.replace(
+                                /\s/g,
+                                ""
+                            )}`}
+                        >
                             {settings.businessPhone}
                         </a>
                     </div>
 
                     <div className="contact-item">
-                        <span className="contact-label">Location</span>
+                        <span className="contact-label">
+                            Email
+                        </span>
 
-                        <p>{settings.address}</p>
-                        {settings.businessEmail && <a href={`mailto:${settings.businessEmail}`}>{settings.businessEmail}</a>}
+                        <a
+                            href={`mailto:${settings.businessEmail.replace(
+                                /\s/g,
+                                ""
+                            )}`}
+                        >
+                            {settings.businessEmail}
+                        </a>
+                    </div>
+
+                    <div className="contact-item">
+                        <span className="contact-label">
+                            Location
+                        </span>
+
+                        <p>
+                            {settings.address}
+                        </p>
                     </div>
 
                     <Link
@@ -213,18 +433,24 @@ export default function Footer() {
             {/* BOTTOM */}
             <div className="container footer-bottom">
                 <p>
-                    © 2026 Prathamesh Builders & Developers.
-                    All rights reserved.
+                    © 2026 Prathamesh Builders &
+                    Developers. All rights reserved.
                 </p>
 
                 <div className="footer-bottom-links">
-                    <Link to="/contact" onClick={scrollToTop}>
+                    <Link
+                        to="/contact"
+                        onClick={scrollToTop}
+                    >
                         Contact
                     </Link>
 
                     <span>•</span>
 
-                    <Link to="/about" onClick={scrollToTop}>
+                    <Link
+                        to="/about"
+                        onClick={scrollToTop}
+                    >
                         About
                     </Link>
                 </div>

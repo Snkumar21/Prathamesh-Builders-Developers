@@ -1,0 +1,651 @@
+.account-settings {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 45px;
+    overflow: hidden;
+}
+
+.account-container {
+    position: relative;
+    z-index: 2;
+}
+
+/* BACKGROUND GLOWS */
+.account-glow {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.account-glow-blue {
+    width: 520px;
+    height: 520px;
+    top: -350px;
+    right: -280px;
+    background: radial-gradient(
+        circle,
+        rgba(0, 174, 240, 0.08),
+        rgba(23, 92, 255, 0.03) 45%,
+        transparent 72%
+    );
+}
+
+.account-glow-purple {
+    width: 450px;
+    height: 450px;
+    bottom: -280px;
+    left: -280px;
+    background: radial-gradient(
+        circle,
+        rgba(237, 12, 174, 0.05),
+        rgba(118, 38, 232, 0.025) 45%,
+        transparent 72%
+    );
+}
+
+/* HEADER */
+.account-header {
+    margin-bottom: 28px;
+}
+
+.account-header > div {
+    max-width: 760px;
+}
+
+.account-eyebrow {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 12px;
+    color: #175cff;
+    background:rgba(23, 92, 255, 0.06);
+    border: 1px solid rgba(23, 92, 255, 0.1);
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.account-header h1 {
+    margin: 15px 0 8px;
+    color: #101828;
+    font-family:
+        "Manrope",
+        sans-serif;
+    font-size:
+        clamp(
+            2.2rem,
+            4vw,
+            3.5rem
+        );
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+}
+
+.account-header h1 span {
+    background: linear-gradient(
+        100deg,
+        #00aef0,
+        #175cff,
+        #7626e8,
+        #ed0cae
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.account-header p {
+    max-width: 680px;
+    margin: 0;
+    color: #667085;
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+/* MESSAGE */
+.account-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    padding: 12px 15px;
+    border-radius: 11px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.account-message.success {
+    color: #067647;
+    background: #ecfdf3;
+    border: 1px solid #abefc6;
+}
+
+.account-message.error {
+    color: #b42318;
+    background: #fef3f2;
+    border: 1px solid #fecdca;
+}
+
+/* CARD */
+.account-card {
+    margin-bottom: 20px;
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.96
+        );
+    border: 1px solid #e7eaf0;
+    border-radius: 18px;
+    box-shadow:
+        0 10px 35px
+        rgba(15, 23, 42, 0.045);
+    overflow: hidden;
+}
+
+.account-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 22px;
+    border-bottom: 1px solid #eef0f4;
+}
+
+.account-card-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 12px;
+}
+
+.account-card-icon.blue {
+    color: #175cff;
+    background:rgba(23, 92, 255, 0.07);
+}
+
+.account-card-icon.purple {
+    color: #7626e8;
+    background:rgba(118, 38, 232, 0.07);
+}
+
+.account-card-icon.pink {
+    color: #d90a9e;
+    background:rgba(237, 12, 174, 0.07);
+}
+
+.account-card-header h2 {
+    margin: 0;
+    color: #101828;
+    font-family:
+        "Manrope",
+        sans-serif;
+    font-size: 0.92rem;
+    font-weight: 800;
+}
+
+.account-card-header p {
+    margin: 4px 0 0;
+    color: #98a2b3;
+    font-size: 0.66rem;
+}
+
+/* FIELDS GRID */
+.account-fields {
+    display: grid;
+    gap: 17px;
+    padding: 22px;
+}
+
+.account-fields.two {
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+}
+
+.account-fields.three {
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+}
+
+.account-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.account-field.full {
+    grid-column: 1 / -1;
+}
+
+.account-field > span {
+    color: #344054;
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+/* INPUT */
+.account-input {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0 12px;
+    background: #ffffff;
+    border: 1px solid #dfe3e8;
+    border-radius: 10px;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.account-input:focus-within {
+    border-color:rgba(23, 92, 255, 0.55);
+    box-shadow:
+        0 0 0 3px
+        rgba(23, 92, 255, 0.07);
+}
+
+.account-input > svg {
+    flex-shrink: 0;
+    color: #98a2b3;
+}
+
+.account-input input,
+.account-input textarea {
+    width: 100%;
+    color: #101828;
+    background: transparent;
+    border: none;
+    outline: none;
+    font: inherit;
+    font-size: 0.74rem;
+}
+
+.account-input input {
+    height: 42px;
+}
+
+.account-input.textarea {
+    align-items: flex-start;
+    padding-top: 12px;
+}
+
+.account-input.textarea textarea {
+    min-height: 70px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.account-input.password {
+    padding-right: 6px;
+}
+
+.account-input.password button {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #98a2b3;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.account-input.password button:hover {
+    color: #175cff;
+    background:rgba(23, 92, 255, 0.06);
+}
+
+/* SECTION DIVIDER */
+.account-section-divider {
+    margin: 0 22px;
+    padding: 20px 0 0;
+    border-top: 1px solid #eef0f4;
+}
+
+.account-section-divider h3 {
+    margin: 0;
+    color: #101828;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.account-section-divider p {
+    max-width: 600px;
+    margin: 4px 0 0;
+    color: #98a2b3;
+    font-size: 0.64rem;
+    line-height: 1.55;
+}
+
+/* SOCIAL GRID */
+.account-social-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+    gap: 13px;
+    padding: 18px 22px 22px;
+}
+
+.account-social-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #e7eaf0;
+    border-radius: 13px;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.account-social-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 20px
+        rgba(15, 23, 42, 0.05);
+}
+
+.account-social-card.instagram:hover {
+    border-color:rgba(237, 12, 174, 0.25);
+}
+
+.account-social-card.linkedin:hover {
+    border-color:rgba(23, 92, 255, 0.25);
+}
+
+.account-social-card.facebook:hover {
+    border-color:rgba(23, 92, 255, 0.25);
+}
+
+.account-social-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.account-social-icon {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 10px;
+}
+
+.instagram
+.account-social-icon {
+    color: #d90a9e;
+    background:rgba(237, 12, 174, 0.07);
+}
+
+.linkedin
+.account-social-icon {
+    color: #175cff;
+    background:rgba(23, 92, 255, 0.07);
+}
+
+.facebook
+.account-social-icon {
+    color: #175cff;
+    background:rgba(23, 92, 255, 0.07);
+}
+
+.account-social-head > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.account-social-head strong {
+    color: #344054;
+    font-size: 0.7rem;
+}
+
+.account-social-head span {
+    color: #98a2b3;
+    font-size: 0.59rem;
+}
+
+.account-social-card input {
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    color: #101828;
+    background: #fafbfc;
+    border: 1px solid #e4e7ec;
+    border-radius: 9px;
+    outline: none;
+    font-size: 0.67rem;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.account-social-card input:focus {
+    background: #ffffff;
+    border-color:rgba(23, 92, 255, 0.45);
+    box-shadow:
+        0 0 0 3px
+        rgba(23, 92, 255, 0.06);
+}
+
+/* SECURITY */
+.security-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 20px 22px 0;
+    padding: 12px 14px;
+    color: #6941c6;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(23, 92, 255, 0.045),
+            rgba(118, 38, 232, 0.055)
+        );
+    border: 1px solid rgba(118, 38, 232, 0.1);
+    border-radius: 11px;
+}
+
+.security-notice > svg {
+    flex-shrink: 0;
+}
+
+.security-notice div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.security-notice strong {
+    color: #344054;
+    font-size: 0.67rem;
+}
+
+.security-notice span {
+    color: #667085;
+    font-size: 0.61rem;
+}
+
+/* CARD FOOTER */
+.account-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 15px 22px;
+    background: #fafbfc;
+    border-top: 1px solid #eef0f4;
+}
+
+.account-card-footer > span {
+    color: #98a2b3;
+    font-size: 0.62rem;
+}
+
+/* PRIMARY BUTTON */
+.account-primary {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 9px 15px;
+    color: #ffffff;
+    background: linear-gradient(
+        100deg,
+        #00aef0,
+        #175cff,
+        #7626e8
+    );
+    border: none;
+    border-radius: 9px;
+    box-shadow:
+        0 7px 17px
+        rgba(23, 92, 255, 0.16);
+    font-size: 0.68rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.account-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow:
+        0 10px 22px
+        rgba(23, 92, 255, 0.22);
+}
+
+.account-primary:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* LOADING */
+.account-loading {
+    min-height: 65vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.account-loading > svg {
+    color: #175cff;
+}
+
+.account-loading strong {
+    margin-top: 8px;
+    color: #101828;
+    font-size: 0.8rem;
+}
+
+.account-loading span {
+    color: #98a2b3;
+    font-size: 0.65rem;
+}
+
+.account-spinner {
+    animation:
+        accountSpin
+        0.8s linear infinite;
+}
+
+@keyframes accountSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1050px) {
+    .account-social-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .account-fields.three {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .account-header h1 {
+        font-size: 2.35rem;
+    }
+
+    .account-fields.two {
+        grid-template-columns: 1fr;
+    }
+
+    .account-field.full {
+        grid-column: auto;
+    }
+
+    .account-card-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .account-primary {
+        width: 100%;
+    }
+}
+
+@media (max-width: 500px) {
+    .account-header h1 {
+        font-size: 2rem;
+    }
+
+    .account-card-header,
+    .account-fields,
+    .account-social-grid {
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    .account-section-divider {
+        margin-left: 17px;
+        margin-right: 17px;
+    }
+
+    .security-notice {
+        margin-left: 17px;
+        margin-right: 17px;
+    }
+
+    .account-card-footer {
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+}
