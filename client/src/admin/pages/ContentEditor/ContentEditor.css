@@ -395,6 +395,425 @@
     }
 }
 
+/* SERVICE CARDS CMS EDITOR */
+.service-cards-editor-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.service-cards-editor-card::before {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    top: -160px;
+    right: -130px;
+    border-radius: 50%;
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 174, 240, 0.09),
+            rgba(118, 38, 232, 0.05),
+            transparent 70%
+        );
+    pointer-events: none;
+}
+
+.service-cards-editor-head {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.service-cards-reset-button {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 9px 13px;
+    cursor: pointer;
+    color: #475467;
+    background: #ffffff;
+    border: 1px solid #e7eaf0;
+    border-radius: 9px;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.service-cards-reset-button:hover {
+    color: #175cff;
+    border-color:rgba(23, 92, 255, 0.22);
+    background:rgba(23, 92, 255, 0.03);
+    transform: translateY(-1px);
+}
+
+/* INFORMATION NOTE */
+.service-cards-editor-note {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    margin-top: 22px;
+    padding: 13px 15px;
+    color: #175cff;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 174, 240, 0.055),
+            rgba(23, 92, 255, 0.045),
+            rgba(118, 38, 232, 0.035)
+        );
+    border: 1px solid rgba(23, 92, 255, 0.10);
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.service-cards-editor-note > svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.service-cards-editor-note strong,
+.service-cards-editor-note span {
+    display: block;
+}
+
+.service-cards-editor-note strong {
+    margin-bottom: 3px;
+    color: #344054;
+    font-size: 0.77rem;
+}
+
+.service-cards-editor-note span {
+    color: #667085;
+    font-size: 0.72rem;
+    line-height: 1.55;
+}
+
+/* SERVICE EDITOR LIST */
+.service-cards-editor-list {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 15px;
+    margin: 10px;
+}
+
+/* INDIVIDUAL SERVICE */
+.service-card-editor-item {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 17px;
+    align-items: flex-start;
+    padding: 19px;
+    background: #ffffff;
+    border: 1px solid #e7eaf0;
+    border-radius: 13px;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.service-card-editor-item:hover {
+    border-color:rgba(23, 92, 255, 0.16);
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04);
+}
+
+/* NUMBER */
+.service-card-editor-number {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    background:
+        linear-gradient(
+            135deg,
+            #00aef0,
+            #175cff,
+            #7626e8
+        );
+    border-radius: 10px;
+    font-family:
+        "Manrope",
+        sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    box-shadow: 0 7px 18px rgba(23, 92, 255, 0.16);
+}
+
+/* FIELDS */
+.service-card-editor-fields {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+    gap: 15px;
+}
+
+.service-card-editor-fields
+.content-field:first-child {
+    grid-column: 1 / -1;
+}
+
+.service-card-editor-fields
+.content-field.full {
+    grid-column: 1 / -1;
+}
+
+/* FOOTER */
+.service-cards-editor-footer {
+    position: relative;
+    z-index: 2;
+    margin: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #e7eaf0;
+}
+
+.service-cards-editor-footer span {
+    color: #98a2b3;
+    font-size: 0.71rem;
+    line-height: 1.5;
+}
+
+/* DYNAMIC SERVICE EDITOR */
+.service-editor-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.service-add-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 15px;
+    border: 0;
+    border-radius: 9px;
+    color: #ffffff;
+    background:
+        linear-gradient(
+            100deg,
+            #00aef0,
+            #175cff,
+            #7626e8
+        );
+    font: inherit;
+    font-size: 0.76rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(23, 92, 255, 0.16);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.service-add-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 9px 22px rgba(23, 92, 255, 0.22);
+}
+
+/* SIDE */
+.service-card-editor-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+}
+
+.service-card-editor-icon-preview {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #175cff;
+    background: rgba(23, 92, 255, 0.055);
+    border: 1px solid rgba(23, 92, 255, 0.10);
+    border-radius: 10px;
+}
+
+/* MAIN */
+.service-card-editor-main {
+    min-width: 0;
+}
+
+.service-card-editor-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.service-card-editor-top strong {
+    color: #344054;
+    font-family:
+        "Manrope",
+        sans-serif;
+    font-size: 0.79rem;
+    font-weight: 800;
+}
+
+/* DELETE */
+.service-delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border: 1px solid rgba(217, 45, 32, 0.13);
+    border-radius: 8px;
+    color: #d92d20;
+    background: rgba(217, 45, 32, 0.035);
+    font: inherit;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.service-delete-button:hover {
+    background: rgba(217, 45, 32, 0.075);
+    border-color: rgba(217, 45, 32, 0.22);
+}
+
+/* SELECT */
+.service-card-editor-fields select {
+    width: 100%;
+    min-height: 45px;
+    padding: 0 12px;
+    outline: none;
+    color: #344054;
+    background: #ffffff;
+    border: 1px solid #dfe3ea;
+    border-radius: 9px;
+    font: inherit;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.service-card-editor-fields select:focus {
+    border-color: rgba(23, 92, 255, 0.45);
+    box-shadow: 0 0 0 3px rgba(23, 92, 255, 0.07);
+}
+
+/* ADD ANOTHER */
+.service-editor-add-bottom {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+}
+
+.service-add-outline-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 15px;
+    border: 1px dashed rgba(23, 92, 255, 0.28);
+    border-radius: 9px;
+    color: #175cff;
+    background: rgba(23, 92, 255, 0.025);
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.service-add-outline-button:hover {
+    background:rgba(23, 92, 255, 0.055);
+    border-color: rgba(23, 92, 255, 0.42);
+    transform: translateY(-1px);
+}
+
+/* EMPTY STATE */
+.service-editor-empty {
+    margin-top: 22px;
+    padding: 35px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px dashed #dfe3ea;
+    border-radius: 13px;
+    background: #fafbfc;
+}
+
+.service-editor-empty-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    color: #175cff;
+    border-radius: 12px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 174, 240, 0.09),
+            rgba(23, 92, 255, 0.08),
+            rgba(118, 38, 232, 0.07)
+        );
+}
+
+
+.service-editor-empty strong {
+    margin-bottom: 5px;
+
+    color: #101828;
+
+    font-family:
+        "Manrope",
+        sans-serif;
+
+    font-size: 0.9rem;
+}
+
+
+.service-editor-empty p {
+    max-width: 330px;
+
+    margin:
+        0
+        0
+        16px;
+
+    color: #667085;
+
+    font-size: 0.76rem;
+
+    line-height: 1.6;
+}
+
 /* RESPONSIVE */
 @media (max-width: 760px) {
     .content-editor-header {
@@ -416,6 +835,45 @@
 
     .content-field.full {
         grid-column: auto;
+    }
+}
+
+@media (max-width: 700px) {
+    .service-cards-editor-head {
+        flex-direction: column;
+    }
+
+    .service-cards-reset-button {
+        align-self: flex-start;
+    }
+
+    .service-card-editor-item {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .service-card-editor-number {
+        width: 38px;
+        height: 38px;
+    }
+
+    .service-card-editor-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .service-editor-header-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .service-card-editor-side {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .service-card-editor-top {
+        margin-top: 4px;
     }
 }
 
@@ -442,5 +900,35 @@
     .logo-upload-button,
     .logo-remove-button {
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-cards-editor-note {
+        padding: 12px;
+    }
+
+    .service-card-editor-item {
+        padding: 14px;
+        border-radius: 11px;
+    }
+
+    .service-editor-header-actions {
+        display: grid;
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .service-editor-header-actions button {
+        width: 100%;
+    }
+
+    .service-card-editor-top {
+        align-items:
+            flex-start;
+    }
+
+    .service-delete-button span {
+        display: none;
     }
 }
