@@ -38,6 +38,25 @@ const siteSettingsSchema = new mongoose.Schema(
             trim: true,
             default: "",
         },
+        ownerName: {
+            type: String,
+            trim: true,
+            default: "",
+        },
+        ownerDesignation: {
+            type: String,
+            trim: true,
+            default: "Founder & Owner",
+        },
+        ownerDescription: {
+            type: String,
+            trim: true,
+            default: "",
+        },
+        ownerImage: {
+            type: String,
+            default: "",
+        },
     },
     { timestamps: true }
 );

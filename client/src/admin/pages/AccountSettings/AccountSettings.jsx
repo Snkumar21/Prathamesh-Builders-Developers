@@ -106,9 +106,15 @@ export default function AccountSettings() {
         businessEmail: "",
         businessPhone: "",
         address: "",
+
         instagramUrl: "",
         linkedinUrl: "",
         facebookUrl: "",
+
+        ownerName: "",
+        ownerDesignation: "",
+        ownerDescription: "",
+        ownerImage: ""
     });
 
     // PASSWORD
@@ -157,39 +163,32 @@ export default function AccountSettings() {
                 ]);
 
                 setProfile({
-                    name:
-                        profileResponse.data?.name ||
-                        "",
-                    email:
-                        profileResponse.data?.email ||
-                        "",
-                    phone:
-                        profileResponse.data?.phone ||
-                        "",
-                    address:
-                        profileResponse.data?.address ||
-                        "",
+                    name: profileResponse.data?.name || "",
+                    email: profileResponse.data?.email || "",
+                    phone: profileResponse.data?.phone || "",
+                    address: profileResponse.data?.address || "",
                 });
 
                 setSite({
-                    businessEmail:
-                        settingsResponse.data
-                            ?.businessEmail || "",
-                    businessPhone:
-                        settingsResponse.data
-                            ?.businessPhone || "",
-                    address:
-                        settingsResponse.data
-                            ?.address || "",
-                    instagramUrl:
-                        settingsResponse.data
-                            ?.instagramUrl || "",
-                    linkedinUrl:
-                        settingsResponse.data
-                            ?.linkedinUrl || "",
-                    facebookUrl:
-                        settingsResponse.data
-                            ?.facebookUrl || "",
+                    businessEmail: settingsResponse.data ?.businessEmail || "",
+
+                    businessPhone: settingsResponse.data ?.businessPhone || "",
+
+                    address: settingsResponse.data ?.address || "",
+
+                    instagramUrl: settingsResponse.data ?.instagramUrl || "",
+
+                    linkedinUrl: settingsResponse.data ?.linkedinUrl || "",
+
+                    facebookUrl: settingsResponse.data ?.facebookUrl || "",
+
+                    ownerName: settingsResponse.data ?.ownerName || "",
+
+                    ownerDesignation: settingsResponse.data ?.ownerDesignation || "Founder & Owner",
+
+                    ownerDescription: settingsResponse.data ?.ownerDescription || "",
+
+                    ownerImage: settingsResponse.data ?.ownerImage || "",
                 });
             } catch (error) {
                 console.error(
@@ -247,6 +246,58 @@ export default function AccountSettings() {
             ...current,
             [field]: value,
         }));
+    };
+
+    // OWNER IMAGE CHANGE
+    const handleOwnerImageChange = (event) => {
+        const file = event.target.files?.[0];
+
+        if (!file) {
+            return;
+        }
+
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+            showError(
+                "Please select a JPG, PNG or WEBP image."
+            );
+            event.target.value = "";
+            return;
+        }
+
+        // Maximum 1 MB
+        if (file.size > 1024 * 1024) {
+            showError(
+                "Owner image must be smaller than 1 MB."
+            );
+            event.target.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            setSite((current) => ({
+                ...current,
+                ownerImage:
+                    reader.result,
+            }));
+            flash(
+                "Owner photo selected. Click Update Website to save it."
+            );
+        };
+
+        reader.onerror = () => {
+            showError(
+                "Unable to read the selected owner image."
+            );
+        };
+
+        reader.readAsDataURL(file);
     };
 
     // PASSWORD CHANGE
@@ -318,18 +369,25 @@ export default function AccountSettings() {
                 );
 
             setSite({
-                businessEmail:
-                    data?.businessEmail || "",
-                businessPhone:
-                    data?.businessPhone || "",
-                address:
-                    data?.address || "",
-                instagramUrl:
-                    data?.instagramUrl || "",
-                linkedinUrl:
-                    data?.linkedinUrl || "",
-                facebookUrl:
-                    data?.facebookUrl || "",
+                businessEmail: data?.businessEmail || "",
+
+                businessPhone: data?.businessPhone || "",
+
+                address: data?.address || "",
+
+                instagramUrl: data?.instagramUrl || "",
+
+                linkedinUrl: data?.linkedinUrl || "",
+
+                facebookUrl: data?.facebookUrl || "",
+
+                ownerName: data?.ownerName || "",
+
+                ownerDesignation: data?.ownerDesignation || "Founder & Owner",
+
+                ownerDescription: data?.ownerDescription || "",
+
+                ownerImage: data?.ownerImage || "",
             });
 
             flash(
@@ -545,7 +603,6 @@ export default function AccountSettings() {
                             <span>
                                 Phone Number
                             </span>
-
                             <div className="account-input">
                                 <Phone size={16} />
                                 <input
@@ -571,9 +628,7 @@ export default function AccountSettings() {
                             </span>
 
                             <div className="account-input textarea">
-
                                 <MapPin size={16} />
-
                                 <textarea
                                     rows={3}
                                     placeholder="Your address"
@@ -588,100 +643,66 @@ export default function AccountSettings() {
                                         )
                                     }
                                 />
-
                             </div>
-
                         </label>
-
                     </div>
 
-
                     <div className="account-card-footer">
-
                         <span>
                             Changing your login email
                             changes the email used to
                             access the admin panel.
                         </span>
-
-
                         <button
                             type="submit"
                             className="account-primary"
                             disabled={savingProfile}
                         >
-
                             {savingProfile ? (
-
                                 <Loader2
                                     size={16}
                                     className="account-spinner"
                                 />
-
                             ) : (
-
                                 <Save size={16} />
-
                             )}
-
-
                             {savingProfile
                                 ? "Saving..."
                                 : "Save Profile"
                             }
-
                         </button>
-
                     </div>
-
                 </form>
 
-
-                {/* =================================
-                    WEBSITE SETTINGS
-                ================================= */}
-
+                {/* WEBSITE SETTINGS */}
                 <form
                     className="account-card"
                     onSubmit={saveSite}
                 >
-
                     <div className="account-card-header">
-
                         <div className="account-card-icon purple">
                             <Globe2 size={20} />
                         </div>
 
-
                         <div>
-
                             <h2>
                                 Website Information
                             </h2>
-
                             <p>
                                 Contact information shown
                                 publicly across the website.
                             </p>
-
                         </div>
-
                     </div>
 
-
                     <div className="account-fields two">
-
                         <label className="account-field">
-
                             <span>
                                 Public Email
                             </span>
 
-
                             <div className="account-input">
-
                                 <Mail size={16} />
-
                                 <input
                                     type="email"
                                     placeholder="info@example.com"
@@ -696,23 +717,16 @@ export default function AccountSettings() {
                                         )
                                     }
                                 />
-
                             </div>
-
                         </label>
 
-
                         <label className="account-field">
-
                             <span>
                                 Public Phone
                             </span>
 
-
                             <div className="account-input">
-
                                 <Phone size={16} />
-
                                 <input
                                     type="text"
                                     placeholder="+91..."
@@ -727,23 +741,16 @@ export default function AccountSettings() {
                                         )
                                     }
                                 />
-
                             </div>
-
                         </label>
 
-
                         <label className="account-field full">
-
                             <span>
                                 Business Address
                             </span>
 
-
                             <div className="account-input textarea">
-
                                 <MapPin size={16} />
-
                                 <textarea
                                     rows={3}
                                     placeholder="Business address"
@@ -758,25 +765,16 @@ export default function AccountSettings() {
                                         )
                                     }
                                 />
-
                             </div>
-
                         </label>
-
                     </div>
 
-
-                    {/* =================================
-                        SOCIAL MEDIA
-                    ================================= */}
-
+                    {/* SOCIAL MEDIA */}
                     <div className="account-section-divider">
-
                         <div>
                             <h3>
                                 Social Media
                             </h3>
-
                             <p>
                                 Add your official social
                                 media profiles. Empty links
@@ -784,35 +782,25 @@ export default function AccountSettings() {
                                 website footer.
                             </p>
                         </div>
-
                     </div>
 
-
                     <div className="account-social-grid">
-
                         {/* INSTAGRAM */}
-
                         <label className="account-social-card instagram">
-
                             <div className="account-social-head">
-
                                 <div className="account-social-icon">
                                     <InstagramIcon />
                                 </div>
-
 
                                 <div>
                                     <strong>
                                         Instagram
                                     </strong>
-
                                     <span>
                                         Business profile
                                     </span>
                                 </div>
-
                             </div>
-
 
                             <input
                                 type="url"
@@ -828,33 +816,24 @@ export default function AccountSettings() {
                                     )
                                 }
                             />
-
                         </label>
 
-
                         {/* LINKEDIN */}
-
                         <label className="account-social-card linkedin">
-
                             <div className="account-social-head">
-
                                 <div className="account-social-icon">
                                     <LinkedinIcon />
                                 </div>
-
 
                                 <div>
                                     <strong>
                                         LinkedIn
                                     </strong>
-
                                     <span>
                                         Company profile
                                     </span>
                                 </div>
-
                             </div>
-
 
                             <input
                                 type="url"
@@ -870,33 +849,24 @@ export default function AccountSettings() {
                                     )
                                 }
                             />
-
                         </label>
 
-
                         {/* FACEBOOK */}
-
                         <label className="account-social-card facebook">
-
                             <div className="account-social-head">
-
                                 <div className="account-social-icon">
                                     <FacebookIcon />
                                 </div>
-
 
                                 <div>
                                     <strong>
                                         Facebook
                                     </strong>
-
                                     <span>
                                         Business page
                                     </span>
                                 </div>
-
                             </div>
-
 
                             <input
                                 type="url"
@@ -912,120 +882,229 @@ export default function AccountSettings() {
                                     )
                                 }
                             />
-
                         </label>
-
                     </div>
 
+                    {/* OWNER / FOUNDER */}
+                    <div className="account-section-divider">
+                        <div>
+                            <h3>
+                                Owner & Founder
+                            </h3>
+                            <p>
+                                Manage the founder information
+                                displayed on the public About page.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="account-owner-layout">
+                        {/* OWNER PHOTO */}
+                        <div className="account-owner-photo-section">
+                            <div className="account-owner-photo">
+                                {site.ownerImage ? (
+                                    <img
+                                        src={site.ownerImage}
+                                        alt={
+                                            site.ownerName
+                                                ? `${site.ownerName} preview`
+                                                : "Owner preview"
+                                        }
+                                    />
+                                ) : (
+                                    <div className="account-owner-photo-empty">
+                                        <UserRound size={46} />
+                                        <span>
+                                            Owner Photo
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+
+                            <label className="account-owner-upload">
+                                <input
+                                    type="file"
+                                    accept="image/jpeg,image/png,image/webp"
+                                    onChange={
+                                        handleOwnerImageChange
+                                    }
+                                />
+                                <UserRound size={15} />
+                                <span>
+                                    Choose Professional Photo
+                                </span>
+                            </label>
+
+                            <p className="account-owner-photo-help">
+                                JPG, PNG or WEBP.
+                                Maximum 1 MB.
+                                Portrait image recommended.
+                            </p>
+
+                            {site.ownerImage && (
+                                <button
+                                    type="button"
+                                    className="account-owner-remove"
+                                    onClick={() => {
+
+                                        setSite((current) => ({
+                                            ...current,
+                                            ownerImage: "",
+                                        }));
+
+                                        flash(
+                                            "Owner photo removed. Click Update Website to save the change."
+                                        );
+
+                                    }}
+                                >
+                                    Remove Photo
+                                </button>
+                            )}
+                        </div>
+
+                        {/* OWNER INFORMATION */}
+                        <div className="account-owner-fields">
+                            <label className="account-field">
+                                <span>
+                                    Owner Name
+                                </span>
+                                <div className="account-input">
+                                    <UserRound size={16} />
+                                    <input
+                                        type="text"
+                                        placeholder="Owner's full name"
+                                        value={site.ownerName}
+                                        onChange={(event) =>
+                                            updateSiteField(
+                                                "ownerName",
+                                                event.target.value
+                                            )
+                                        }
+                                    />
+                                </div>
+                            </label>
+
+                            <label className="account-field">
+                                <span>
+                                    Designation
+                                </span>
+                                <div className="account-input">
+                                    <ShieldCheck size={16} />
+                                    <input
+                                        type="text"
+                                        placeholder="Founder & Owner"
+                                        value={
+                                            site.ownerDesignation
+                                        }
+                                        onChange={(event) =>
+                                            updateSiteField(
+                                                "ownerDesignation",
+                                                event.target.value
+                                            )
+                                        }
+                                    />
+                                </div>
+                            </label>
+
+                            <label className="account-field full">
+                                <span>
+                                    About the Owner
+                                </span>
+                                <div className="account-input textarea">
+                                    <UserRound size={16} />
+                                    <textarea
+                                        rows={7}
+                                        placeholder="Write about the owner's experience, vision, values and approach..."
+                                        value={
+                                            site.ownerDescription
+                                        }
+                                        onChange={(event) =>
+                                            updateSiteField(
+                                                "ownerDescription",
+                                                event.target.value
+                                            )
+                                        }
+                                    />
+                                </div>
+
+                                <small className="account-owner-field-help">
+                                    This description will appear
+                                    on the public About page.
+                                </small>
+                            </label>
+                        </div>
+                    </div>
 
                     <div className="account-card-footer">
-
                         <span>
                             These details are used across
                             the public website.
                         </span>
-
 
                         <button
                             type="submit"
                             className="account-primary"
                             disabled={savingSite}
                         >
-
                             {savingSite ? (
-
                                 <Loader2
                                     size={16}
                                     className="account-spinner"
                                 />
-
                             ) : (
-
                                 <Save size={16} />
-
                             )}
-
-
                             {savingSite
                                 ? "Updating..."
                                 : "Update Website"
                             }
-
                         </button>
-
                     </div>
-
                 </form>
 
-
-                {/* =================================
-                    SECURITY
-                ================================= */}
-
+                {/* SECURITY */}
                 <form
                     className="account-card security-card"
                     onSubmit={changePassword}
                 >
-
                     <div className="account-card-header">
-
                         <div className="account-card-icon pink">
                             <LockKeyhole size={20} />
                         </div>
-
-
                         <div>
-
                             <h2>
                                 Account Security
                             </h2>
-
                             <p>
                                 Update the password used
                                 to access your admin panel.
                             </p>
-
                         </div>
-
                     </div>
 
-
                     <div className="security-notice">
-
                         <ShieldCheck size={18} />
-
-
                         <div>
-
                             <strong>
                                 Keep your account secure
                             </strong>
-
                             <span>
                                 Use a unique password with
                                 at least 8 characters.
                             </span>
-
                         </div>
-
                     </div>
 
-
                     <div className="account-fields three">
-
                         {/* CURRENT */}
-
                         <label className="account-field">
-
                             <span>
                                 Current Password
                             </span>
 
-
                             <div className="account-input password">
-
                                 <KeyRound size={16} />
-
 
                                 <input
                                     type={
@@ -1046,7 +1125,6 @@ export default function AccountSettings() {
                                     }
                                 />
 
-
                                 <button
                                     type="button"
                                     onClick={() =>
@@ -1057,33 +1135,23 @@ export default function AccountSettings() {
                                     }
                                     aria-label="Show current password"
                                 >
-
                                     {showCurrentPassword ? (
                                         <EyeOff size={16} />
                                     ) : (
                                         <Eye size={16} />
                                     )}
-
                                 </button>
-
                             </div>
-
                         </label>
 
-
                         {/* NEW */}
-
                         <label className="account-field">
-
                             <span>
                                 New Password
                             </span>
 
-
                             <div className="account-input password">
-
                                 <LockKeyhole size={16} />
-
 
                                 <input
                                     type={
@@ -1105,7 +1173,6 @@ export default function AccountSettings() {
                                     }
                                 />
 
-
                                 <button
                                     type="button"
                                     onClick={() =>
@@ -1116,33 +1183,23 @@ export default function AccountSettings() {
                                     }
                                     aria-label="Show new password"
                                 >
-
                                     {showNewPassword ? (
                                         <EyeOff size={16} />
                                     ) : (
                                         <Eye size={16} />
                                     )}
-
                                 </button>
-
                             </div>
-
                         </label>
 
-
                         {/* CONFIRM */}
-
                         <label className="account-field">
-
                             <span>
                                 Confirm Password
                             </span>
 
-
                             <div className="account-input password">
-
                                 <LockKeyhole size={16} />
-
 
                                 <input
                                     type={
@@ -1164,7 +1221,6 @@ export default function AccountSettings() {
                                     }
                                 />
 
-
                                 <button
                                     type="button"
                                     onClick={() =>
@@ -1175,64 +1231,44 @@ export default function AccountSettings() {
                                     }
                                     aria-label="Show confirm password"
                                 >
-
                                     {showConfirmPassword ? (
                                         <EyeOff size={16} />
                                     ) : (
                                         <Eye size={16} />
                                     )}
-
                                 </button>
-
                             </div>
-
                         </label>
-
                     </div>
 
-
                     <div className="account-card-footer">
-
                         <span>
                             You will use the new password
                             the next time you sign in.
                         </span>
-
 
                         <button
                             type="submit"
                             className="account-primary"
                             disabled={changingPassword}
                         >
-
                             {changingPassword ? (
-
                                 <Loader2
                                     size={16}
                                     className="account-spinner"
                                 />
-
                             ) : (
-
                                 <LockKeyhole size={16} />
-
                             )}
-
 
                             {changingPassword
                                 ? "Changing..."
                                 : "Change Password"
                             }
-
                         </button>
-
                     </div>
-
                 </form>
-
             </div>
-
         </section>
-
     );
 }

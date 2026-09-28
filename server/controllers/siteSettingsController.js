@@ -39,12 +39,16 @@ export const updateSettings = async (req, res) => {
             "businessEmail",
             "businessPhone",
             "address",
-            // Social Media
+
             "instagramUrl",
             "linkedinUrl",
             "facebookUrl",
-        ];
 
+            "ownerName",
+            "ownerDesignation",
+            "ownerDescription",
+            "ownerImage",
+        ];
         const updates = {};
 
         /*
