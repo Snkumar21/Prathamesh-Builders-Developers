@@ -8,7 +8,6 @@ import projectRoutes from "./routes/projectRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import siteContentRoutes from "./routes/siteContentRoutes.js";
 import siteSettingsRoutes from "./routes/siteSettingsRoutes.js";
-import clientProjectRoutes from "./routes/clientProjectRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -25,7 +24,6 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/content", siteContentRoutes);
 app.use("/api/settings", siteSettingsRoutes);
-app.use("/api/client-projects", clientProjectRoutes);
 
 app.use((err, req, res, next) => {
     console.error(err);
