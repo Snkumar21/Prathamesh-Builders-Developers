@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { MapPin, Building2 } from "lucide-react";
+import {
+    ArrowRight,
+    Building2,
+    MapPin
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 import api from "../../services/api";
 import "./Projects.css";
@@ -13,6 +18,7 @@ const fallback = [
         image:
             "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=85"
     },
+
     {
         title: "Urban Workspace",
         category: "Commercial",
@@ -20,6 +26,7 @@ const fallback = [
         image:
             "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=85"
     },
+
     {
         title: "Linear Villa",
         category: "Residential",
@@ -32,7 +39,8 @@ const fallback = [
 
 export default function Projects() {
 
-    const [items, setItems] = useState(fallback);
+    const [items, setItems] =
+        useState(fallback);
 
 
     useEffect(() => {
@@ -40,39 +48,98 @@ export default function Projects() {
         Promise.all([
             api.get("/projects"),
             api.get("/client-projects/public")
-        ]).then(([projectsResponse, clientResponse]) => {
-            const portfolio = projectsResponse.data || [];
-            const liveClientProjects = (clientResponse.data || []).map((item) => ({
-                _id: item._id,
-                title: item.projectName,
-                category: item.category,
-                location: item.location,
-                image: item.coverImage,
-                description: item.description
-            }));
-            const combined = [...liveClientProjects, ...portfolio];
-            if (combined.length) setItems(combined);
-        }).catch(() => {
-            // Fallback projects remain visible
-        });
+        ])
+            .then(([
+                projectsResponse,
+                clientResponse
+            ]) => {
+
+                const portfolio =
+                    (
+                        projectsResponse.data ||
+                        []
+                    ).map((item) => ({
+                        ...item,
+
+                        galleryImages:
+                            item.galleryImages ||
+                            [],
+
+                        videos:
+                            item.videos ||
+                            [],
+
+                        source:
+                            "portfolio"
+                    }));
+
+
+                const clientProjects =
+                    (
+                        clientResponse.data ||
+                        []
+                    ).map((item) => ({
+                        _id:
+                            item._id,
+
+                        title:
+                            item.projectName,
+
+                        category:
+                            item.category,
+
+                        location:
+                            item.location,
+
+                        image:
+                            item.coverImage,
+
+                        description:
+                            item.description,
+
+                        galleryImages:
+                            item.galleryImages ||
+                            [],
+
+                        videos:
+                            item.videos ||
+                            [],
+
+                        source:
+                            "client"
+                    }));
+
+
+                const combined = [
+                    ...clientProjects,
+                    ...portfolio
+                ];
+
+
+                if (combined.length) {
+                    setItems(combined);
+                }
+
+            })
+            .catch((error) => {
+                console.error(
+                    "Unable to load projects:",
+                    error
+                );
+            });
 
     }, []);
 
 
     return (
-        <section className="section projects">
 
-            {/* Decorative background */}
+        <section className="section projects">
 
             <div className="projects-glow projects-glow-blue"></div>
             <div className="projects-glow projects-glow-pink"></div>
 
 
             <div className="container projects-container">
-
-                {/* =====================================
-                    PAGE HEADER
-                ====================================== */}
 
                 <div className="projects-header">
 
@@ -88,40 +155,50 @@ export default function Projects() {
 
 
                     <h1 className="projects-title">
+
                         Selected spaces we're
+
                         <span className="projects-gradient-text">
                             {" "}proud to build.
                         </span>
+
                     </h1>
 
 
                     <p className="projects-intro">
-                        Explore a selection of residential and commercial
-                        projects shaped by thoughtful planning, quality
-                        execution and attention to every detail.
+
+                        Explore a selection of residential
+                        and commercial projects shaped by
+                        thoughtful planning, quality
+                        execution and attention to every
+                        detail.
+
                     </p>
 
                 </div>
 
-
-                {/* =====================================
-                    PROJECT GRID
-                ====================================== */}
 
                 <div className="project-grid">
 
                     {items.map((project, index) => {
 
                         const fallbackImage =
-                            fallback[index % fallback.length].image;
+                            fallback[
+                                index %
+                                fallback.length
+                            ].image;
+
 
                         return (
+
                             <article
                                 className="project-card"
-                                key={project._id || index}
+                                key={
+                                    project._id
+                                        ? `${project.source}-${project._id}`
+                                        : index
+                                }
                             >
-
-                                {/* IMAGE */}
 
                                 <div className="project-image">
 
@@ -137,23 +214,22 @@ export default function Projects() {
                                         loading="lazy"
                                     />
 
-
                                     <div className="project-overlay"></div>
 
 
-                                    {/* Project Number */}
-
                                     <span className="project-number">
-                                        {String(index + 1).padStart(
+
+                                        {String(
+                                            index + 1
+                                        ).padStart(
                                             2,
                                             "0"
                                         )}
+
                                     </span>
 
                                 </div>
 
-
-                                {/* CONTENT */}
 
                                 <div className="project-content">
 
@@ -163,7 +239,8 @@ export default function Projects() {
 
                                         <span>
                                             {project.category ||
-                                                "Construction"}
+                                                "Construction"
+                                            }
                                         </span>
 
                                     </div>
@@ -180,10 +257,27 @@ export default function Projects() {
 
                                         <span>
                                             {project.location ||
-                                                "Maharashtra"}
+                                                "Maharashtra"
+                                            }
                                         </span>
 
                                     </div>
+
+
+                                    {project._id && project.source && (
+
+                                        <Link
+                                            to={
+                                                `/projects/${project.source}/${project._id}`
+                                            }
+                                            className="project-view-link"
+                                        >
+                                            View Project
+
+                                            <ArrowRight size={16} />
+                                        </Link>
+
+                                    )}
 
 
                                     <div className="project-accent"></div>
@@ -191,7 +285,9 @@ export default function Projects() {
                                 </div>
 
                             </article>
+
                         );
+
                     })}
 
                 </div>

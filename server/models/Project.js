@@ -1,58 +1,68 @@
 import mongoose from "mongoose";
 
-// PROJECT SCHEMA
+
 const projectSchema = new mongoose.Schema(
     {
-        // Project Title
         title: {
             type: String,
             required: true,
-            trim: true,
+            trim: true
         },
 
-        // Project Category
         category: {
             type: String,
             trim: true,
-            default: "Residential",
+            default: "Residential"
         },
 
-        // Project Location
         location: {
             type: String,
             trim: true,
-            default: "",
+            default: ""
         },
 
-        // Project Image URL
         image: {
             type: String,
             trim: true,
-            default: "",
+            default: ""
         },
 
-        // Project Description
+        galleryImages: [
+            {
+                type: String,
+                trim: true
+            }
+        ],
+
+        videos: [
+            {
+                type: String,
+                trim: true
+            }
+        ],
+
         description: {
             type: String,
             trim: true,
-            default: "",
+            default: ""
         },
 
-        // Featured Project
         featured: {
             type: Boolean,
-            default: false,
-        },
+            default: false
+        }
     },
     {
-        timestamps: true,
+        timestamps: true
     }
 );
 
-// PROJECT MODEL
-const Project = mongoose.model(
-    "Project",
-    projectSchema
-);
+
+const Project =
+    mongoose.model(
+        "Project",
+        projectSchema
+    );
+
 
 export default Project;

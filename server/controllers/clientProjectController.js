@@ -1,60 +1,312 @@
-import ClientProject from "../models/ClientProject.js";
+import ClientProject from "../models/ClientProjects.js";
 
-export const listClientProjects = async (req, res) => {
+
+export const listClientProjects = async (
+    req,
+    res
+) => {
+
     try {
-        res.json(await ClientProject.find().sort({ updatedAt: -1 }));
+
+        const projects =
+            await ClientProject
+                .find()
+                .sort({
+                    updatedAt: -1
+                });
+
+
+        res.json(projects);
+
     } catch (error) {
-        res.status(500).json({ message: "Unable to load client projects." });
-    }
-};
 
-export const listPublicClientProjects = async (req, res) => {
-    try {
-        res.json(await ClientProject.find({ isPublic: true }).sort({ updatedAt: -1 }));
-    } catch (error) {
-        res.status(500).json({ message: "Unable to load projects." });
-    }
-};
+        console.error(
+            "List client projects error:",
+            error
+        );
 
-export const createClientProject = async (req, res) => {
-    try {
-        res.status(201).json(await ClientProject.create(req.body));
-    } catch (error) {
-        res.status(500).json({ message: "Unable to create client project." });
-    }
-};
 
-export const updateClientProject = async (req, res) => {
-    try {
-        const item = await ClientProject.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true
+        res.status(500).json({
+            message:
+                "Unable to load client projects."
         });
-        if (!item) return res.status(404).json({ message: "Client project not found." });
-        res.json(item);
-    } catch (error) {
-        res.status(500).json({ message: "Unable to update client project." });
+
     }
+
 };
 
-export const addProjectUpdate = async (req, res) => {
+
+export const listPublicClientProjects = async (
+    req,
+    res
+) => {
+
     try {
-        const item = await ClientProject.findById(req.params.id);
-        if (!item) return res.status(404).json({ message: "Client project not found." });
-        item.updates.unshift(req.body);
-        await item.save();
-        res.json(item);
+
+        const projects =
+            await ClientProject
+                .find({
+                    isPublic: true
+                })
+                .select(
+                    "projectName location category description coverImage galleryImages videos createdAt updatedAt"
+                )
+                .sort({
+                    updatedAt: -1
+                });
+
+
+        res.json(projects);
+
     } catch (error) {
-        res.status(500).json({ message: "Unable to add project update." });
+
+        console.error(
+            "Public client projects error:",
+            error
+        );
+
+
+        res.status(500).json({
+            message:
+                "Unable to load projects."
+        });
+
     }
+
 };
 
-export const deleteClientProject = async (req, res) => {
+
+export const getPublicClientProject = async (
+    req,
+    res
+) => {
+
     try {
-        const item = await ClientProject.findByIdAndDelete(req.params.id);
-        if (!item) return res.status(404).json({ message: "Client project not found." });
-        res.json({ message: "Client project deleted." });
+
+        const project =
+            await ClientProject
+                .findOne({
+                    _id: req.params.id,
+                    isPublic: true
+                })
+                .select(
+                    "projectName location category description coverImage galleryImages videos createdAt updatedAt"
+                );
+
+
+        if (!project) {
+
+            return res
+                .status(404)
+                .json({
+                    message:
+                        "Project not found."
+                });
+
+        }
+
+
+        res.json(project);
+
     } catch (error) {
-        res.status(500).json({ message: "Unable to delete client project." });
+
+        console.error(
+            "Get public client project error:",
+            error
+        );
+
+
+        res.status(500).json({
+            message:
+                "Unable to load project."
+        });
+
     }
+
+};
+
+
+export const createClientProject = async (
+    req,
+    res
+) => {
+
+    try {
+
+        const project =
+            await ClientProject.create(
+                req.body
+            );
+
+
+        res.status(201).json(
+            project
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Create client project error:",
+            error
+        );
+
+
+        res.status(500).json({
+            message:
+                "Unable to create client project."
+        });
+
+    }
+
+};
+
+
+export const updateClientProject = async (
+    req,
+    res
+) => {
+
+    try {
+
+        const project =
+            await ClientProject.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                {
+                    new: true,
+                    runValidators: true
+                }
+            );
+
+
+        if (!project) {
+
+            return res
+                .status(404)
+                .json({
+                    message:
+                        "Client project not found."
+                });
+
+        }
+
+
+        res.json(project);
+
+    } catch (error) {
+
+        console.error(
+            "Update client project error:",
+            error
+        );
+
+
+        res.status(500).json({
+            message:
+                "Unable to update client project."
+        });
+
+    }
+
+};
+
+
+export const addProjectUpdate = async (
+    req,
+    res
+) => {
+
+    try {
+
+        const project =
+            await ClientProject.findById(
+                req.params.id
+            );
+
+
+        if (!project) {
+
+            return res
+                .status(404)
+                .json({
+                    message:
+                        "Client project not found."
+                });
+
+        }
+
+
+        project.updates.unshift(
+            req.body
+        );
+
+
+        await project.save();
+
+
+        res.json(project);
+
+    } catch (error) {
+
+        console.error(
+            "Add project update error:",
+            error
+        );
+
+
+        res.status(500).json({
+            message:
+                "Unable to add project update."
+        });
+
+    }
+
+};
+
+
+export const deleteClientProject = async (
+    req,
+    res
+) => {
+
+    try {
+
+        const project =
+            await ClientProject.findByIdAndDelete(
+                req.params.id
+            );
+
+
+        if (!project) {
+
+            return res
+                .status(404)
+                .json({
+                    message:
+                        "Client project not found."
+                });
+
+        }
+
+
+        res.json({
+            message:
+                "Client project deleted."
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Delete client project error:",
+            error
+        );
+
+
+        res.status(500).json({
+            message:
+                "Unable to delete client project."
+        });
+
+    }
+
 };

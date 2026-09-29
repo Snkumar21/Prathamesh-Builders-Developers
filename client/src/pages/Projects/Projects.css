@@ -516,6 +516,41 @@
 
 
 /* =========================================
+   PROJECT VIEW LINK
+========================================= */
+
+.project-view-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-top: 18px;
+
+    color: #175cff;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+
+    text-decoration: none;
+
+    transition:
+        gap 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.project-view-link svg {
+    stroke-width: 2;
+}
+
+
+.project-view-link:hover {
+    gap: 11px;
+    color: #7626e8;
+}
+
+/* =========================================
    TABLET
 ========================================= */
 

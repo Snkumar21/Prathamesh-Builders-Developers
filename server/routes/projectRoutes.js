@@ -2,47 +2,57 @@ import { Router } from "express";
 
 import {
     list,
+    getOne,
     create,
     update,
-    remove,
-} from "../controllers/projectController.js";
+    remove
+} from "../controllers/ProjectController.js";
 
 import auth from "../middleware/auth.js";
 
-// PROJECT ROUTER
+
 const router = Router();
 
-// PUBLIC ROUTES
-// Get All Projects
-// GET /api/projects
+
+/* =========================================
+   PUBLIC ROUTES
+========================================= */
+
 router.get(
     "/",
     list
 );
 
-// ADMIN PROTECTED ROUTES
-// Create New Project
-// POST /api/projects
+
+router.get(
+    "/:id",
+    getOne
+);
+
+
+/* =========================================
+   ADMIN ROUTES
+========================================= */
+
 router.post(
     "/",
     auth,
     create
 );
 
-// Update Project
-// PUT /api/projects/:id
+
 router.put(
     "/:id",
     auth,
     update
 );
 
-// Delete Project
-// DELETE /api/projects/:id
+
 router.delete(
     "/:id",
     auth,
     remove
 );
+
 
 export default router;
