@@ -8,47 +8,51 @@ import {
 } from "lucide-react";
 import "./ServicesGrid.css";
 
-/* SERVICE ICONS - Icons remain controlled by the website. Admin can edit only title and description. */
-const serviceIcons = [
+/* SERVICE ICON MAP - The admin panel saves icon names as strings. Example: icon: "Home", icon: "Building2". This map converts those strings back into Lucide React components. */
+const serviceIconMap = {
     Home,
     Building2,
     PenTool,
     Paintbrush,
     RefreshCcw,
     Warehouse
-];
+};
 
-const Icon = serviceIconMap[service.icon] || Home;
-
-/* FALLBACK SERVICE CARDS - Used if CMS data is unavailable. */
+/* FALLBACK SERVICE CARDS - These cards are displayed when CMS datais unavailable or no serviceCards exist. */
 const defaultServiceCards = [
     {
         id: "residential-construction",
+        icon: "Home",
         title: "Residential Construction",
         description: "Villas, bungalows and custom homes thoughtfully planned around your lifestyle, requirements and budget."
     },
     {
-        id: "commercial-construction",
+        id: "commercial-spaces",
+        icon: "Building2",
         title: "Commercial Spaces",
         description: "Functional offices, retail spaces and commercial developments designed and built for long-term performance."
     },
     {
-        id: "architectural-planning",
+        id: "architecture-planning",
+        icon: "PenTool",
         title: "Architecture & Planning",
         description: "Smart layouts, elevations and coordinated technical drawings prepared before construction begins."
     },
     {
         id: "interior-solutions",
+        icon: "Paintbrush",
         title: "Interior Solutions",
         description: "Thoughtful interior solutions combining aesthetics, functionality, durable materials and practical budgets."
     },
     {
         id: "renovation",
+        icon: "RefreshCcw",
         title: "Renovation",
         description: "Structural, functional and visual upgrades that transform existing homes and commercial spaces."
     },
     {
         id: "turnkey-delivery",
+        icon: "Warehouse",
         title: "Turnkey Delivery",
         description: "One accountable team managing design, planning, procurement, construction and final project handover."
     }
@@ -63,7 +67,7 @@ export default function ServicesGrid({
     const gridHighlight = content.gridHighlight || "construction.";
     const gridIntro = content.gridIntro || "From planning and design to construction and final handover, our team provides complete solutions for residential and commercial projects.";
 
-    /* SERVICE CARDS */
+    /* SERVICE CARDS - CMS cards are used when available. Otherwise the original default cards are displayed. */
     const serviceCards =
         Array.isArray(
             content.serviceCards
@@ -72,6 +76,7 @@ export default function ServicesGrid({
             ? content.serviceCards
             : defaultServiceCards;
 
+    /* RENDER */
     return (
         <section className="section services">
             {/* DECORATIVE BACKGROUND */}
@@ -82,12 +87,10 @@ export default function ServicesGrid({
                 <div className="services-header">
                     <div className="services-eyebrow">
                         <span className="services-eyebrow-dot"></span>
-
                         <span className="services-eyebrow-text">
                             What We Build
                         </span>
                     </div>
-
                     <h2 className="section-title">
                         {gridTitle}
                         <span className="services-gradient-text">
@@ -95,7 +98,6 @@ export default function ServicesGrid({
                             {gridHighlight}
                         </span>
                     </h2>
-
                     <p className="services-intro">
                         {gridIntro}
                     </p>
@@ -104,16 +106,9 @@ export default function ServicesGrid({
                 {/* SERVICES GRID */}
                 <div className="service-grid">
                     {serviceCards.map(
-                        (
-                            service,
-                            index
-                        ) => {
-                            /*
-                             * Icon is based on card position.
-                             * This keeps the existing approved
-                             * website icons unchanged.
-                             */
-                            const Icon = serviceIcons[index] || Home;
+                        ( service, index) => {
+                            /* DYNAMIC ICON - Get icon component from the icon name saved by admin. Home is used as fallback. */
+                            const Icon = serviceIconMap[ service.icon ] || Home;
                             return (
                                 <article
                                     className="service-card"

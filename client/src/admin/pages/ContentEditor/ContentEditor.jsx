@@ -412,7 +412,6 @@ export default function ContentEditor() {
     };
 
     /* ADD SERVICE */
-
     const addService = () => {
         const newService = {
             id: createServiceId(),
@@ -420,11 +419,8 @@ export default function ContentEditor() {
             title: "",
             description: "",
         };
-
-
         setForm((current) => ({
             ...current,
-
             serviceCards: [
                 ...(
                     Array.isArray(
@@ -433,22 +429,15 @@ export default function ContentEditor() {
                         ? current.serviceCards
                         : []
                 ),
-
                 newService,
             ],
         }));
-
-
         showMessage(
             "New service added. Enter the details and click Save Changes."
         );
     };
 
-
-    /* =====================================================
-       DELETE SERVICE
-    ===================================================== */
-
+    /* DELETE SERVICE */
     const deleteService = (
         index
     ) => {
@@ -459,11 +448,8 @@ export default function ContentEditor() {
                 )
                     ? current.serviceCards
                     : [];
-
-
             return {
                 ...current,
-
                 serviceCards:
                     currentCards.filter(
                         (
@@ -475,22 +461,15 @@ export default function ContentEditor() {
                     ),
             };
         });
-
-
         showMessage(
             "Service removed. Click Save Changes to publish the change."
         );
     };
 
-
-    /* =====================================================
-       RESET SERVICES
-    ===================================================== */
-
+    /* RESET SERVICES */
     const resetServiceCards = () => {
         setForm((current) => ({
             ...current,
-
             serviceCards:
                 defaultServiceCards.map(
                     (service) => ({
@@ -498,38 +477,25 @@ export default function ContentEditor() {
                     })
                 ),
         }));
-
-
         showMessage(
             "Services restored to default values. Click Save Changes to publish them."
         );
     };
 
-
-    /* =====================================================
-       LOGO UPLOAD
-    ===================================================== */
-
+    /* LOGO UPLOAD */
     const handleLogoChange = (
         event
     ) => {
-        const file =
-            event.target.files?.[0];
-
-
+        const file = event.target.files?.[0];
         if (!file) {
             return;
         }
-
-
         const allowedTypes = [
             "image/png",
             "image/jpeg",
             "image/webp",
             "image/svg+xml",
         ];
-
-
         if (
             !allowedTypes.includes(
                 file.type
@@ -538,23 +504,12 @@ export default function ContentEditor() {
             setError(
                 "Please upload PNG, JPG, WEBP or SVG logo."
             );
-
-            event.target.value =
-                "";
-
+            event.target.value = "";
             return;
         }
 
-
-        /*
-         * Logo is stored inside
-         * MongoDB as a data URL.
-         */
-
-        const maxSize =
-            2 * 1024 * 1024;
-
-
+        /* Logo is stored inside MongoDB as a data URL. */
+        const maxSize = 2 * 1024 * 1024;
         if (
             file.size >
             maxSize
@@ -562,32 +517,22 @@ export default function ContentEditor() {
             setError(
                 "Logo must be smaller than 2 MB."
             );
-
-            event.target.value =
-                "";
-
+            event.target.value = "";
             return;
         }
 
-
         setError("");
-
-
-        const reader =
-            new FileReader();
-
+        const reader = new FileReader();
 
         reader.onload = () => {
             setForm(
                 (current) => ({
                     ...current,
-
                     logo:
                         reader.result,
                 })
             );
         };
-
 
         reader.onerror = () => {
             setError(
@@ -595,23 +540,17 @@ export default function ContentEditor() {
             );
         };
 
-
         reader.readAsDataURL(
             file
         );
     };
 
-
-    /* =====================================================
-       REMOVE LOGO
-    ===================================================== */
-
+    /* REMOVE LOGO */
     const removeLogo = () => {
         setForm((current) => ({
             ...current,
             logo: "",
         }));
-
 
         if (
             fileInputRef.current
@@ -621,35 +560,25 @@ export default function ContentEditor() {
         }
     };
 
-
-    /* =====================================================
-       VALIDATE SERVICES
-    ===================================================== */
-
+    /* VALIDATE SERVICES */
     const validateServices = () => {
         if (
             page !== "services"
         ) {
             return true;
         }
-
-
         const services =
             Array.isArray(
                 form.serviceCards
             )
                 ? form.serviceCards
                 : [];
-
-
         for (
             let index = 0;
             index < services.length;
             index += 1
         ) {
-            const service =
-                services[index];
-
+            const service = services[index];
 
             if (
                 !service.title?.trim()
@@ -657,10 +586,8 @@ export default function ContentEditor() {
                 setError(
                     `Please enter a title for Service ${index + 1}.`
                 );
-
                 return false;
             }
-
 
             if (
                 !service.description?.trim()
@@ -668,10 +595,8 @@ export default function ContentEditor() {
                 setError(
                     `Please enter a description for Service ${index + 1}.`
                 );
-
                 return false;
             }
-
 
             if (
                 !service.icon
@@ -679,25 +604,17 @@ export default function ContentEditor() {
                 setError(
                     `Please select an icon for Service ${index + 1}.`
                 );
-
                 return false;
             }
         }
-
-
         return true;
     };
 
-
-    /* =====================================================
-       SAVE CONTENT
-    ===================================================== */
-
+    /* SAVE CONTENT */
     const save = async (
         event
     ) => {
         event.preventDefault();
-
 
         if (
             !validateServices()
@@ -705,24 +622,16 @@ export default function ContentEditor() {
             return;
         }
 
-
         try {
             setSaving(true);
             setError("");
             setMessage("");
-
-
             await api.put(
-                `/content/${page}`,
-                form
+                `/content/${page}`, form
             );
-
-
             setMessage(
                 "Website content updated successfully."
             );
-
-
             window.setTimeout(
                 () => {
                     setMessage("");
@@ -735,7 +644,6 @@ export default function ContentEditor() {
                 error
             );
 
-
             setError(
                 error.response
                     ?.data
@@ -747,75 +655,43 @@ export default function ContentEditor() {
         }
     };
 
-
-    /* =====================================================
-       LOADING
-    ===================================================== */
-
+    /* LOADING */
     if (loading) {
         return (
             <section className="content-editor">
-
                 <div className="content-editor-loading">
-
-                    <Loader2
-                        size={30}
-                        className="content-editor-spinner"
-                    />
-
+                    <Loader2 size={30} className="content-editor-spinner" />
                     <strong>
                         Loading content
                     </strong>
-
                     <span>
                         Preparing website settings.
                     </span>
-
                 </div>
-
             </section>
         );
     }
 
-
-    /* =====================================================
-       RENDER
-    ===================================================== */
-
+    /* RENDER */
     return (
         <section className="content-editor">
-
-
-            {/* =============================================
-                HEADER
-            ============================================= */}
-
+            {/* HEADER */}
             <header className="content-editor-header">
-
                 <div>
-
                     <span className="content-editor-eyebrow">
                         Website Content
                     </span>
-
-
                     <h1>
                         Edit{" "}
-
                         <span>
                             {page}
                         </span>
                     </h1>
-
-
                     <p>
                         Update public website content
                         without changing source code.
                     </p>
-
                 </div>
-
-
                 <button
                     type="submit"
                     form="website-content-form"
@@ -830,208 +706,114 @@ export default function ContentEditor() {
                     ) : (
                         <Save size={17} />
                     )}
-
                     {saving
                         ? "Saving..."
                         : "Save Changes"
                     }
                 </button>
-
             </header>
 
-
-            {/* =============================================
-                SUCCESS MESSAGE
-            ============================================= */}
-
+            {/* SUCCESS MESSAGE */}
             {message && (
                 <div className="content-editor-success">
-
-                    <CheckCircle2
-                        size={18}
-                    />
-
+                    <CheckCircle2 size={18} />
                     {message}
-
                 </div>
             )}
 
-
-            {/* =============================================
-                ERROR MESSAGE
-            ============================================= */}
-
+            {/* ERROR MESSAGE */}
             {error && (
                 <div className="content-editor-error">
                     {error}
                 </div>
             )}
 
-
-            {/* =============================================
-                FORM
-            ============================================= */}
-
-            <form
-                id="website-content-form"
-                onSubmit={save}
-            >
-
-
-                {/* =========================================
-                    HOME LOGO
-                ========================================= */}
-
+            {/* FORM */}
+            <form id="website-content-form" onSubmit={save} >
+                {/* HOME LOGO */}
                 {page === "home" && (
                     <div className="content-editor-card logo-settings-card">
-
                         <div className="content-editor-card-head">
-
                             <div>
-
                                 <span>
                                     Branding
                                 </span>
-
                                 <h2>
                                     Website Logo
                                 </h2>
-
                                 <p>
                                     This logo can be used
                                     across the public website.
                                 </p>
-
                             </div>
-
                         </div>
-
-
                         <div className="logo-editor">
-
-
                             {/* PREVIEW */}
-
                             <div className="logo-preview-box">
-
                                 {form.logo ? (
-                                    <img
-                                        src={form.logo}
-                                        alt="Website logo preview"
-                                    />
+                                    <img src={form.logo} alt="Website logo preview" />
                                 ) : (
                                     <div className="logo-placeholder">
-
-                                        <ImagePlus
-                                            size={28}
-                                        />
-
+                                        <ImagePlus size={28} />
                                         <span>
                                             No custom logo
                                         </span>
-
                                     </div>
                                 )}
-
                             </div>
-
-
                             {/* CONTROLS */}
-
                             <div className="logo-editor-controls">
-
                                 <h3>
                                     Company Logo
                                 </h3>
-
-
                                 <p>
                                     PNG, JPG, WEBP or SVG.
                                     Maximum file size 2 MB.
                                 </p>
-
-
                                 <input
                                     ref={fileInputRef}
                                     type="file"
                                     accept=".png,.jpg,.jpeg,.webp,.svg"
-                                    onChange={
-                                        handleLogoChange
-                                    }
+                                    onChange = { handleLogoChange }
                                     hidden
                                 />
-
-
                                 <div className="logo-editor-buttons">
-
                                     <button
                                         type="button"
                                         className="logo-upload-button"
-                                        onClick={() =>
-                                            fileInputRef
-                                                .current
-                                                ?.click()
-                                        }
+                                        onClick={() => fileInputRef .current ?.click()}
                                     >
-                                        <Upload
-                                            size={16}
-                                        />
-
-                                        {form.logo
-                                            ? "Change Logo"
-                                            : "Upload Logo"
-                                        }
+                                        <Upload size={16} />
+                                        {form.logo ? "Change Logo" : "Upload Logo" }
                                     </button>
-
-
                                     {form.logo && (
                                         <button
                                             type="button"
                                             className="logo-remove-button"
-                                            onClick={
-                                                removeLogo
-                                            }
+                                            onClick = { removeLogo }
                                         >
-                                            <RotateCcw
-                                                size={16}
-                                            />
-
+                                            <RotateCcw size={16} />
                                             Remove
                                         </button>
                                     )}
-
                                 </div>
-
-
                                 <small>
                                     Logo changes become
                                     public after you click
                                     Save Changes.
                                 </small>
-
                             </div>
-
                         </div>
-
                     </div>
                 )}
 
-
-                {/* =========================================
-                    PAGE COPY
-                ========================================= */}
-
+                {/* PAGE COPY */}
                 <div className="content-editor-card">
-
                     <div className="content-editor-card-head">
-
                         <div>
-
                             <span>
                                 Page Copy
                             </span>
-
-
                             <h2>
                                 {page
                                     .charAt(0)
@@ -1039,20 +821,13 @@ export default function ContentEditor() {
                                     page.slice(1)
                                 } Content
                             </h2>
-
-
                             <p>
                                 Manage the text displayed
                                 on this page.
                             </p>
-
                         </div>
-
                     </div>
-
-
                     <div className="content-editor-fields">
-
                         {definition.fields.map(
                             ([
                                 key,
