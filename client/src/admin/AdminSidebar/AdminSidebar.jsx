@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import {
     LayoutDashboard, Home, Info, Wrench, FolderKanban, Package,
-    Inbox, BriefcaseBusiness, UserRound, LogOut
+    Inbox, UserRound, LogOut
 } from "lucide-react";
 import "./AdminSidebar.css";
 
@@ -13,7 +13,6 @@ const links = [
     ["/admin/projects", "Projects", FolderKanban],
     ["/admin/content/packages", "Packages", Package],
     ["/admin/enquiries", "Enquiries", Inbox],
-    ["/admin/client-projects", "Client Projects", BriefcaseBusiness],
     ["/admin/account", "Account", UserRound]
 ];
 

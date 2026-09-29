@@ -21,27 +21,32 @@ const projectSchema = new mongoose.Schema(
             default: ""
         },
 
-        image: {
+        description: {
             type: String,
             trim: true,
             default: ""
         },
 
-        galleryImages: [
-            {
-                type: String,
-                trim: true
-            }
-        ],
+        images: {
+            type: [
+                {
+                    type: String,
+                    trim: true
+                }
+            ],
 
-        videos: [
-            {
-                type: String,
-                trim: true
-            }
-        ],
+            validate: {
+                validator: function (images) {
+                    return images.length <= 4;
+                },
 
-        description: {
+                message: "A project can have maximum 4 photos."
+            },
+
+            default: []
+        },
+
+        video: {
             type: String,
             trim: true,
             default: ""
@@ -58,11 +63,10 @@ const projectSchema = new mongoose.Schema(
 );
 
 
-const Project =
-    mongoose.model(
-        "Project",
-        projectSchema
-    );
+const Project = mongoose.model(
+    "Project",
+    projectSchema
+);
 
 
 export default Project;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-    ImagePlus,
+    ImageIcon,
     MapPin,
     Pencil,
     Save,
@@ -8,129 +8,108 @@ import {
     Trash2,
     Video
 } from "lucide-react";
-
 import api from "../../../services/api";
-
-
+import "./ProjectsAdmin.css";
 const blank = {
     title: "",
     category: "Residential",
     location: "",
-    image: "",
-    galleryImages: [],
-    videos: [],
     description: "",
+    images: [],
+    video: "",
     featured: false
 };
 
-
 export default function ProjectsAdmin() {
-
     const [items, setItems] = useState([]);
     const [form, setForm] = useState(blank);
-
-    const [galleryText, setGalleryText] = useState("");
-    const [videoText, setVideoText] = useState("");
-
+    const [imageInputs, setImageInputs] = useState(["","","",""]);
     const [editing, setEditing] = useState(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
-
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
 
-
+    /* LOAD PROJECTS */
     const load = async () => {
         try {
             setLoading(true);
-
             const { data } = await api.get("/projects");
-
             setItems(data || []);
         } catch (err) {
             console.error(err);
-            setError("Unable to load projects.");
+            setError(
+                "Unable to load projects."
+            );
         } finally {
             setLoading(false);
         }
     };
-
-
     useEffect(() => {
         load();
     }, []);
 
-
+    /* CHANGE FIELD */
     const change = (field, value) => {
-        setForm((current) => ({
-            ...current,
-            [field]: value
-        }));
+        setForm((current) => ({...current,[field]: value}));
     };
 
+    /* IMAGE FIELD */
+    const changeImage = (
+        index,
+        value
+    ) => {
+        setImageInputs((current) => {
+            const next = [...current];
+            next[index] = value;
+            return next;
+        });
+    };
 
+    /* RESET */
     const resetForm = () => {
         setForm(blank);
-        setGalleryText("");
-        setVideoText("");
+        setImageInputs(["","","",""]);
         setEditing(null);
     };
 
-
+    /* SAVE */
     const save = async (event) => {
         event.preventDefault();
-
         if (!form.title.trim()) {
-            setError("Project title is required.");
+            setError(
+                "Project title is required."
+            );
+            return;
+        }
+        const images = imageInputs
+            .map((image) => image.trim())
+            .filter(Boolean);
+        if (images.length > 4) {
+            setError(
+                "Maximum 4 photos are allowed."
+            );
             return;
         }
 
+        const payload = {...form,images};
         try {
             setSaving(true);
             setError("");
-
-            const payload = {
-                ...form,
-
-                galleryImages: galleryText
-                    .split("\n")
-                    .map((item) => item.trim())
-                    .filter(Boolean),
-
-                videos: videoText
-                    .split("\n")
-                    .map((item) => item.trim())
-                    .filter(Boolean)
-            };
-
-
             if (editing) {
-                await api.put(
-                    `/projects/${editing}`,
-                    payload
-                );
-
+                await api.put(`/projects/${editing}`,payload);
                 setMessage("Project updated successfully.");
             } else {
-                await api.post(
-                    "/projects",
-                    payload
-                );
-
+                await api.post("/projects",payload);
                 setMessage("Project added successfully.");
             }
-
-
             resetForm();
             await load();
-
-            window.setTimeout(
-                () => setMessage(""),
-                3000
-            );
+            window.setTimeout(() => {
+                setMessage("");
+            }, 3000);
         } catch (err) {
             console.error(err);
-
             setError(
                 err.response?.data?.message ||
                 "Unable to save project."
@@ -140,288 +119,229 @@ export default function ProjectsAdmin() {
         }
     };
 
-
+    /* EDIT */
     const edit = (item) => {
         setEditing(item._id);
-
         setForm({
-            ...blank,
-            ...item
+            title: item.title || "",
+            category: item.category || "Residential",
+            location: item.location || "",
+            description: item.description || "",
+            images: item.images || [],
+            video: item.video || "",
+            featured: Boolean(item.featured)
         });
-
-        setGalleryText(
-            Array.isArray(item.galleryImages)
-                ? item.galleryImages.join("\n")
-                : ""
-        );
-
-        setVideoText(
-            Array.isArray(item.videos)
-                ? item.videos.join("\n")
-                : ""
-        );
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        const existingImages = Array.isArray(item.images) ? item.images : [];
+        setImageInputs([
+            existingImages[0] || "",
+            existingImages[1] || "",
+            existingImages[2] || "",
+            existingImages[3] || ""
+        ]);
+        window.scrollTo({top: 0,behavior: "smooth"});
     };
 
-
+    /* DELETE */
     const remove = async (item) => {
-        if (!window.confirm(`Delete ${item.title}?`)) {
+        const confirmed = window.confirm(`Delete "${item.title}"?`);
+        if (!confirmed) {
             return;
         }
-
         try {
-            await api.delete(
-                `/projects/${item._id}`
-            );
-
-            if (editing === item._id) {
-                resetForm();
-            }
-
-            setMessage("Project deleted successfully.");
-
+            setError("");
+            await api.delete( `/projects/${item._id}` );
+            if (editing === item._id) { resetForm(); }
+            setMessage( "Project deleted successfully." );
             await load();
         } catch (err) {
             console.error(err);
-            setError("Unable to delete project.");
+            setError(
+                err.response?.data?.message ||
+                "Unable to delete project."
+            );
         }
     };
 
-
+    /* UI */
     return (
-        <section className="admin-page">
-
+        <section className="admin-page projects-admin">
             <div className="admin-page-head">
-                <span>Portfolio</span>
-
-                <h1>Projects</h1>
-
+                <span>
+                    Portfolio Management
+                </span>
+                <h1>
+                    Projects
+                </h1>
                 <p>
-                    Add, edit and manage public portfolio
-                    projects, gallery images and videos.
+                    Add, edit and manage project
+                    information, photos and videos.
                 </p>
             </div>
-
-
             {message && (
                 <div className="admin-success">
                     {message}
                 </div>
             )}
-
-
             {error && (
                 <div className="admin-error">
                     {error}
                 </div>
             )}
 
-
             {/* PROJECT FORM */}
-
-            <form
-                className="admin-card admin-form admin-grid two"
-                onSubmit={save}
-            >
-
-                <label>
-                    Project Title
-
-                    <input
-                        required
-                        value={form.title}
-                        onChange={(event) =>
-                            change(
-                                "title",
-                                event.target.value
-                            )
-                        }
-                    />
-                </label>
-
-
-                <label>
-                    Category
-
-                    <select
-                        value={form.category}
-                        onChange={(event) =>
-                            change(
-                                "category",
-                                event.target.value
-                            )
-                        }
-                    >
-                        <option value="Residential">
-                            Residential
-                        </option>
-
-                        <option value="Commercial">
-                            Commercial
-                        </option>
-
-                        <option value="Interior">
-                            Interior
-                        </option>
-
-                        <option value="Renovation">
-                            Renovation
-                        </option>
-
-                        <option value="Turnkey">
-                            Turnkey
-                        </option>
-
-                        <option value="Other">
-                            Other
-                        </option>
-                    </select>
-                </label>
-
-
-                <label>
-                    Location
-
-                    <input
-                        value={form.location}
-                        onChange={(event) =>
-                            change(
-                                "location",
-                                event.target.value
-                            )
-                        }
-                    />
-                </label>
-
+            <form className="admin-card admin-form" onSubmit={save} >
+                <h3>
+                    {editing ? "Edit Project" : "Add New Project" }
+                </h3>
+                <div className="projects-admin-project-grid">
+                    <label>
+                        Project Title
+                        <input required value={form.title} onChange={(event) =>
+                                change("title",event.target.value)
+                            }
+                            placeholder="Modern Bungalow"
+                        />
+                    </label>
+                    <label>
+                        Category
+                        <select
+                            value={form.category}
+                            onChange={(event) =>
+                                change("category",event.target.value)
+                            }
+                        >
+                            <option value="Residential">
+                                Residential
+                            </option>
+                            <option value="Commercial">
+                                Commercial
+                            </option>
+                            <option value="Interior">
+                                Interior
+                            </option>
+                            <option value="Renovation">
+                                Renovation
+                            </option>
+                            <option value="Turnkey">
+                                Turnkey
+                            </option>
+                            <option value="Other">
+                                Other
+                            </option>
+                        </select>
+                    </label>
+                    <label>
+                        Location
+                        <input
+                            value={form.location}
+                            onChange={(event) =>
+                                change("location",event.target.value)
+                            }
+                            placeholder="Pune, Maharashtra"
+                        />
+                    </label>
+                    <label>
+                        Featured Project
+                        <select
+                            value={ form.featured ? "yes" : "no" }
+                            onChange={(event) =>
+                                change("featured",event.target.value === "yes")
+                            }
+                        >
+                            <option value="no">
+                                No
+                            </option>
+                            <option value="yes">
+                                Yes
+                            </option>
+                        </select>
+                    </label>
+                </div>
 
                 <label>
-                    Cover Image URL
-
-                    <input
-                        value={form.image}
-                        onChange={(event) =>
-                            change(
-                                "image",
-                                event.target.value
-                            )
-                        }
-                    />
-                </label>
-
-
-                <label>
-                    Featured
-
-                    <select
-                        value={
-                            form.featured
-                                ? "yes"
-                                : "no"
-                        }
-                        onChange={(event) =>
-                            change(
-                                "featured",
-                                event.target.value === "yes"
-                            )
-                        }
-                    >
-                        <option value="no">
-                            No
-                        </option>
-
-                        <option value="yes">
-                            Yes
-                        </option>
-                    </select>
-                </label>
-
-
-                <label>
-                    Description
-
+                    Project Description
                     <textarea
-                        rows={5}
+                        rows={6}
                         value={form.description}
                         onChange={(event) =>
-                            change(
-                                "description",
-                                event.target.value
-                            )
+                            change("description",event.target.value)
                         }
+                        placeholder="Tell visitors about this project..."
                     />
                 </label>
 
-
-                <label>
-                    Gallery Image URLs
-
-                    <textarea
-                        rows={7}
-                        value={galleryText}
-                        onChange={(event) =>
-                            setGalleryText(
-                                event.target.value
+                {/* PHOTOS */}
+                <div>
+                    <h4>
+                        <ImageIcon size={17} />
+                        {" "}
+                        Project Photos
+                    </h4>
+                    <p>
+                        Maximum 4 photos.
+                        Photo 1 will be used as
+                        the project cover image.
+                    </p>
+                    <div className="admin-grid two">
+                        {imageInputs.map(
+                            (image, index) => (
+                                <label key={index}>
+                                    Photo {index + 1}
+                                    <input
+                                        value={image}
+                                        onChange={(event) =>
+                                            changeImage(index,event.target.value)
+                                        }
+                                        placeholder="Image URL"
+                                    />
+                                    {image && (
+                                        <img
+                                            src={image}
+                                            alt={`Project preview ${index + 1}`}
+                                            className="projects-admin-form-preview"
+                                        />
+                                    )}
+                                </label>
                             )
-                        }
-                        placeholder="One image URL per line"
-                    />
-                </label>
-
-
-                <label>
-                    Video URLs
-
-                    <textarea
-                        rows={7}
-                        value={videoText}
-                        onChange={(event) =>
-                            setVideoText(
-                                event.target.value
-                            )
-                        }
-                        placeholder="One video URL per line"
-                    />
-                </label>
-
-
-                {/* COVER PREVIEW */}
-
-                {form.image && (
-                    <div>
-                        <strong>
-                            Cover Preview
-                        </strong>
-
-                        <div style={{ marginTop: 10 }}>
-                            <img
-                                src={form.image}
-                                alt="Cover preview"
-                                style={{
-                                    width: "100%",
-                                    maxWidth: 320,
-                                    height: 190,
-                                    objectFit: "cover",
-                                    borderRadius: 14
-                                }}
-                            />
-                        </div>
+                        )}
                     </div>
+                </div>
+
+                {/* VIDEO */}
+                <label>
+                    <span>
+                        <Video size={17} />
+                        {" "}
+                        Project Video
+                    </span>
+                    <input
+                        value={form.video}
+                        onChange={(event) =>
+                            change("video",event.target.value)
+                        }
+                        placeholder="Video URL"
+                    />
+                    <small>
+                        Maximum one project video.
+                        Device upload version will
+                        enforce a maximum duration
+                        of 5 minutes.
+                    </small>
+                </label>
+                {form.video && (
+                    <video
+                        src={form.video}
+                        controls
+                        preload="metadata"
+                    />
                 )}
-
-
                 <div className="admin-actions-row">
-
                     <button
-                        className="admin-primary"
                         type="submit"
+                        className="admin-primary"
                         disabled={saving}
                     >
                         <Save size={16} />
-
                         {saving
                             ? "Saving..."
                             : editing
@@ -429,8 +349,6 @@ export default function ProjectsAdmin() {
                                 : "Add Project"
                         }
                     </button>
-
-
                     {editing && (
                         <button
                             type="button"
@@ -440,227 +358,114 @@ export default function ProjectsAdmin() {
                             Cancel
                         </button>
                     )}
-
                 </div>
-
             </form>
 
-
-            {/* PROJECT PREVIEW LIST */}
-
-            <div
-                className="admin-grid"
-                style={{ marginTop: 20 }}
-            >
-
+            {/* EXISTING PROJECTS */}
+            <div className="projects-admin-projects">
+                <div className="admin-page-head">
+                    <span>
+                        Portfolio
+                    </span>
+                    <h2>
+                        Existing Projects
+                    </h2>
+                </div>
                 {loading && (
                     <div className="admin-card">
                         Loading projects...
                     </div>
                 )}
-
-
-                {!loading && items.length === 0 && (
-                    <div className="admin-card">
-                        No projects added yet.
-                    </div>
-                )}
-
-
-                {items.map((item) => (
-
-                    <article
-                        className="admin-card"
-                        key={item._id}
-                    >
-
-                        <div
-                            className="admin-actions-row"
-                            style={{
-                                justifyContent: "space-between"
-                            }}
+                {!loading &&
+                    items.length === 0 && (
+                        <div className="admin-card">
+                            No projects added yet.
+                        </div>
+                    )
+                }
+                <div className="admin-grid">
+                    {items.map((item) => (
+                        <article
+                            className="projects-admin-project-card"
+                            key={item._id}
                         >
-
                             <div>
                                 <h3>
                                     {item.title}
                                 </h3>
-
                                 <p>
                                     {item.category}
-
-                                    {" · "}
-
+                                    {" • "}
                                     <MapPin size={13} />
-
                                     {" "}
-
                                     {item.location || "No location"}
                                 </p>
+                                {item.featured && (
+                                    <span>
+                                        <Star size={14} />
+                                        {" "}
+                                        Featured
+                                    </span>
+                                )}
                             </div>
 
-
-                            {item.featured && (
-                                <span>
-                                    <Star size={15} />
-                                    {" "}
-                                    Featured
-                                </span>
-                            )}
-
-                        </div>
-
-
-                        {/* COVER IMAGE */}
-
-                        {item.image && (
-                            <div style={{ marginTop: 18 }}>
-
-                                <h4>
-                                    Cover Image
-                                </h4>
-
-                                <img
-                                    src={item.image}
-                                    alt={item.title}
-                                    style={{
-                                        width: "100%",
-                                        maxWidth: 420,
-                                        height: 240,
-                                        objectFit: "cover",
-                                        borderRadius: 14
-                                    }}
-                                />
-
-                            </div>
-                        )}
-
-
-                        {/* GALLERY */}
-
-                        {item.galleryImages?.length > 0 && (
-
-                            <div style={{ marginTop: 20 }}>
-
-                                <h4>
-                                    <ImagePlus size={15} />
-                                    {" "}
-                                    Gallery
-                                </h4>
-
-
-                                <div
-                                    style={{
-                                        display: "grid",
-                                        gridTemplateColumns:
-                                            "repeat(auto-fill, minmax(130px, 1fr))",
-                                        gap: 10
-                                    }}
-                                >
-
-                                    {item.galleryImages.map(
-                                        (image, index) => (
-
+                            {/* IMAGES */}
+                            {item.images?.length > 0 && (
+                                <div className="projects-admin-images">
+                                    {item.images.map((image, index) => (
+                                        <div
+                                            className="projects-admin-image"
+                                            key={`${image}-${index}`}
+                                        >
                                             <img
-                                                key={`${image}-${index}`}
                                                 src={image}
                                                 alt={`${item.title} ${index + 1}`}
-                                                style={{
-                                                    width: "100%",
-                                                    height: 110,
-                                                    objectFit: "cover",
-                                                    borderRadius: 10
-                                                }}
                                             />
-
-                                        )
-                                    )}
-
+                                            <span className="projects-admin-image-number">
+                                                {String(index + 1).padStart(2, "0")}
+                                            </span>
+                                        </div>
+                                    ))}
                                 </div>
+                            )}
 
-                            </div>
-
-                        )}
-
-
-                        {/* VIDEOS */}
-
-                        {item.videos?.length > 0 && (
-
-                            <div style={{ marginTop: 20 }}>
-
-                                <h4>
-                                    <Video size={15} />
-                                    {" "}
-                                    Videos
-                                </h4>
-
-
-                                <div
-                                    style={{
-                                        display: "grid",
-                                        gridTemplateColumns:
-                                            "repeat(auto-fill, minmax(220px, 1fr))",
-                                        gap: 12
-                                    }}
+                            {/* VIDEO */}
+                            {item.video && (
+                                <div className="projects-admin-video-wrap">
+                                    <video
+                                        src={item.video}
+                                        controls
+                                        preload="metadata"
+                                    />
+                                </div>
+                            )}
+                            <div
+                                className="admin-actions-row"
+                                style={{marginTop: 20}}
+                            >
+                                <button
+                                    type="button"
+                                    className="admin-action-btn admin-secondary"
+                                    onClick={() => edit(item)}
                                 >
-
-                                    {item.videos.map(
-                                        (video, index) => (
-
-                                            <video
-                                                key={`${video}-${index}`}
-                                                src={video}
-                                                controls
-                                                preload="metadata"
-                                                style={{
-                                                    width: "100%",
-                                                    borderRadius: 12
-                                                }}
-                                            />
-
-                                        )
-                                    )}
-
-                                </div>
-
+                                    <Pencil size={14} />
+                                    Edit
+                                </button>
+                                <button
+                                    type="button"
+                                    className="admin-action-btn admin-danger"
+                                    onClick={() =>
+                                        remove(item)
+                                    }
+                                >
+                                    <Trash2 size={14} />
+                                    Delete
+                                </button>
                             </div>
-
-                        )}
-
-
-                        <div
-                            className="admin-actions-row"
-                            style={{ marginTop: 20 }}
-                        >
-
-                            <button
-                                type="button"
-                                className="admin-action-btn admin-secondary"
-                                onClick={() => edit(item)}
-                            >
-                                <Pencil size={14} />
-                                Edit
-                            </button>
-
-
-                            <button
-                                type="button"
-                                className="admin-action-btn admin-danger"
-                                onClick={() => remove(item)}
-                            >
-                                <Trash2 size={14} />
-                                Delete
-                            </button>
-
-                        </div>
-
-                    </article>
-
-                ))}
-
+                        </article>
+                    ))}
+                </div>
             </div>
-
         </section>
     );
 }

@@ -1,21 +1,23 @@
 import Project from "../models/Projects.js";
 
 
+/* =========================================
+   GET ALL PROJECTS
+========================================= */
+
 export const list = async (req, res) => {
 
     try {
 
-        const projects =
-            await Project
-                .find()
-                .sort({
-                    createdAt: -1
-                });
+        const projects = await Project
+            .find()
+            .sort({
+                featured: -1,
+                createdAt: -1
+            });
 
 
-        res.status(200).json(
-            projects
-        );
+        res.status(200).json(projects);
 
     } catch (error) {
 
@@ -26,8 +28,7 @@ export const list = async (req, res) => {
 
 
         res.status(500).json({
-            message:
-                "Unable to fetch projects."
+            message: "Unable to fetch projects."
         });
 
     }
@@ -35,31 +36,29 @@ export const list = async (req, res) => {
 };
 
 
+/* =========================================
+   GET SINGLE PROJECT
+========================================= */
+
 export const getOne = async (req, res) => {
 
     try {
 
-        const project =
-            await Project.findById(
-                req.params.id
-            );
+        const project = await Project.findById(
+            req.params.id
+        );
 
 
         if (!project) {
 
-            return res
-                .status(404)
-                .json({
-                    message:
-                        "Project not found."
-                });
+            return res.status(404).json({
+                message: "Project not found."
+            });
 
         }
 
 
-        res.status(200).json(
-            project
-        );
+        res.status(200).json(project);
 
     } catch (error) {
 
@@ -70,8 +69,7 @@ export const getOne = async (req, res) => {
 
 
         res.status(500).json({
-            message:
-                "Unable to fetch project."
+            message: "Unable to fetch project."
         });
 
     }
@@ -79,19 +77,69 @@ export const getOne = async (req, res) => {
 };
 
 
+/* =========================================
+   CREATE PROJECT
+========================================= */
+
 export const create = async (req, res) => {
 
     try {
 
-        const project =
-            await Project.create(
-                req.body
-            );
+        const {
+            title,
+            category,
+            location,
+            description,
+            images,
+            video,
+            featured
+        } = req.body;
 
 
-        res.status(201).json(
-            project
-        );
+        if (!title?.trim()) {
+
+            return res.status(400).json({
+                message: "Project title is required."
+            });
+
+        }
+
+
+        if (
+            Array.isArray(images) &&
+            images.length > 4
+        ) {
+
+            return res.status(400).json({
+                message:
+                    "A project can have maximum 4 photos."
+            });
+
+        }
+
+
+        const project = await Project.create({
+            title,
+            category,
+            location,
+            description,
+
+            images:
+                Array.isArray(images)
+                    ? images.slice(0, 4)
+                    : [],
+
+            video:
+                typeof video === "string"
+                    ? video
+                    : "",
+
+            featured:
+                Boolean(featured)
+        });
+
+
+        res.status(201).json(project);
 
     } catch (error) {
 
@@ -103,6 +151,7 @@ export const create = async (req, res) => {
 
         res.status(500).json({
             message:
+                error.message ||
                 "Unable to create project."
         });
 
@@ -111,9 +160,26 @@ export const create = async (req, res) => {
 };
 
 
+/* =========================================
+   UPDATE PROJECT
+========================================= */
+
 export const update = async (req, res) => {
 
     try {
+
+        if (
+            Array.isArray(req.body.images) &&
+            req.body.images.length > 4
+        ) {
+
+            return res.status(400).json({
+                message:
+                    "A project can have maximum 4 photos."
+            });
+
+        }
+
 
         const project =
             await Project.findByIdAndUpdate(
@@ -128,19 +194,14 @@ export const update = async (req, res) => {
 
         if (!project) {
 
-            return res
-                .status(404)
-                .json({
-                    message:
-                        "Project not found."
-                });
+            return res.status(404).json({
+                message: "Project not found."
+            });
 
         }
 
 
-        res.status(200).json(
-            project
-        );
+        res.status(200).json(project);
 
     } catch (error) {
 
@@ -152,6 +213,7 @@ export const update = async (req, res) => {
 
         res.status(500).json({
             message:
+                error.message ||
                 "Unable to update project."
         });
 
@@ -159,6 +221,10 @@ export const update = async (req, res) => {
 
 };
 
+
+/* =========================================
+   DELETE PROJECT
+========================================= */
 
 export const remove = async (req, res) => {
 
@@ -172,12 +238,9 @@ export const remove = async (req, res) => {
 
         if (!project) {
 
-            return res
-                .status(404)
-                .json({
-                    message:
-                        "Project not found."
-                });
+            return res.status(404).json({
+                message: "Project not found."
+            });
 
         }
 
