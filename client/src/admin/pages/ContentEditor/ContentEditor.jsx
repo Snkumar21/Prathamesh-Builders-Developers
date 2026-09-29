@@ -846,8 +846,6 @@ export default function ContentEditor() {
                                     <span>
                                         {label}
                                     </span>
-
-
                                     {type ===
                                     "textarea" ? (
                                         <textarea
@@ -886,49 +884,31 @@ export default function ContentEditor() {
                                             }
                                         />
                                     )}
-
                                 </label>
                             )
                         )}
-
                     </div>
-
                 </div>
 
-
-                {/* =========================================
-                    DYNAMIC SERVICE CARDS EDITOR
-                ========================================= */}
-
+                {/* DYNAMIC SERVICE CARDS EDITOR */}
                 {page === "services" && (
                     <div className="content-editor-card service-cards-editor-card">
-
-
                         {/* HEADER */}
-
                         <div className="content-editor-card-head service-cards-editor-head">
-
                             <div>
-
                                 <span>
                                     Services
                                 </span>
-
                                 <h2>
                                     Service Cards
                                 </h2>
-
                                 <p>
                                     Add, edit or remove the
                                     services displayed on the
                                     public Services page.
                                 </p>
-
                             </div>
-
-
                             <div className="service-editor-header-actions">
-
                                 <button
                                     type="button"
                                     className="service-cards-reset-button"
@@ -936,13 +916,9 @@ export default function ContentEditor() {
                                         resetServiceCards
                                     }
                                 >
-                                    <RotateCcw
-                                        size={15}
-                                    />
-
+                                    <RotateCcw size={15} />
                                     Reset
                                 </button>
-
 
                                 <button
                                     type="button"
@@ -951,20 +927,13 @@ export default function ContentEditor() {
                                         addService
                                     }
                                 >
-                                    <Plus
-                                        size={16}
-                                    />
-
+                                    <Plus size={16} />
                                     Add Service
                                 </button>
-
                             </div>
-
                         </div>
 
-
                         {/* EMPTY STATE */}
-
                         {(
                             !Array.isArray(
                                 form.serviceCards
@@ -973,21 +942,17 @@ export default function ContentEditor() {
                                 .length === 0
                         ) && (
                             <div className="service-editor-empty">
-
                                 <div className="service-editor-empty-icon">
                                     <Plus size={22} />
                                 </div>
-
                                 <strong>
                                     No services added
                                 </strong>
-
                                 <p>
                                     Add your first service
                                     to display it on the
                                     public website.
                                 </p>
-
                                 <button
                                     type="button"
                                     className="service-add-button"
@@ -995,21 +960,14 @@ export default function ContentEditor() {
                                         addService
                                     }
                                 >
-                                    <Plus
-                                        size={16}
-                                    />
-
+                                    <Plus size={16} />
                                     Add Service
                                 </button>
-
                             </div>
                         )}
 
-
                         {/* SERVICES */}
-
                         <div className="service-cards-editor-list">
-
                             {Array.isArray(
                                 form.serviceCards
                             ) &&
@@ -1026,27 +984,14 @@ export default function ContentEditor() {
                                                     option.value ===
                                                     service.icon
                                             );
-
-
-                                        const PreviewIcon =
-                                            selectedOption
-                                                ?.Icon ||
-                                            Home;
-
-
+                                        const PreviewIcon = selectedOption ?.Icon || Home;
                                         return (
                                             <div
                                                 className="service-card-editor-item"
-                                                key={
-                                                    service.id ||
-                                                    index
-                                                }
+                                                key={ service.id || index }
                                             >
-
                                                 {/* NUMBER */}
-
                                                 <div className="service-card-editor-side">
-
                                                     <div className="service-card-editor-number">
                                                         {String(
                                                             index + 1
@@ -1055,34 +1000,19 @@ export default function ContentEditor() {
                                                             "0"
                                                         )}
                                                     </div>
-
-
                                                     <div className="service-card-editor-icon-preview">
-
-                                                        <PreviewIcon
-                                                            size={19}
-                                                        />
-
+                                                        <PreviewIcon size={19} />
                                                     </div>
-
                                                 </div>
 
-
                                                 {/* CONTENT */}
-
                                                 <div className="service-card-editor-main">
-
-
                                                     {/* TOP ROW */}
-
                                                     <div className="service-card-editor-top">
-
                                                         <strong>
                                                             Service{" "}
                                                             {index + 1}
                                                         </strong>
-
-
                                                         <button
                                                             type="button"
                                                             className="service-delete-button"
@@ -1093,32 +1023,20 @@ export default function ContentEditor() {
                                                             }
                                                             aria-label={`Delete service ${index + 1}`}
                                                         >
-                                                            <Trash2
-                                                                size={15}
-                                                            />
-
+                                                            <Trash2 size={15} />
                                                             <span>
                                                                 Delete
                                                             </span>
                                                         </button>
-
                                                     </div>
 
-
                                                     {/* FIELDS */}
-
                                                     <div className="service-card-editor-fields">
-
-
                                                         {/* ICON */}
-
                                                         <label className="content-field">
-
                                                             <span>
                                                                 Service Icon
                                                             </span>
-
-
                                                             <select
                                                                 value={
                                                                     service.icon ||
@@ -1137,47 +1055,28 @@ export default function ContentEditor() {
                                                                 }
                                                             >
                                                                 {serviceIconOptions.map(
-                                                                    (
-                                                                        option
-                                                                    ) => (
+                                                                    ( option ) => (
                                                                         <option
-                                                                            value={
-                                                                                option.value
-                                                                            }
-                                                                            key={
-                                                                                option.value
-                                                                            }
+                                                                            value={ option.value }
+                                                                            key={ option.value }
                                                                         >
-                                                                            {
-                                                                                option.label
-                                                                            }
+                                                                            { option.label }
                                                                         </option>
                                                                     )
                                                                 )}
                                                             </select>
-
                                                         </label>
 
-
                                                         {/* TITLE */}
-
                                                         <label className="content-field">
-
                                                             <span>
                                                                 Service Title
                                                             </span>
-
-
                                                             <input
                                                                 type="text"
-                                                                value={
-                                                                    service.title ||
-                                                                    ""
-                                                                }
+                                                                value={ service.title || "" }
                                                                 placeholder="e.g. Residential Construction"
-                                                                onChange={(
-                                                                    event
-                                                                ) =>
+                                                                onChange={( event ) =>
                                                                     handleServiceCardChange(
                                                                         index,
                                                                         "title",
@@ -1187,29 +1086,18 @@ export default function ContentEditor() {
                                                                     )
                                                                 }
                                                             />
-
                                                         </label>
 
-
                                                         {/* DESCRIPTION */}
-
                                                         <label className="content-field full">
-
                                                             <span>
                                                                 Service Description
                                                             </span>
-
-
                                                             <textarea
                                                                 rows={4}
-                                                                value={
-                                                                    service.description ||
-                                                                    ""
-                                                                }
+                                                                value={ service.description || "" }
                                                                 placeholder="Describe this service..."
-                                                                onChange={(
-                                                                    event
-                                                                ) =>
+                                                                onChange={( event ) =>
                                                                     handleServiceCardChange(
                                                                         index,
                                                                         "description",
@@ -1219,47 +1107,30 @@ export default function ContentEditor() {
                                                                     )
                                                                 }
                                                             />
-
                                                         </label>
-
                                                     </div>
-
                                                 </div>
-
                                             </div>
                                         );
                                     }
                                 )}
-
                         </div>
 
-
                         {/* ADD BOTTOM */}
-
-                        {Array.isArray(
-                            form.serviceCards
-                        ) &&
+                        {Array.isArray( form.serviceCards ) &&
                             form.serviceCards
                                 .length > 0 && (
                                 <div className="service-editor-add-bottom">
-
                                     <button
                                         type="button"
                                         className="service-add-outline-button"
-                                        onClick={
-                                            addService
-                                        }
+                                        onClick = { addService }
                                     >
-                                        <Plus
-                                            size={16}
-                                        />
-
+                                        <Plus size={16} />
                                         Add Another Service
                                     </button>
-
                                 </div>
                             )}
-
                         <div className="service-cards-editor-footer">
                             <span>
                                 Add, edit or delete services
@@ -1269,29 +1140,18 @@ export default function ContentEditor() {
                         </div>
                     </div>
                 )}
-
                 {/* BOTTOM SAVE */}
                 <div className="content-editor-bottom">
                     <span>
                         Changes will update the
                         public website.
                     </span>
-
                     <button
                         type="submit"
                         className="content-editor-primary"
                         disabled={saving}
                     >
-                        {saving ? (
-                            <Loader2
-                                size={17}
-                                className="content-editor-spinner"
-                            />
-                        ) : (
-                            <Save
-                                size={17}
-                            />
-                        )}
+                        {saving ? (<Loader2 size={17} className="content-editor-spinner" />) : (<Save size={17} />)}
                         { saving ? "Saving..." : "Save Changes" }
                     </button>
                 </div>
