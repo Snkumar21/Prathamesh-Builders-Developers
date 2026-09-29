@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-
-
 const projectSchema = new mongoose.Schema(
     {
         title: {
@@ -8,25 +6,21 @@ const projectSchema = new mongoose.Schema(
             required: true,
             trim: true
         },
-
         category: {
             type: String,
             trim: true,
             default: "Residential"
         },
-
         location: {
             type: String,
             trim: true,
             default: ""
         },
-
         description: {
             type: String,
             trim: true,
             default: ""
         },
-
         images: {
             type: [
                 {
@@ -34,24 +28,19 @@ const projectSchema = new mongoose.Schema(
                     trim: true
                 }
             ],
-
             validate: {
                 validator: function (images) {
                     return images.length <= 4;
                 },
-
                 message: "A project can have maximum 4 photos."
             },
-
             default: []
         },
-
         video: {
             type: String,
             trim: true,
             default: ""
         },
-
         featured: {
             type: Boolean,
             default: false
@@ -61,12 +50,9 @@ const projectSchema = new mongoose.Schema(
         timestamps: true
     }
 );
-
-
 const Project = mongoose.model(
     "Project",
     projectSchema
 );
-
 
 export default Project;
