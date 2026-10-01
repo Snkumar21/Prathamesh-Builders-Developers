@@ -1,4 +1,5 @@
 import Enquiry from "../models/Enquiry.js";
+import { sendEnquiryNotification } from "../services/emailService.js";
 
 // CREATE ENQUIRY
 // POST /api/enquiries
@@ -77,5 +78,30 @@ export const deleteEnquiry = async (req, res) => {
     } catch (error) {
         console.error("Delete enquiry error:", error);
         res.status(500).json({ message: "Unable to delete enquiry." });
+    }
+};
+
+export const createEnquiry = async (req, res) => {
+    try {
+        const enquiry = await Enquiry.create({
+            name: req.body.name,
+            phone: req.body.phone,
+            email: req.body.email,
+            location: req.body.location,
+            plotSize: req.body.plotSize,
+            message: req.body.message
+        });
+
+        /* Database save is the primary operation. Email notification should not destroy a successfully submitted enquiry. */
+        try { await sendEnquiryNotification(enquiry); } catch (emailError) {
+                console.error("Enquiry email notification failed:", emailError);
+            }
+            return res.status(201).json({ message: "Enquiry submitted successfully.", enquiry });
+        } catch (error) {
+        console.error( "Create enquiry failed:", error );
+
+        return res.status(500).json({
+            message: "Unable to submit enquiry."
+        });
     }
 };
