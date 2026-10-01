@@ -785,36 +785,796 @@
         );
 }
 
-
 .service-editor-empty strong {
     margin-bottom: 5px;
-
     color: #101828;
-
-    font-family:
-        "Manrope",
-        sans-serif;
-
+    font-family: "Manrope", sans-serif;
     font-size: 0.9rem;
 }
 
-
 .service-editor-empty p {
     max-width: 330px;
-
-    margin:
-        0
-        0
-        16px;
-
+    margin: 0 0 16px;
     color: #667085;
-
     font-size: 0.76rem;
-
     line-height: 1.6;
 }
 
+/* =========================================================
+   PACKAGE CARDS EDITOR
+========================================================= */
+
+.package-cards-editor-card {
+    margin-top: 24px;
+}
+
+
+/* =========================================================
+   PACKAGE EDITOR HEADER
+========================================================= */
+
+.package-editor-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.package-editor-header-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+
+/* RESET BUTTON */
+
+.package-reset-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-height: 39px;
+    padding: 9px 13px;
+
+    color: #475467;
+    background: #ffffff;
+
+    border: 1px solid #dfe3ea;
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.package-reset-button:hover {
+    color: #175cff;
+    background: #f8faff;
+    border-color: rgba(23, 92, 255, 0.25);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 15px
+        rgba(23, 92, 255, 0.07);
+}
+
+
+/* ADD PACKAGE BUTTON */
+
+.package-add-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-height: 39px;
+    padding: 9px 14px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            100deg,
+            #175cff,
+            #7626e8
+        );
+
+    border: 0;
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    box-shadow:
+        0 7px 18px
+        rgba(23, 92, 255, 0.16);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.package-add-button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 23px
+        rgba(23, 92, 255, 0.22);
+}
+
+
+/* =========================================================
+   PACKAGE EDITOR GRID
+========================================================= */
+
+.package-cards-editor-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-top: 25px;
+}
+
+
+/* =========================================================
+   PACKAGE EDITOR CARD
+========================================================= */
+
+.package-editor-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    padding: 23px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #ffffff 78%,
+            rgba(23, 92, 255, 0.02) 100%
+        );
+
+    border: 1px solid #e7eaf0;
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 28px
+        rgba(15, 23, 42, 0.04);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.package-editor-card:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(23, 92, 255, 0.18);
+
+    box-shadow:
+        0 14px 34px
+        rgba(15, 23, 42, 0.065);
+}
+
+
+/* COLORED TOP ACCENT */
+
+.package-editor-card::after {
+    position: absolute;
+
+    left: 22px;
+    right: 22px;
+    bottom: 0;
+
+    height: 3px;
+
+    content: "";
+
+    opacity: 0.65;
+
+    border-radius:
+        10px 10px 0 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00aef0,
+            #175cff,
+            #7626e8,
+            #ed0cae
+        );
+}
+
+
+/* =========================================================
+   FEATURED / RECOMMENDED PACKAGE
+========================================================= */
+
+.package-editor-card.featured {
+    border-color: transparent;
+
+    box-shadow:
+        0 13px 36px
+        rgba(23, 92, 255, 0.09);
+}
+
+
+/* GRADIENT BORDER */
+
+.package-editor-card.featured::before {
+    position: absolute;
+    inset: 0;
+
+    padding: 2px;
+
+    content: "";
+
+    pointer-events: none;
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #00aef0,
+            #175cff,
+            #7626e8,
+            #ed0cae
+        );
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0)
+            content-box,
+        linear-gradient(#fff 0 0);
+
+    mask:
+        linear-gradient(#fff 0 0)
+            content-box,
+        linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+
+/* =========================================================
+   RECOMMENDED BADGE
+========================================================= */
+
+.package-editor-recommended {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    align-self: flex-start;
+
+    margin-bottom: 14px;
+    padding: 6px 9px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            100deg,
+            #175cff,
+            #7626e8,
+            #ed0cae
+        );
+
+    border-radius: 999px;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 0.58rem;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+
+    box-shadow:
+        0 6px 16px
+        rgba(118, 38, 232, 0.16);
+}
+
+
+/* =========================================================
+   CARD TOP ROW
+========================================================= */
+
+.package-editor-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    margin-bottom: 20px;
+}
+
+.package-editor-card-top > span {
+    color: #175cff;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 0.67rem;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.65px;
+}
+
+
+/* DELETE PACKAGE */
+
+.package-delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    min-height: 31px;
+    padding: 6px 9px;
+
+    color: #d92d20;
+    background: #ffffff;
+
+    border: 1px solid #fecdca;
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 0.62rem;
+    font-weight: 800;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.package-delete-button:hover {
+    background: #fef3f2;
+    border-color: #fda29b;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PACKAGE FIELDS
+========================================================= */
+
+.package-editor-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    margin-bottom: 15px;
+}
+
+.package-editor-field > span {
+    color: #344054;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 0.69rem;
+    font-weight: 750;
+}
+
+.package-editor-field input {
+    width: 100%;
+    min-height: 42px;
+
+    padding: 10px 12px;
+
+    color: #101828;
+    background: #ffffff;
+
+    border: 1px solid #dfe3ea;
+    border-radius: 9px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 500;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.package-editor-field input::placeholder {
+    color: #98a2b3;
+}
+
+.package-editor-field input:hover {
+    border-color: #c8ced8;
+}
+
+.package-editor-field input:focus {
+    background: #ffffff;
+
+    border-color: #175cff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(23, 92, 255, 0.08);
+}
+
+
+/* TAGLINE FIELD */
+
+.package-editor-card
+.package-editor-field:first-of-type
+input {
+    color: #175cff;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+
+/* PACKAGE NAME */
+
+.package-editor-card
+.package-editor-field:nth-of-type(2)
+input {
+    color: #101828;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   PRICE ROW
+========================================================= */
+
+.package-editor-price-row {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.3fr)
+        minmax(0, 0.7fr);
+
+    gap: 10px;
+}
+
+.package-editor-price-row
+.package-editor-field {
+    min-width: 0;
+}
+
+
+/* PRICE INPUT */
+
+.package-editor-price-row
+.package-editor-field:first-child
+input {
+    color: #101828;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+
+    letter-spacing: -0.02em;
+}
+
+
+/* FEATURED PRICE */
+
+.package-editor-card.featured
+.package-editor-price-row
+.package-editor-field:first-child
+input {
+    color: #7626e8;
+}
+
+
+/* =========================================================
+   FEATURED TOGGLE
+========================================================= */
+
+.package-editor-featured-toggle {
+    display: flex;
+    align-items: center;
+
+    margin: 2px 0 17px;
+
+    cursor: pointer;
+}
+
+.package-editor-featured-toggle > input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+.package-editor-featured-toggle > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    min-height: 34px;
+    padding: 7px 10px;
+
+    color: #667085;
+    background: #f9fafb;
+
+    border: 1px solid #e7eaf0;
+    border-radius: 999px;
+
+    font-family: "Manrope", sans-serif;
+    font-size: 0.64rem;
+    font-weight: 800;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.package-editor-featured-toggle
+> input:checked
++ span {
+    color: #7626e8;
+    background:rgba(118, 38, 232, 0.055);
+    border-color:rgba(118, 38, 232, 0.18);
+    box-shadow: 0 4px 13px rgba(118, 38, 232, 0.07);
+}
+
+.package-editor-featured-toggle
+> input:focus-visible
++ span {
+    box-shadow: 0 0 0 3px rgba(23, 92, 255, 0.1);
+}
+
+/* DIVIDER */
+.package-editor-divider {
+    width: 100%;
+    height: 1px;
+    margin-bottom: 18px;
+    background: #eaecf0;
+}
+
+/* PACKAGE FEATURES */
+.package-editor-features {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.package-editor-features-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 3px;
+}
+
+.package-editor-features-head strong {
+    color: #344054;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+
+/* ADD FEATURE */
+.package-editor-features-head button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 8px;
+    color: #175cff;
+    background: rgba(23, 92, 255, 0.045);
+    border: 1px solid rgba(23, 92, 255, 0.1);
+    border-radius: 7px;
+    cursor: pointer;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.6rem;
+    font-weight: 800;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.package-editor-features-head button:hover {
+    background: rgba(23, 92, 255, 0.075);
+    border-color: rgba(23, 92, 255, 0.18);
+    transform: translateY(-1px);
+}
+
+/* FEATURE ROW */
+.package-editor-feature-row {
+    display: grid;
+    grid-template-columns: 26px minmax(0, 1fr) 31px;
+    align-items: center;
+    gap: 7px;
+}
+
+/* CHECK */
+.package-editor-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: #175cff;
+    background: rgba(23, 92, 255, 0.07);
+    border-radius: 50%;
+}
+
+.package-editor-card.featured
+.package-editor-check {
+    color: #7626e8;
+    background: rgba(118, 38, 232, 0.07);
+}
+
+/* FEATURE INPUT */
+.package-editor-feature-row input {
+    width: 100%;
+    min-width: 0;
+    min-height: 38px;
+    padding: 8px 10px;
+    color: #475467;
+    background: #ffffff;
+    border: 1px solid #e1e5eb;
+    border-radius: 8px;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.73rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.package-editor-feature-row input::placeholder {
+    color: #98a2b3;
+}
+
+.package-editor-feature-row input:focus {
+    border-color: #175cff;
+    box-shadow: 0 0 0 3px rgba(23, 92, 255, 0.07);
+}
+
+/* DELETE FEATURE */
+.package-editor-feature-row > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 31px;
+    height: 31px;
+    padding: 0;
+    color: #98a2b3;
+    background: #ffffff;
+    border: 1px solid #e7eaf0;
+    border-radius: 7px;
+    cursor: pointer;
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.package-editor-feature-row > button:hover {
+    color: #d92d20;
+    background: #fef3f2;
+    border-color: #fecdca;
+    transform: translateY(-1px);
+}
+
+/* EMPTY STATE */
+.package-editor-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 230px;
+    margin-top: 24px;
+    padding: 30px;
+    color: #667085;
+    background: linear-gradient( 145deg, #ffffff, #f9fafb );
+    border: 1px dashed #d0d5dd;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.package-editor-empty > svg {
+    margin-bottom: 12px;
+    color: #7626e8;
+}
+
+.package-editor-empty strong {
+    margin-bottom: 6px;
+    color: #101828;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.package-editor-empty p {
+    margin: 0 0 17px;
+    color: #667085;
+    font-size: 0.75rem;
+    line-height: 1.6;
+}
+
+/* ADD ANOTHER PACKAGE */
+.package-editor-add-bottom {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.package-add-outline-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 9px 15px;
+    color: #175cff;
+    background: #ffffff;
+    border: 1px dashed rgba(23, 92, 255, 0.3);
+    border-radius: 9px;
+    cursor: pointer;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 800;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.package-add-outline-button:hover {
+    background: rgba(23, 92, 255, 0.035);
+    border-color: rgba(23, 92, 255, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 7px 18px rgba(23, 92, 255, 0.07);
+}
+
 /* RESPONSIVE */
+@media (max-width: 1000px) {
+    .package-cards-editor-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 760px) {
     .content-editor-header {
         align-items: flex-start;
@@ -875,6 +1635,23 @@
     .service-card-editor-top {
         margin-top: 4px;
     }
+
+    .package-editor-head {
+        flex-direction: column;
+    }
+
+    .package-editor-header-actions {
+        width: 100%;
+    }
+
+    .package-editor-card {
+        padding: 19px;
+    }
+
+    .package-editor-price-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
 }
 
 @media (max-width: 520px) {
@@ -930,5 +1707,38 @@
 
     .service-delete-button span {
         display: none;
+    }
+
+    .package-editor-header-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .package-reset-button,
+    .package-add-button {
+        width: 100%;
+    }
+
+    .package-editor-card-top {
+        align-items: flex-start;
+    }
+
+    .package-delete-button span {
+        display: none;
+    }
+
+    .package-editor-features-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .package-editor-feature-row {
+        grid-template-columns: 23px minmax(0, 1fr) 29px;
+        gap: 5px;
+    }
+
+    .package-editor-check {
+        width: 22px;
+        height: 22px;
     }
 }

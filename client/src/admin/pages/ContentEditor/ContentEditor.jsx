@@ -15,6 +15,7 @@ import {
     PenTool,
     Warehouse,
     RefreshCcw,
+    Sparkles
 } from "lucide-react";
 import api from "../../../services/api";
 import "./ContentEditor.css";
@@ -93,6 +94,46 @@ const defaultServiceCards = [
     },
 ];
 
+/* DEFAULT PACKAGE CARDS */
+const defaultPackageCards = [
+    {
+        id: "essential",
+        name: "Essential",
+        price: "₹1,800",
+        priceSuffix: "/sq.ft",
+        tagline: "Smart Fundamentals",
+        features: [ "Architectural planning", "Standard structure", "Value flooring", "Standard electrical & plumbing" ],
+        featured: false
+    },
+    {
+        id: "signature",
+        name: "Signature",
+        price: "₹2,200",
+        priceSuffix: "/sq.ft",
+        tagline: "Balanced Quality",
+        features: [ "3D elevation", "Enhanced structure specs", "Better finishes", "Branded fittings" ],
+        featured: false
+    },
+    {
+        id: "premium",
+        name: "Premium",
+        price: "₹2,800",
+        priceSuffix: "/sq.ft",
+        tagline: "Elevated Specification",
+        features: [ "Premium flooring", "Upgraded windows", "Premium sanitary fittings", "Enhanced electrical provisions" ],
+        featured: true
+    },
+    {
+        id: "luxury",
+        name: "Luxury",
+        price: "₹3,500+",
+        priceSuffix: "/sq.ft",
+        tagline: "Bespoke Delivery",
+        features: [ "Custom facade", "Luxury finishes", "Designer coordination", "Tailored specifications" ],
+        featured: false
+    }
+];
+
 /* CREATE UNIQUE SERVICE ID */
 const createServiceId = () => { return `service-${Date.now()}-${Math.random() .toString(36) .slice(2, 8)}`; };
 
@@ -111,36 +152,13 @@ const pageDefinitions = {
             featureDescription: "We combine design coordination, site supervision, material planning and milestone visibility so you always know what's happening, what's completed and what comes next.",
         },
         fields: [
-            [
-                "heroEyebrow",
-                "Hero Eyebrow",
-            ],
-            [
-                "heroTitle",
-                "Hero Title",
-            ],
-            [
-                "heroHighlight",
-                "Hero Highlight",
-            ],
-            [
-                "heroDescription",
-                "Hero Description",
-                "textarea",
-            ],
-            [
-                "featureTitle",
-                "Feature Title",
-            ],
-            [
-                "featureHighlight",
-                "Feature Highlight",
-            ],
-            [
-                "featureDescription",
-                "Feature Description",
-                "textarea",
-            ],
+            [ "heroEyebrow","Hero Eyebrow", ],
+            [ "heroTitle","Hero Title", ],
+            [ "heroHighlight","Hero Highlight", ],
+            [ "heroDescription","Hero Description","textarea", ],
+            [ "featureTitle","Feature Title", ],
+            [ "featureHighlight","Feature Highlight", ],
+            [ "featureDescription","Feature Description","textarea", ],
         ],
     },
 
@@ -155,32 +173,12 @@ const pageDefinitions = {
             approachDescription: "Our approach puts planning, communication, engineering and quality control at the center of every project.",
         },
         fields: [
-            [
-                "eyebrow",
-                "Eyebrow",
-            ],
-            [
-                "title",
-                "Main Title",
-            ],
-            [
-                "highlight",
-                "Title Highlight",
-            ],
-            [
-                "intro",
-                "Introduction",
-                "textarea",
-            ],
-            [
-                "approachTitle",
-                "Approach Title",
-            ],
-            [
-                "approachDescription",
-                "Approach Description",
-                "textarea",
-            ],
+            [ "eyebrow","Eyebrow", ],
+            [ "title","Main Title", ],
+            [ "highlight","Title Highlight", ],
+            [ "intro","Introduction","textarea", ],
+            [ "approachTitle","Approach Title", ],
+            [ "approachDescription","Approach Description","textarea", ],
         ],
     },
 
@@ -197,36 +195,13 @@ const pageDefinitions = {
             serviceCards: defaultServiceCards,
         },
         fields: [
-            [
-                "eyebrow",
-                "Eyebrow",
-            ],
-            [
-                "title",
-                "Page Title",
-            ],
-            [
-                "highlight",
-                "Title Highlight",
-            ],
-            [
-                "description",
-                "Page Description",
-                "textarea",
-            ],
-            [
-                "gridTitle",
-                "Services Section Title",
-            ],
-            [
-                "gridHighlight",
-                "Services Section Highlight",
-            ],
-            [
-                "gridIntro",
-                "Services Section Intro",
-                "textarea",
-            ],
+            [ "eyebrow","Eyebrow", ],
+            [ "title","Page Title", ],
+            [ "highlight","Title Highlight", ],
+            [ "description","Page Description","textarea", ],
+            [ "gridTitle","Services Section Title", ],
+            [ "gridHighlight","Services Section Highlight", ],
+            [ "gridIntro","Services Section Intro","textarea", ],
         ],
     },
 
@@ -238,32 +213,23 @@ const pageDefinitions = {
             highlight: "specification.",
             description: "Explore indicative construction packages designed for different requirements, finishes and budgets. Final pricing depends on project scope, location, drawings, materials and site conditions.",
             disclaimer: "* Package rates are indicative starting estimates and may vary depending on design, site conditions, specifications, materials and project requirements.",
+            packageCards: defaultPackageCards
         },
         fields: [
-            [
-                "eyebrow",
-                "Eyebrow",
-            ],
-            [
-                "title",
-                "Page Title",
-            ],
-            [
-                "highlight",
-                "Title Highlight",
-            ],
-            [
-                "description",
-                "Description",
-                "textarea",
-            ],
-            [
-                "disclaimer",
-                "Disclaimer",
-                "textarea",
-            ],
+            [ "eyebrow","Eyebrow", ],
+            [ "title","Page Title", ],
+            [ "highlight","Title Highlight", ],
+            [ "description","Description","textarea", ],
+            [ "disclaimer","Disclaimer","textarea", ],
         ],
     },
+};
+
+/* CREATE UNIQUE PACKAGE ID */
+const createPackageId = () => {
+    return `package-${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2, 8)}`;
 };
 
 /* COMPONENT */
@@ -271,12 +237,10 @@ export default function ContentEditor() {
     const { page } = useParams();
     const fileInputRef = useRef(null);
     const definition = useMemo(
-        () =>
-            pageDefinitions[page] || {
+        () => pageDefinitions[page] || {
                 defaults: {},
                 fields: [],
-            },
-        [page]
+            }, [page]
     );
     const [form, setForm] = useState(definition.defaults);
     const [loading, setLoading] = useState(true);
@@ -288,9 +252,7 @@ export default function ContentEditor() {
     const showMessage = (text) => {
         setError("");
         setMessage(text);
-        window.setTimeout(() => {
-            setMessage("");
-        }, 3500);
+        window.setTimeout(() => { setMessage(""); }, 3500);
     };
 
     /* FETCH CONTENT */
@@ -300,214 +262,177 @@ export default function ContentEditor() {
                 setLoading(true);
                 setError("");
                 setMessage("");
-                setForm(
-                    definition.defaults
-                );
+                setForm( definition.defaults );
 
-                const { data } =
-                    await api.get(
-                        `/content/${page}`
-                    );
+                const { data } = await api.get(`/content/${page}`);
+                const nextForm = { ...definition.defaults, ...(data || {}), };
 
-                const nextForm = {
-                    ...definition.defaults,
-                    ...(data || {}),
-                };
-
-                /* Older services content may not contain serviceCards.*/
-                if (
-                    page === "services"
-                ) {
-                    nextForm.serviceCards =
-                        Array.isArray(
-                            data?.serviceCards
-                        ) &&
-                        data.serviceCards.length > 0
-                            ? data.serviceCards
-                            : defaultServiceCards;
+                if ( page === "services" ) {
+                    nextForm.serviceCards = Array.isArray( data?.serviceCards ) &&
+                        data.serviceCards.length > 0 ? data.serviceCards : defaultServiceCards;
                 }
-                setForm(
-                    nextForm
-                );
+                if (page === "packages") {
+                    nextForm.packageCards = Array.isArray(data?.packageCards) 
+                        ? data.packageCards : defaultPackageCards;
+                }
+                setForm( nextForm );
             } catch (error) {
-                console.error(
-                    "Content fetch failed:",
-                    error
-                );
-
-                /* Defaults can still be edited when no content document exists yet. */
-                setForm(
-                    definition.defaults
-                );
+                console.error( "Content fetch failed:", error );
+                setForm( definition.defaults );
             } finally {
                 setLoading(false);
             }
         };
         fetchContent();
-    }, [
-        page,
-        definition,
-    ]);
+    }, [ page,definition, ]);
 
     /* NORMAL INPUT CHANGE */
-    const handleChange = (
-        key,
-        value
-    ) => {
-        setForm((current) => ({
-            ...current,
-            [key]: value,
-        }));
-    };
+    const handleChange = ( key, value ) => { setForm((current) => ({ ...current, [key]: value, })); };
 
     /* SERVICE CARD FIELD CHANGE */
-    const handleServiceCardChange = (
-        index,
-        field,
-        value
-    ) => {
-        setForm((current) => {
-            const currentCards =
-                Array.isArray(
-                    current.serviceCards
-                )
-                    ? current.serviceCards
-                    : [];
+    const handleServiceCardChange = ( index, field, value ) => {
+        setForm((current) => { const currentCards = Array.isArray( current.serviceCards ) ? current.serviceCards : [];
+            const updatedCards = currentCards.map(( service,serviceIndex ) => {
+                    if ( serviceIndex !== index ) { return service; }
+                    return { ...service, [field]: value, };
+                }
+            );
+            return { ...current, serviceCards: updatedCards, };
+        });
+    };
 
-            const updatedCards =
-                currentCards.map(
-                    (
-                        service,
-                        serviceIndex
-                    ) => {
-                        if (
-                            serviceIndex !==
-                            index
-                        ) {
-                            return service;
-                        }
+    /* PACKAGE CARD FIELD CHANGE */
+    const handlePackageCardChange = ( index, field, value ) => {
+        setForm((current) => { const currentPackages = Array.isArray(current.packageCards) ? current.packageCards : [];
+            const updatedPackages = currentPackages.map((packageItem, packageIndex) => {
+                    if (packageIndex !== index) {return packageItem;}
+                    return {...packageItem, [field]: value};
+                }
+            );
+            return { ...current, packageCards: updatedPackages };
+        });
+    };
 
-                        return {
-                            ...service,
-                            [field]: value,
+    /* PACKAGE CARD FIELD CHANGE */
+    const handlePackageFeatureChange = ( packageIndex, featureIndex, value ) => {
+        setForm((current) => { const packages = Array.isArray(current.packageCards) ? current.packageCards : [];
+            const updatedPackages = packages.map((packageItem, index) => {
+                    if (index !== packageIndex) { return packageItem; }
+                    const features = Array.isArray(packageItem.features) ? [...packageItem.features] : [];
+                    features[featureIndex] = value;
+                    return { ...packageItem, features };
+                });
+            return { ...current, packageCards: updatedPackages };
+        });
+    };
+
+    /* ADD PACKAGE FEATURE */
+    const addPackageFeature = (packageIndex) => { setForm((current) => {
+            const packages = Array.isArray(current.packageCards) ? current.packageCards : [];
+            return { ...current,
+                packageCards: packages.map(
+                    (packageItem, index) => {
+                        if (index !== packageIndex) { return packageItem; }
+                        return { ...packageItem,
+                            features: [ ...( Array.isArray( packageItem.features ) ? packageItem.features : [] ), "" ]
                         };
                     }
-                );
-
-            return {
-                ...current,
-                serviceCards:
-                    updatedCards,
+                )
             };
         });
+    };
+
+    /* DELETE PACKAGE FEATURE */
+    const deletePackageFeature = ( packageIndex, featureIndex ) => {
+        setForm((current) => { const packages = Array.isArray(current.packageCards) ? current.packageCards : [];
+            return { ...current,
+                packageCards: packages.map( (packageItem, index) => {
+                        if (index !== packageIndex) { return packageItem; }
+                        return { ...packageItem, features:(
+                                    Array.isArray( packageItem.features ) ? packageItem.features : []
+                                ).filter( (_feature, index) => index !== featureIndex )
+                        };
+                    }
+                )
+            };
+        });
+    };
+
+    /* ADD PACKAGE */
+    const addPackage = () => {
+        const newPackage = {
+            id: createPackageId(),
+            name: "",
+            price: "",
+            priceSuffix: "/sq.ft",
+            tagline: "",
+            features: [""],
+            featured: false
+        };
+        setForm((current) => ({...current,
+            packageCards: [...(Array.isArray(current.packageCards) ? current.packageCards : [] ), newPackage ]
+        }));
+        showMessage( "New package added. Enter the details and click Save Changes." );
+    };
+
+    /* DELETE PACKAGE */
+    const deletePackage = (index) => {
+        setForm((current) => ({ ...current,
+            packageCards:
+                ( Array.isArray(current.packageCards) ? current.packageCards : [] ).filter(
+                    (_packageItem, packageIndex) => packageIndex !== index
+                )
+        }));
+        showMessage( "Package removed. Click Save Changes to publish the change." );
+    };
+
+    /* RESET PACKAGES */
+    const resetPackageCards = () => {
+        setForm((current) => ({ ...current, packageCards: defaultPackageCards.map( (packageItem) => ({ ...packageItem, features: [...packageItem.features] }) )
+        }));
+        showMessage( "Packages restored to default values. Click Save Changes to publish them." );
     };
 
     /* ADD SERVICE */
     const addService = () => {
-        const newService = {
-            id: createServiceId(),
-            icon: "Home",
-            title: "",
-            description: "",
-        };
-        setForm((current) => ({
-            ...current,
-            serviceCards: [
-                ...(
-                    Array.isArray(
-                        current.serviceCards
-                    )
-                        ? current.serviceCards
-                        : []
-                ),
-                newService,
+        const newService = {  id: createServiceId(), icon: "Home", title: "", description: "", };
+        setForm((current) => ({ ...current, serviceCards: [
+                ...( Array.isArray(current.serviceCards) ? current.serviceCards : [] ), newService,
             ],
         }));
-        showMessage(
-            "New service added. Enter the details and click Save Changes."
-        );
+        showMessage( "New service added. Enter the details and click Save Changes." );
     };
 
     /* DELETE SERVICE */
-    const deleteService = (
-        index
-    ) => {
-        setForm((current) => {
-            const currentCards =
-                Array.isArray(
-                    current.serviceCards
-                )
+    const deleteService = ( index ) => {
+        setForm((current) => { const currentCards = Array.isArray( current.serviceCards )
                     ? current.serviceCards
                     : [];
-            return {
-                ...current,
-                serviceCards:
-                    currentCards.filter(
-                        (
-                            _service,
-                            serviceIndex
-                        ) =>
-                            serviceIndex !==
-                            index
-                    ),
-            };
+            return { ...current, serviceCards: currentCards.filter(( _service, serviceIndex ) => serviceIndex !== index),};
         });
-        showMessage(
-            "Service removed. Click Save Changes to publish the change."
-        );
+        showMessage("Service removed. Click Save Changes to publish the change.");
     };
 
     /* RESET SERVICES */
     const resetServiceCards = () => {
-        setForm((current) => ({
-            ...current,
-            serviceCards:
-                defaultServiceCards.map(
-                    (service) => ({
-                        ...service,
-                    })
-                ),
-        }));
-        showMessage(
-            "Services restored to default values. Click Save Changes to publish them."
-        );
+        setForm((current) => ({ ...current, serviceCards: defaultServiceCards.map((service) => ({ ...service, })), }));
+        showMessage("Services restored to default values. Click Save Changes to publish them.");
     };
 
     /* LOGO UPLOAD */
-    const handleLogoChange = (
-        event
-    ) => {
+    const handleLogoChange = ( event ) => {
         const file = event.target.files?.[0];
-        if (!file) {
-            return;
-        }
-        const allowedTypes = [
-            "image/png",
-            "image/jpeg",
-            "image/webp",
-            "image/svg+xml",
-        ];
-        if (
-            !allowedTypes.includes(
-                file.type
-            )
-        ) {
-            setError(
-                "Please upload PNG, JPG, WEBP or SVG logo."
-            );
+        if (!file) {return;}
+        const allowedTypes = [ "image/png","image/jpeg","image/webp","image/svg+xml", ];
+        if ( !allowedTypes.includes( file.type ) ) {
+            setError( "Please upload PNG, JPG, WEBP or SVG logo." );
             event.target.value = "";
             return;
         }
 
-        /* Logo is stored inside MongoDB as a data URL. */
         const maxSize = 2 * 1024 * 1024;
-        if (
-            file.size >
-            maxSize
-        ) {
-            setError(
-                "Logo must be smaller than 2 MB."
-            );
+        if ( file.size > maxSize ) {
+            setError( "Logo must be smaller than 2 MB." );
             event.target.value = "";
             return;
         }
@@ -515,86 +440,62 @@ export default function ContentEditor() {
         setError("");
         const reader = new FileReader();
 
-        reader.onload = () => {
-            setForm(
-                (current) => ({
-                    ...current,
-                    logo:
-                        reader.result,
-                })
-            );
-        };
-
-        reader.onerror = () => {
-            setError(
-                "Unable to read the selected logo."
-            );
-        };
-
-        reader.readAsDataURL(
-            file
-        );
+        reader.onload = () => {setForm((current) => ({ ...current, logo: reader.result, }));};
+        reader.onerror = () => {setError( "Unable to read the selected logo." );};
+        reader.readAsDataURL(file);
     };
 
     /* REMOVE LOGO */
     const removeLogo = () => {
-        setForm((current) => ({
-            ...current,
-            logo: "",
-        }));
-
-        if (
-            fileInputRef.current
-        ) {
-            fileInputRef.current.value =
-                "";
-        }
+        setForm((current) => ({ ...current, logo: "", }));
+        if ( fileInputRef.current ) { fileInputRef.current.value = ""; }
     };
 
     /* VALIDATE SERVICES */
     const validateServices = () => {
-        if (
-            page !== "services"
-        ) {
-            return true;
-        }
-        const services =
-            Array.isArray(
-                form.serviceCards
-            )
+        if (page !== "services") {return true;}
+        const services = Array.isArray( form.serviceCards )
                 ? form.serviceCards
                 : [];
-        for (
-            let index = 0;
-            index < services.length;
-            index += 1
-        ) {
+        for ( let index = 0; index < services.length; index += 1 ) {
             const service = services[index];
-
-            if (
-                !service.title?.trim()
-            ) {
-                setError(
-                    `Please enter a title for Service ${index + 1}.`
-                );
+            if ( !service.title?.trim() ) {
+                setError(`Please enter a title for Service ${index + 1}.`);
                 return false;
             }
-
-            if (
-                !service.description?.trim()
-            ) {
-                setError(
-                    `Please enter a description for Service ${index + 1}.`
-                );
+            if ( !service.description?.trim() ) {
+                setError( `Please enter a description for Service ${index + 1}.` );
                 return false;
             }
+            if ( !service.icon ) {
+                setError( `Please select an icon for Service ${index + 1}.` );
+                return false;
+            }
+        }
+        return true;
+    };
 
-            if (
-                !service.icon
-            ) {
-                setError(
-                    `Please select an icon for Service ${index + 1}.`
-                );
+    /* VALIDATE PACKAGES */
+    const validatePackages = () => {
+        if (page !== "packages") { return true; }
+        const packages = Array.isArray(form.packageCards) ? form.packageCards : [];
+        for ( let index = 0; index < packages.length; index += 1 ) {
+            const packageItem = packages[index];
+            if (!packageItem.name?.trim()) {
+                setError(`Please enter a name for Package ${index + 1}.`);
+                return false;
+            }
+            if (!packageItem.price?.trim()) {
+                setError(`Please enter a price for Package ${index + 1}.`);
+                return false;
+            }
+            if (!packageItem.tagline?.trim()) {
+                setError(`Please enter a tagline for Package ${index + 1}.`);
+                return false;
+            }
+            const features = Array.isArray(packageItem.features) ? packageItem.features : [];
+            if ( features.length === 0 || features.some((feature) => !feature?.trim()) ) {
+                setError(`Please complete all features for Package ${index + 1}.`);
                 return false;
             }
         }
@@ -602,48 +503,25 @@ export default function ContentEditor() {
     };
 
     /* SAVE CONTENT */
-    const save = async (
-        event
-    ) => {
+    const save = async ( event ) => {
         event.preventDefault();
-
-        if (
-            !validateServices()
-        ) {
+        if ( !validateServices() ) {
             return;
         }
-
+        if (!validatePackages()) {
+            return;
+        }
         try {
             setSaving(true);
             setError("");
             setMessage("");
-            await api.put(
-                `/content/${page}`, form
-            );
-            setMessage(
-                "Website content updated successfully."
-            );
-            window.setTimeout(
-                () => {
-                    setMessage("");
-                },
-                3000
-            );
+            await api.put(`/content/${page}`, form);
+            setMessage("Website content updated successfully.");
+            window.setTimeout(() => {setMessage("");},3000);
         } catch (error) {
-            console.error(
-                "Content save failed:",
-                error
-            );
-
-            setError(
-                error.response
-                    ?.data
-                    ?.message ||
-                    "Unable to save website content."
-            );
-        } finally {
-            setSaving(false);
-        }
+            console.error( "Content save failed:", error);
+            setError( error.response ?.data ?.message || "Unable to save website content." );
+        } finally {setSaving(false);}
     };
 
     /* LOADING */
@@ -806,11 +684,7 @@ export default function ContentEditor() {
                                 Page Copy
                             </span>
                             <h2>
-                                {page
-                                    .charAt(0)
-                                    .toUpperCase() +
-                                    page.slice(1)
-                                } Content
+                                {page .charAt(0) .toUpperCase() + page.slice(1)} Content
                             </h2>
                             <p>
                                 Manage the text displayed
@@ -820,60 +694,13 @@ export default function ContentEditor() {
                     </div>
                     <div className="content-editor-fields">
                         {definition.fields.map(
-                            ([
-                                key,
-                                label,
-                                type,
-                            ]) => (
-                                <label
-                                    className={
-                                        type ===
-                                        "textarea"
-                                            ? "content-field full"
-                                            : "content-field"
-                                    }
-                                    key={key}
-                                >
+                            ([ key, label, type, ]) => (
+                                <label className={ type === "textarea" ? "content-field full" : "content-field" } key={key}>
                                     <span>
                                         {label}
                                     </span>
-                                    {type ===
-                                    "textarea" ? (
-                                        <textarea
-                                            value={
-                                                form[key] ||
-                                                ""
-                                            }
-                                            onChange={(
-                                                event
-                                            ) =>
-                                                handleChange(
-                                                    key,
-                                                    event
-                                                        .target
-                                                        .value
-                                                )
-                                            }
-                                            rows={5}
-                                        />
-                                    ) : (
-                                        <input
-                                            type="text"
-                                            value={
-                                                form[key] ||
-                                                ""
-                                            }
-                                            onChange={(
-                                                event
-                                            ) =>
-                                                handleChange(
-                                                    key,
-                                                    event
-                                                        .target
-                                                        .value
-                                                )
-                                            }
-                                        />
+                                    {type === "textarea" ? (<textarea value={form[key] || ""} onChange={(event) => handleChange( key, event .target .value )} rows={5}/>) : (
+                                        <input type="text" value={form[key] || ""} onChange={(event) => handleChange( key, event .target .value )}/>
                                     )}
                                 </label>
                             )
@@ -1131,6 +958,343 @@ export default function ContentEditor() {
                         </div>
                     </div>
                 )}
+
+                {/* DYNAMIC PACKAGE CARDS EDITOR */}
+                {page === "packages" && (
+                    <div className="content-editor-card package-cards-editor-card">
+
+                        <div className="content-editor-card-head package-editor-head">
+                            <div>
+                                <span>
+                                    Construction Packages
+                                </span>
+
+                                <h2>
+                                    Package Cards
+                                </h2>
+
+                                <p>
+                                    Edit the packages displayed on the
+                                    public Packages page.
+                                </p>
+                            </div>
+
+                            <div className="package-editor-header-actions">
+                                <button
+                                    type="button"
+                                    className="package-reset-button"
+                                    onClick={resetPackageCards}
+                                >
+                                    <RotateCcw size={15} />
+                                    Reset
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="package-add-button"
+                                    onClick={addPackage}
+                                >
+                                    <Plus size={16} />
+                                    Add Package
+                                </button>
+                            </div>
+                        </div>
+
+
+                        {(
+                            !Array.isArray(form.packageCards) ||
+                            form.packageCards.length === 0
+                        ) && (
+                            <div className="package-editor-empty">
+                                <Sparkles size={24} />
+
+                                <strong>
+                                    No packages added
+                                </strong>
+
+                                <p>
+                                    Add your first construction package.
+                                </p>
+
+                                <button
+                                    type="button"
+                                    className="package-add-button"
+                                    onClick={addPackage}
+                                >
+                                    <Plus size={16} />
+                                    Add Package
+                                </button>
+                            </div>
+                        )}
+
+
+                        <div className="package-cards-editor-grid">
+                            {Array.isArray(form.packageCards) &&
+                                form.packageCards.map(
+                                    (packageItem, packageIndex) => (
+                                        <article
+                                            className={`package-editor-card ${
+                                                packageItem.featured
+                                                    ? "featured"
+                                                    : ""
+                                            }`}
+                                            key={
+                                                packageItem.id ||
+                                                packageIndex
+                                            }
+                                        >
+
+                                            {packageItem.featured && (
+                                                <div className="package-editor-recommended">
+                                                    <Sparkles size={13} />
+                                                    Recommended
+                                                </div>
+                                            )}
+
+
+                                            <div className="package-editor-card-top">
+                                                <span>
+                                                    Package{" "}
+                                                    {String(
+                                                        packageIndex + 1
+                                                    ).padStart(2, "0")}
+                                                </span>
+
+                                                <button
+                                                    type="button"
+                                                    className="package-delete-button"
+                                                    onClick={() =>
+                                                        deletePackage(
+                                                            packageIndex
+                                                        )
+                                                    }
+                                                >
+                                                    <Trash2 size={14} />
+                                                    Delete
+                                                </button>
+                                            </div>
+
+
+                                            <label className="package-editor-field">
+                                                <span>
+                                                    Tagline
+                                                </span>
+
+                                                <input
+                                                    type="text"
+                                                    value={
+                                                        packageItem.tagline ||
+                                                        ""
+                                                    }
+                                                    placeholder="Smart Fundamentals"
+                                                    onChange={(event) =>
+                                                        handlePackageCardChange(
+                                                            packageIndex,
+                                                            "tagline",
+                                                            event.target.value
+                                                        )
+                                                    }
+                                                />
+                                            </label>
+
+
+                                            <label className="package-editor-field">
+                                                <span>
+                                                    Package Name
+                                                </span>
+
+                                                <input
+                                                    type="text"
+                                                    value={
+                                                        packageItem.name ||
+                                                        ""
+                                                    }
+                                                    placeholder="Essential"
+                                                    onChange={(event) =>
+                                                        handlePackageCardChange(
+                                                            packageIndex,
+                                                            "name",
+                                                            event.target.value
+                                                        )
+                                                    }
+                                                />
+                                            </label>
+
+
+                                            <div className="package-editor-price-row">
+                                                <label className="package-editor-field">
+                                                    <span>
+                                                        Price
+                                                    </span>
+
+                                                    <input
+                                                        type="text"
+                                                        value={
+                                                            packageItem.price ||
+                                                            ""
+                                                        }
+                                                        placeholder="₹1,800"
+                                                        onChange={(event) =>
+                                                            handlePackageCardChange(
+                                                                packageIndex,
+                                                                "price",
+                                                                event.target.value
+                                                            )
+                                                        }
+                                                    />
+                                                </label>
+
+                                                <label className="package-editor-field">
+                                                    <span>
+                                                        Price Suffix
+                                                    </span>
+
+                                                    <input
+                                                        type="text"
+                                                        value={
+                                                            packageItem.priceSuffix ||
+                                                            ""
+                                                        }
+                                                        placeholder="/sq.ft"
+                                                        onChange={(event) =>
+                                                            handlePackageCardChange(
+                                                                packageIndex,
+                                                                "priceSuffix",
+                                                                event.target.value
+                                                            )
+                                                        }
+                                                    />
+                                                </label>
+                                            </div>
+
+
+                                            <label className="package-editor-featured-toggle">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={
+                                                        Boolean(
+                                                            packageItem.featured
+                                                        )
+                                                    }
+                                                    onChange={(event) =>
+                                                        handlePackageCardChange(
+                                                            packageIndex,
+                                                            "featured",
+                                                            event.target.checked
+                                                        )
+                                                    }
+                                                />
+
+                                                <span>
+                                                    <Sparkles size={14} />
+
+                                                    Show as Recommended
+                                                </span>
+                                            </label>
+
+
+                                            <div className="package-editor-divider"></div>
+
+
+                                            <div className="package-editor-features">
+                                                <div className="package-editor-features-head">
+                                                    <strong>
+                                                        Package Features
+                                                    </strong>
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            addPackageFeature(
+                                                                packageIndex
+                                                            )
+                                                        }
+                                                    >
+                                                        <Plus size={14} />
+                                                        Add Feature
+                                                    </button>
+                                                </div>
+
+
+                                                {Array.isArray(
+                                                    packageItem.features
+                                                ) &&
+                                                    packageItem.features.map(
+                                                        (
+                                                            feature,
+                                                            featureIndex
+                                                        ) => (
+                                                            <div
+                                                                className="package-editor-feature-row"
+                                                                key={
+                                                                    featureIndex
+                                                                }
+                                                            >
+                                                                <div className="package-editor-check">
+                                                                    <CheckCircle2
+                                                                        size={14}
+                                                                    />
+                                                                </div>
+
+                                                                <input
+                                                                    type="text"
+                                                                    value={
+                                                                        feature
+                                                                    }
+                                                                    placeholder="Package feature"
+                                                                    onChange={(
+                                                                        event
+                                                                    ) =>
+                                                                        handlePackageFeatureChange(
+                                                                            packageIndex,
+                                                                            featureIndex,
+                                                                            event
+                                                                                .target
+                                                                                .value
+                                                                        )
+                                                                    }
+                                                                />
+
+                                                                <button
+                                                                    type="button"
+                                                                    aria-label="Delete feature"
+                                                                    onClick={() =>
+                                                                        deletePackageFeature(
+                                                                            packageIndex,
+                                                                            featureIndex
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <Trash2
+                                                                        size={14}
+                                                                    />
+                                                                </button>
+                                                            </div>
+                                                        )
+                                                    )}
+                                            </div>
+                                        </article>
+                                    )
+                                )}
+                        </div>
+
+
+                        {Array.isArray(form.packageCards) &&
+                            form.packageCards.length > 0 && (
+                                <div className="package-editor-add-bottom">
+                                    <button
+                                        type="button"
+                                        className="package-add-outline-button"
+                                        onClick={addPackage}
+                                    >
+                                        <Plus size={16} />
+                                        Add Another Package
+                                    </button>
+                                </div>
+                            )}
+                    </div>
+                )}
+
                 {/* BOTTOM SAVE */}
                 <div className="content-editor-bottom">
                     <span>
