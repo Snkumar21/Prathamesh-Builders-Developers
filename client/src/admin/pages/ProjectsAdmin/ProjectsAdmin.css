@@ -1,174 +1,108 @@
-/* =========================================
-   PROJECTS ADMIN
-   Prathamesh Builders & Developers
-========================================= */
-
+/* PROJECTS ADMIN */
 .projects-admin {
     position: relative;
     width: 100%;
 }
 
-
-/* =========================================
-   PAGE HEADER
-========================================= */
-
+/* PAGE HEADER */
 .projects-admin .admin-page-head {
     position: relative;
     margin-bottom: 28px;
 }
 
-
 .projects-admin .admin-page-head > span {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-
     margin-bottom: 9px;
-
     color: #175cff;
-
     font-family: "Manrope", sans-serif;
     font-size: 0.7rem;
     font-weight: 800;
-
     text-transform: uppercase;
     letter-spacing: 0.9px;
 }
 
-
 .projects-admin .admin-page-head > span::before {
     content: "";
-
     width: 22px;
     height: 2px;
-
     border-radius: 999px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #00aef0,
-            #175cff,
-            #7626e8,
-            #ed0cae
-        );
+    background: linear-gradient( 90deg, #00aef0, #175cff, #7626e8, #ed0cae );
 }
-
 
 .projects-admin .admin-page-head h1,
 .projects-admin .admin-page-head h2 {
     margin: 0;
-
     color: #101828;
-
     font-family: "Manrope", sans-serif;
     font-weight: 800;
-
     letter-spacing: -0.035em;
 }
-
 
 .projects-admin .admin-page-head h1 {
     font-size: clamp(2rem, 3vw, 2.7rem);
 }
 
-
 .projects-admin .admin-page-head h2 {
     font-size: clamp(1.6rem, 2.5vw, 2.1rem);
 }
 
-
 .projects-admin .admin-page-head p {
     max-width: 670px;
-
     margin: 10px 0 0;
-
     color: #667085;
-
     font-size: 0.88rem;
     line-height: 1.7;
 }
 
-
-/* =========================================
-   SUCCESS / ERROR
-========================================= */
-
+/* SUCCESS / ERROR */
 .projects-admin .admin-success,
 .projects-admin .admin-error {
     position: relative;
-
     margin-bottom: 18px;
     padding: 13px 16px 13px 42px;
-
     border-radius: 12px;
-
     font-size: 0.8rem;
     font-weight: 700;
-
-    animation:
-        projectsAdminMessageIn
-        0.3s ease;
+    animation: projectsAdminMessageIn 0.3s ease;
 }
-
 
 .projects-admin .admin-success {
     color: #067647;
-
     background: #ecfdf3;
-
     border: 1px solid #abefc6;
 }
 
-
 .projects-admin .admin-error {
     color: #b42318;
-
     background: #fef3f2;
-
     border: 1px solid #fecdca;
 }
-
 
 .projects-admin .admin-success::before,
 .projects-admin .admin-error::before {
     position: absolute;
-
     top: 50%;
     left: 17px;
-
     width: 9px;
     height: 9px;
-
     content: "";
-
     border-radius: 50%;
-
     transform: translateY(-50%);
 }
 
-
 .projects-admin .admin-success::before {
     background: #12b76a;
-
-    box-shadow:
-        0 0 0 4px
-        rgba(18, 183, 106, 0.12);
+    box-shadow: 0 0 0 4px rgba(18, 183, 106, 0.12);
 }
-
 
 .projects-admin .admin-error::before {
     background: #f04438;
-
-    box-shadow:
-        0 0 0 4px
-        rgba(240, 68, 56, 0.1);
+    box-shadow: 0 0 0 4px rgba(240, 68, 56, 0.1);
 }
 
-
 @keyframes projectsAdminMessageIn {
-
     from {
         opacity: 0;
         transform: translateY(-5px);
@@ -178,183 +112,107 @@
         opacity: 1;
         transform: translateY(0);
     }
-
 }
 
-
-/* =========================================
-   MAIN FORM CARD
-========================================= */
-
+/* MAIN FORM CARD */
 .projects-admin > .admin-card {
     position: relative;
-
     padding: 30px;
-
     overflow: hidden;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff 0%,
-            #ffffff 72%,
-            rgba(23, 92, 255, 0.025) 100%
-        );
-
+    background: linear-gradient( 145deg, #ffffff 0%, #ffffff 72%, rgba(23, 92, 255, 0.025) 100% );
     border: 1px solid #e7eaf0;
-
     border-radius: 20px;
-
-    box-shadow:
-        0 12px 40px
-        rgba(16, 24, 40, 0.055);
+    box-shadow: 0 12px 40px rgba(16, 24, 40, 0.055);
 }
-
 
 .projects-admin > .admin-card::before {
     position: absolute;
-
     top: 0;
     left: 0;
-
     width: 100%;
     height: 3px;
-
     content: "";
-
-    background:
-        linear-gradient(
-            90deg,
-            #00aef0,
-            #175cff,
-            #7626e8,
-            #ed0cae
-        );
+    background: linear-gradient( 90deg, #00aef0, #175cff, #7626e8, #ed0cae );
 }
-
 
 .projects-admin > .admin-card > h3 {
     margin: 0 0 25px;
-
     color: #101828;
-
     font-family: "Manrope", sans-serif;
     font-size: 1.15rem;
     font-weight: 800;
-
     letter-spacing: -0.025em;
 }
 
-
-/* =========================================
-   FORM
-========================================= */
-
+/* FORM */
 .projects-admin .admin-form {
     display: flex;
     flex-direction: column;
-
     gap: 25px;
 }
 
-
 .projects-admin .admin-grid {
     display: grid;
-
     gap: 20px;
 }
 
-
 .projects-admin .admin-grid.two {
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-
-/* =========================================
-   LABELS
-========================================= */
-
+/* LABELS */
 .projects-admin .admin-form label {
     display: flex;
     flex-direction: column;
-
     gap: 8px;
-
     color: #344054;
-
     font-family: "Manrope", sans-serif;
     font-size: 0.76rem;
     font-weight: 750;
 }
 
-
 .projects-admin .admin-form label > span {
     display: inline-flex;
     align-items: center;
-
     gap: 7px;
 }
 
-
-/* =========================================
-   INPUTS
-========================================= */
-
+/* INPUTS */
 .projects-admin .admin-form input,
 .projects-admin .admin-form select,
 .projects-admin .admin-form textarea {
     width: 100%;
-
     padding: 12px 13px;
-
     color: #101828;
-
     background: #ffffff;
-
     border: 1px solid #dfe3ea;
-
     border-radius: 10px;
-
     outline: none;
-
     font-family: inherit;
     font-size: 0.82rem;
     font-weight: 500;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
-
 
 .projects-admin .admin-form input {
     min-height: 44px;
 }
 
-
 .projects-admin .admin-form select {
     min-height: 44px;
-
     cursor: pointer;
 }
 
-
 .projects-admin .admin-form textarea {
     min-height: 120px;
-
     resize: vertical;
-
     line-height: 1.65;
 }
-
 
 .projects-admin .admin-form input::placeholder,
 .projects-admin .admin-form textarea::placeholder {
     color: #98a2b3;
 }
-
 
 .projects-admin .admin-form input:hover,
 .projects-admin .admin-form select:hover,
@@ -362,740 +220,439 @@
     border-color: #c8ced8;
 }
 
-
 .projects-admin .admin-form input:focus,
 .projects-admin .admin-form select:focus,
 .projects-admin .admin-form textarea:focus {
     background: #ffffff;
-
     border-color: #175cff;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(23, 92, 255, 0.09);
+    box-shadow: 0 0 0 3px rgba(23, 92, 255, 0.09);
 }
 
-
-/* =========================================
-   SMALL HELP TEXT
-========================================= */
-
+/* SMALL HELP TEXT */
 .projects-admin .admin-form small {
     display: block;
-
     margin-top: 2px;
-
     color: #98a2b3;
-
     font-size: 0.7rem;
     font-weight: 500;
-
     line-height: 1.55;
 }
 
-
-/* =========================================
-   MEDIA SECTION HEADINGS
-========================================= */
-
+/* MEDIA SECTION HEADINGS */
 .projects-admin .admin-form h4 {
     display: flex;
     align-items: center;
-
     gap: 8px;
-
     margin: 0 0 5px;
-
     color: #101828;
-
     font-family: "Manrope", sans-serif;
     font-size: 0.92rem;
     font-weight: 800;
 }
 
-
 .projects-admin .admin-form h4 svg {
     color: #175cff;
-
     stroke-width: 1.9;
 }
 
-
 .projects-admin .admin-form h4 + p {
     margin: 0 0 17px;
-
     color: #667085;
-
     font-size: 0.76rem;
     line-height: 1.6;
 }
 
-
-/* =========================================
-   IMAGE INPUT AREA
-========================================= */
-
+/* IMAGE INPUT AREA */
 .projects-admin .admin-form .admin-grid.two label:has(img) {
     padding: 14px;
-
     background: #f9fafb;
-
     border: 1px solid #e7eaf0;
-
     border-radius: 14px;
 }
 
-
 .projects-admin .admin-form label img {
     display: block;
-
     width: 100%;
-
     border: 1px solid #e7eaf0;
-
-    box-shadow:
-        0 5px 16px
-        rgba(16, 24, 40, 0.06);
+    box-shadow: 0 5px 16px rgba(16, 24, 40, 0.06);
 }
 
-
-/* =========================================
-   VIDEO PREVIEW
-========================================= */
-
+/* VIDEO PREVIEW */
 .projects-admin .admin-form > video {
     display: block;
-
     overflow: hidden;
-
     background: #101828;
-
     border: 1px solid #e7eaf0;
-
     border-radius: 15px;
-
-    box-shadow:
-        0 8px 25px
-        rgba(16, 24, 40, 0.08);
+    box-shadow: 0 8px 25px rgba(16, 24, 40, 0.08);
 }
 
-
-/* =========================================
-   BUTTON ROW
-========================================= */
-
+/* BUTTON ROW */
 .projects-admin .admin-actions-row {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-
     gap: 10px;
 }
 
-
-/* =========================================
-   PRIMARY BUTTON
-========================================= */
-
+/* PRIMARY BUTTON */
 .projects-admin .admin-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     gap: 8px;
-
     min-height: 42px;
-
     padding: 10px 17px;
-
     color: #ffffff;
-
-    background:
-        linear-gradient(
-            100deg,
-            #175cff,
-            #7626e8
-        );
-
+    background: linear-gradient( 100deg, #175cff, #7626e8 );
     border: 0;
-
     border-radius: 10px;
-
     cursor: pointer;
-
     font-family: "Manrope", sans-serif;
     font-size: 0.76rem;
     font-weight: 800;
-
-    box-shadow:
-        0 7px 18px
-        rgba(23, 92, 255, 0.17);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        opacity 0.2s ease;
+    box-shadow: 0 7px 18px rgba(23, 92, 255, 0.17);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
-
 
 .projects-admin .admin-primary:hover:not(:disabled) {
     transform: translateY(-1px);
-
-    box-shadow:
-        0 10px 24px
-        rgba(23, 92, 255, 0.22);
+    box-shadow: 0 10px 24px rgba(23, 92, 255, 0.22);
 }
-
 
 .projects-admin .admin-primary:disabled {
     opacity: 0.55;
-
     cursor: not-allowed;
 }
 
-
-/* =========================================
-   SECONDARY BUTTON
-========================================= */
-
+/* SECONDARY BUTTON */
 .projects-admin .admin-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     gap: 7px;
-
     min-height: 42px;
-
     padding: 10px 15px;
-
     color: #344054;
-
     background: #ffffff;
-
     border: 1px solid #dfe3ea;
-
     border-radius: 10px;
-
     cursor: pointer;
-
     font-family: "Manrope", sans-serif;
     font-size: 0.75rem;
     font-weight: 750;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
-
 
 .projects-admin .admin-secondary:hover {
     background: #f8fafc;
-
     border-color: #cbd1da;
-
     transform: translateY(-1px);
 }
 
-
-/* =========================================
-   EXISTING PROJECTS AREA
-========================================= */
-
+/* EXISTING PROJECTS AREA */
 .projects-admin-projects {
     margin-top: 42px;
 }
 
-
 .projects-admin-project-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
 }
 
-
-/* =========================================
-   PROJECT CARD
-========================================= */
-
+/* PROJECT CARD */
 .projects-admin-project-card {
     position: relative;
-
     padding: 20px;
-
     overflow: hidden;
-
     background: #ffffff;
-
     border: 1px solid #e7eaf0;
-
     border-radius: 18px;
-
-    box-shadow:
-        0 8px 28px
-        rgba(16, 24, 40, 0.045);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+    box-shadow: 0 8px 28px rgba(16, 24, 40, 0.045);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
-
 
 .projects-admin-project-card:hover {
     transform: translateY(-3px);
-
-    border-color:
-        rgba(23, 92, 255, 0.2);
-
-    box-shadow:
-        0 16px 38px
-        rgba(16, 24, 40, 0.075);
+    border-color: rgba(23, 92, 255, 0.2);
+    box-shadow: 0 16px 38px rgba(16, 24, 40, 0.075);
 }
 
-
-/* =========================================
-   PROJECT CARD HEADER
-========================================= */
-
+/* PROJECT CARD HEADER */
 .projects-admin-project-head {
     display: flex;
-
     align-items: flex-start;
-
     justify-content: space-between;
-
     gap: 18px;
-
     margin-bottom: 17px;
 }
 
-
 .projects-admin-project-head h3 {
     margin: 0 0 7px;
-
     color: #101828;
-
     font-family: "Manrope", sans-serif;
     font-size: 1rem;
     font-weight: 800;
-
     line-height: 1.35;
 }
-
 
 .projects-admin-project-meta {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-
     gap: 6px;
-
     margin: 0;
-
     color: #667085;
-
     font-size: 0.72rem;
     font-weight: 600;
 }
 
-
 .projects-admin-project-meta svg {
     color: #175cff;
-
     stroke-width: 1.9;
 }
 
-
-/* =========================================
-   FEATURED BADGE
-========================================= */
-
+/* FEATURED BADGE */
 .projects-admin-featured {
     display: inline-flex;
     align-items: center;
-
     gap: 5px;
-
     flex-shrink: 0;
-
     padding: 6px 9px;
-
     color: #7626e8;
-
-    background:
-        rgba(118, 38, 232, 0.065);
-
-    border:
-        1px solid
-        rgba(118, 38, 232, 0.12);
-
+    background: rgba(118, 38, 232, 0.065);
+    border: 1px solid rgba(118, 38, 232, 0.12);
     border-radius: 999px;
-
     font-size: 0.65rem;
     font-weight: 800;
 }
-
 
 .projects-admin-featured svg {
     width: 12px;
     height: 12px;
 }
 
-
-/* =========================================
-   PROJECT IMAGE GRID
-========================================= */
-
+/* PROJECT IMAGE GRID */
 .projects-admin-media-title {
     display: flex;
     align-items: center;
-
     gap: 7px;
-
     margin: 0 0 10px;
-
     color: #344054;
-
     font-size: 0.7rem;
     font-weight: 800;
-
     text-transform: uppercase;
     letter-spacing: 0.45px;
 }
 
-
 .projects-admin-images {
     display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 8px;
+    margin-top: 12px;
 }
-
 
 .projects-admin-image {
     position: relative;
-
-    height: 150px;
-
-    overflow: hidden;
-
-    background: #f2f4f7;
-
-    border: 1px solid #e7eaf0;
-
-    border-radius: 11px;
-}
-
-
-.projects-admin-image img {
-    display: block;
-
     width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    transition:
-        transform 0.35s ease;
-}
-
-
-.projects-admin-image:hover img {
-    transform: scale(1.035);
-}
-
-
-.projects-admin-image-number {
-    position: absolute;
-
-    right: 7px;
-    bottom: 7px;
-
+    aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    min-width: 27px;
-    height: 23px;
-
-    padding: 0 6px;
-
-    color: #101828;
-
-    background:
-        rgba(255, 255, 255, 0.92);
-
-    border-radius: 6px;
-
-    backdrop-filter: blur(7px);
-
-    font-size: 0.6rem;
-    font-weight: 800;
+    overflow: hidden;
+    background: #f2f4f7;
+    border: 1px solid #e7eaf0;
+    border-radius: 9px;
+    width: 200px;
+    height: 200px;
 }
 
+.projects-admin-image img {
+    display: block;
+    width: 94%;
+    height: 94%;
+    object-fit: cover;
+    border-radius: 7px;
+    transition: transform 0.35s ease;
+}
 
-/* =========================================
-   PROJECT VIDEO
-========================================= */
+.projects-admin-image:hover img {
+    transform: scale(1.025);
+}
 
+.projects-admin-image-number {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 21px;
+    padding: 0 5px;
+    color: #101828;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 5px;
+    backdrop-filter: blur(7px);
+    font-size: 0.56rem;
+    font-weight: 800;
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08);
+}
+
+/* PROJECT VIDEO */
 .projects-admin-video-wrap {
     margin-top: 16px;
 }
 
-
 .projects-admin-video-wrap video {
     display: block;
-
     width: 100%;
-
     max-height: 300px;
-
     background: #101828;
-
     border-radius: 12px;
-
     object-fit: contain;
 }
 
-
-/* =========================================
-   CARD ACTIONS
-========================================= */
-
+/* CARD ACTIONS */
 .projects-admin-card-actions {
     display: flex;
-
     align-items: center;
-
     gap: 8px;
-
     margin-top: 18px;
     padding-top: 16px;
-
     border-top: 1px solid #eef0f4;
 }
 
-
 .projects-admin .admin-action-btn {
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
-
     gap: 6px;
-
     min-height: 36px;
-
     padding: 8px 12px;
-
     border-radius: 8px;
-
     cursor: pointer;
-
     font-family: "Manrope", sans-serif;
     font-size: 0.7rem;
     font-weight: 800;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
-
 
 .projects-admin .admin-action-btn:hover {
     transform: translateY(-1px);
 }
 
-
-/* =========================================
-   DELETE BUTTON
-========================================= */
-
+/* DELETE BUTTON */
 .projects-admin .admin-danger {
     color: #d92d20;
-
     background: #ffffff;
-
     border: 1px solid #fecdca;
 }
 
-
 .projects-admin .admin-danger:hover {
     background: #fef3f2;
-
     border-color: #fda29b;
 }
 
-
-/* =========================================
-   EMPTY / LOADING STATE
-========================================= */
-
+/* EMPTY / LOADING STATE */
 .projects-admin-empty {
     padding: 45px 25px;
-
     color: #667085;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #f9fafb
-        );
-
+    background: linear-gradient( 145deg, #ffffff, #f9fafb );
     border: 1px dashed #d0d5dd;
-
     border-radius: 16px;
-
     text-align: center;
-
     font-size: 0.82rem;
     line-height: 1.6;
 }
 
-
-/* =========================================
-   TABLET
-========================================= */
-
-@media (max-width: 1050px) {
-
-    .projects-admin-project-grid {
-        grid-template-columns: 1fr;
-    }
-
+.projects-admin-form-preview {
+    display: block;
+    width: 100%;
+    height: 180px;
+    margin-top: 10px;
+    object-fit: cover;
+    background: #f2f4f7;
+    border: 1px solid #e7eaf0;
+    border-radius: 12px;
+    box-shadow: 0 5px 16px rgba(16, 24, 40, 0.06);
 }
 
+.projects-admin-form-video {
+    display: block;
+    width: 100%;
+    max-width: 550px;
+    margin-top: 10px;
+    overflow: hidden;
+    background: #101828;
+    border: 1px solid #e7eaf0;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(16, 24, 40, 0.08);
+}
 
-/* =========================================
-   MOBILE
-========================================= */
+/* TABLET */
+@media (max-width: 1050px) {
+    .projects-admin-project-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
 
+/* MOBILE */
 @media (max-width: 700px) {
-
     .projects-admin > .admin-card {
         padding: 22px 18px;
-
         border-radius: 16px;
     }
 
-
     .projects-admin .admin-grid.two {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-
 
     .projects-admin-project-card {
         padding: 16px;
-
         border-radius: 15px;
     }
 
-
     .projects-admin-project-head {
         flex-direction: column;
-
         gap: 10px;
     }
 
-
     .projects-admin-images {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
 
     .projects-admin-image {
         height: 130px;
     }
 
-
     .projects-admin-card-actions {
         flex-wrap: wrap;
     }
-
 }
 
-
-/* =========================================
-   SMALL MOBILE
-========================================= */
-
+/* SMALL MOBILE */
 @media (max-width: 430px) {
-
     .projects-admin .admin-page-head h1 {
         font-size: 1.9rem;
     }
 
-
     .projects-admin-images {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
 
     .projects-admin-image {
         height: 200px;
     }
-
 
     .projects-admin .admin-primary,
     .projects-admin .admin-secondary {
         width: 100%;
     }
 
-
     .projects-admin-card-actions
     .admin-action-btn {
         flex: 1;
     }
-
-}
-
-.projects-admin-form-preview {
-    display: block;
-
-    width: 100%;
-    height: 180px;
-
-    margin-top: 10px;
-
-    object-fit: cover;
-
-    background: #f2f4f7;
-
-    border: 1px solid #e7eaf0;
-    border-radius: 12px;
-
-    box-shadow:
-        0 5px 16px
-        rgba(16, 24, 40, 0.06);
-}
-
-
-.projects-admin-form-video {
-    display: block;
-
-    width: 100%;
-    max-width: 550px;
-
-    margin-top: 10px;
-
-    overflow: hidden;
-
-    background: #101828;
-
-    border: 1px solid #e7eaf0;
-    border-radius: 14px;
-
-    box-shadow:
-        0 8px 25px
-        rgba(16, 24, 40, 0.08);
 }
