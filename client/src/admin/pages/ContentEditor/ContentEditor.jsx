@@ -1,9 +1,4 @@
-import {
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import { useEffect, useMemo, useRef, useState, } from "react";
 import { useParams } from "react-router-dom";
 import {
     CheckCircle2,
@@ -99,11 +94,7 @@ const defaultServiceCards = [
 ];
 
 /* CREATE UNIQUE SERVICE ID */
-const createServiceId = () => {
-    return `service-${Date.now()}-${Math.random()
-        .toString(36)
-        .slice(2, 8)}`;
-};
+const createServiceId = () => { return `service-${Date.now()}-${Math.random() .toString(36) .slice(2, 8)}`; };
 
 /* PAGE DEFINITIONS */
 const pageDefinitions = {

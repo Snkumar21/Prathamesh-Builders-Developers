@@ -1,13 +1,7 @@
-import {
-    useCallback,
-    useEffect,
-    useMemo,
-    useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useState, } from "react";
 import { Link } from "react-router-dom";
 import {
     ArrowRight,
-    BriefcaseBusiness,
     CalendarDays,
     CheckCircle2,
     CircleAlert,
@@ -28,7 +22,6 @@ import "./Dashboard.css";
 export default function Dashboard() {
     const [enquiries, setEnquiries] = useState([]);
     const [projects, setProjects] = useState([]);
-    const [clientProjects, setClientProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [error, setError] = useState("");
@@ -38,21 +31,8 @@ export default function Dashboard() {
         async (isRefresh = false) => {
             try {
                 setError("");
-                if (isRefresh) {
-                    setRefreshing(true);
-                } else {
-                    setLoading(true);
-                }
-                const [
-                    enquiryResponse,
-                    projectResponse,
-                    clientProjectResponse,
-                ] = await Promise.all([
-                    api.get("/enquiries"),
-                    api.get("/projects"),
-                    api.get("/client-projects"),
-                ]);
-
+                if (isRefresh) { setRefreshing(true); } else { setLoading(true); }
+                const [ enquiryResponse, projectResponse ] = await Promise.all([ api.get("/enquiries"), api.get("/projects"), ]);
                 setEnquiries(
                     Array.isArray(enquiryResponse.data)
                         ? enquiryResponse.data
@@ -63,19 +43,9 @@ export default function Dashboard() {
                         ? projectResponse.data
                         : []
                 );
-                setClientProjects(
-                    Array.isArray(clientProjectResponse.data)
-                        ? clientProjectResponse.data
-                        : []
-                );
             } catch (error) {
-                console.error(
-                    "Dashboard fetch error:",
-                    error
-                );
-                setError(
-                    "Some dashboard information could not be loaded."
-                );
+                console.error( "Dashboard fetch error:", error );
+                setError( "Some dashboard information could not be loaded." );
             } finally {
                 setLoading(false);
                 setRefreshing(false);
@@ -84,29 +54,12 @@ export default function Dashboard() {
         []
     );
 
-    useEffect(() => {
-        fetchDashboardData();
-    }, [fetchDashboardData]);
-
+    useEffect(() => { fetchDashboardData(); }, [fetchDashboardData]);
     // DASHBOARD STATS
     const stats = useMemo(() => {
-        const newEnquiries =
-            enquiries.filter(
-                (item) =>
-                    (item.status || "New") === "New"
-            ).length;
-
-        const qualifiedEnquiries =
-            enquiries.filter(
-                (item) =>
-                    item.status === "Qualified"
-            ).length;
-
-        const publicProjects =
-            clientProjects.filter(
-                (item) => item.isPublic
-            ).length;
-
+        const newEnquiries = enquiries.filter( (item) => (item.status || "New") === "New" ).length;
+        const qualifiedEnquiries = enquiries.filter( (item) => item.status === "Qualified" ).length;
+        
         return [
             {
                 label: "Total Enquiries",
@@ -116,7 +69,6 @@ export default function Dashboard() {
                 to: "/admin/enquiries",
                 type: "cyan",
             },
-
             {
                 label: "New Enquiries",
                 value: newEnquiries,
@@ -125,7 +77,6 @@ export default function Dashboard() {
                 to: "/admin/enquiries",
                 type: "blue",
             },
-
             {
                 label: "Portfolio Projects",
                 value: projects.length,
@@ -134,16 +85,6 @@ export default function Dashboard() {
                 to: "/admin/projects",
                 type: "purple",
             },
-
-            {
-                label: "Client Projects",
-                value: clientProjects.length,
-                description: `${publicProjects} live on website`,
-                icon: BriefcaseBusiness,
-                to: "/admin/client-projects",
-                type: "pink",
-            },
-
             {
                 label: "Qualified Leads",
                 value: qualifiedEnquiries,
@@ -153,11 +94,7 @@ export default function Dashboard() {
                 type: "green",
             },
         ];
-    }, [
-        enquiries,
-        projects,
-        clientProjects,
-    ]);
+    }, [ enquiries, projects, ]);
 
     // HELPERS
     const formatDate = (date) => {
@@ -509,19 +446,6 @@ export default function Dashboard() {
                                     </strong>
                                     <span>
                                         Update website projects
-                                    </span>
-                                </div>
-                                <ArrowRight size={15} />
-                            </Link>
-
-                            <Link to="/admin/client-projects">
-                                <BriefcaseBusiness size={18} />
-                                <div>
-                                    <strong>
-                                        Client Projects
-                                    </strong>
-                                    <span>
-                                        Add progress updates
                                     </span>
                                 </div>
                                 <ArrowRight size={15} />

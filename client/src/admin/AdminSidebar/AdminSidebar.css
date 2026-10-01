@@ -1,1 +1,214 @@
-.admin-sidebar{position:sticky;top:0;height:100vh;background:#fff;border-right:1px solid #e7eaf0;padding:24px 16px;display:flex;flex-direction:column;z-index:20}.admin-sidebar-brand{padding:0 10px 22px;border-bottom:1px solid #eef0f4;display:grid}.admin-sidebar-brand strong{font-family:Manrope,sans-serif;font-size:1.2rem}.admin-sidebar-brand span{color:#667085;font-size:.82rem}.admin-sidebar nav{display:grid;gap:5px;margin-top:18px}.admin-sidebar nav a,.admin-sidebar-logout{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:10px;color:#475467;font-weight:700}.admin-sidebar nav a:hover,.admin-sidebar nav a.active{background:#f2f6ff;color:#175cff}.admin-sidebar-logout{margin-top:auto;border:0;background:#fff1f3;color:#c01048;cursor:pointer}@media(max-width:900px){.admin-sidebar{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;padding:8px;border-right:0;border-top:1px solid #e7eaf0;display:block;overflow-x:auto}.admin-sidebar-brand,.admin-sidebar-logout{display:none}.admin-sidebar nav{display:flex;margin:0;min-width:max-content}.admin-sidebar nav a{display:grid;justify-items:center;gap:3px;font-size:.68rem;padding:7px 10px}}
+/* ADMIN SIDEBAR */
+.admin-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 14px 18px;
+    background: linear-gradient( 180deg, #ffffff 0%, #fbfcff 100% );
+    border-right: 1px solid #e8ebf1;
+    z-index: 20;
+}
+
+/* BRAND */
+.admin-sidebar-brand {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0 5px;
+    padding: 4px 9px 22px;
+    border-bottom: 1px solid #eef0f4;
+}
+
+.admin-sidebar-brand::before {
+    content: "";
+    width: 35px;
+    height: 3px;
+    margin-bottom: 8px;
+    border-radius: 999px;
+    background: linear-gradient( 90deg, #00aef0, #175cff, #7626e8, #ed0cae );
+}
+
+.admin-sidebar-brand strong {
+    color: #101828;
+    font-family: "Manrope", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.admin-sidebar-brand span {
+    color: #98a2b3;
+    font-size: 0.68rem;
+    line-height: 1.45;
+}
+
+/* NAVIGATION */
+.admin-sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 18px;
+}
+
+.admin-sidebar nav a {
+    position: relative;
+    min-height: 43px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 12px;
+    color: #667085;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.73rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-sidebar nav a svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: #98a2b3;
+    stroke-width: 1.9;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.admin-sidebar nav a:hover {
+    color: #175cff;
+    background: rgba( 23, 92, 255, 0.035 );
+    border-color: rgba( 23, 92, 255, 0.07 );
+    transform: translateX(2px);
+}
+
+.admin-sidebar nav a:hover svg {
+    color: #175cff;
+}
+
+.admin-sidebar nav a.active {
+    color: #175cff;
+    background: linear-gradient( 100deg, rgba(0, 174, 240, 0.07), rgba(23, 92, 255, 0.065), rgba(118, 38, 232, 0.035) );
+    border-color: rgba( 23, 92, 255, 0.1 );
+    box-shadow: 0 5px 16px rgba(23, 92, 255, 0.055);
+}
+
+.admin-sidebar nav a.active::before {
+    content: "";
+    position: absolute;
+    left: -15px;
+    width: 3px;
+    height: 22px;
+    border-radius: 0 999px 999px 0;
+    background: linear-gradient( 180deg, #00aef0, #175cff, #7626e8 );
+}
+
+.admin-sidebar nav a.active svg {
+    color: #175cff;
+}
+
+/* LOGOUT */
+.admin-sidebar-logout {
+    width: 100%;
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    padding: 10px 12px;
+    color: #b42318;
+    background: #fffafa;
+    border: 1px solid #fee4e2;
+    border-radius: 10px;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.admin-sidebar-logout svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.9;
+}
+
+.admin-sidebar-logout:hover {
+    background: #fef3f2;
+    border-color: #fecdca;
+    transform: translateY(-1px);
+}
+
+/* MOBILE BOTTOM NAVIGATION */
+@media (max-width: 900px) {
+    .admin-sidebar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: auto;
+        width: 100%;
+        height: auto;
+        display: block;
+        padding: 7px 8px calc( 7px + env(safe-area-inset-bottom) );
+        background: rgba( 255, 255, 255, 0.96 );
+        border-right: 0;
+        border-top: 1px solid #e7eaf0;
+        box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.07);
+        backdrop-filter: blur(18px);
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .admin-sidebar-brand,
+    .admin-sidebar-logout {
+        display: none;
+    }
+
+    .admin-sidebar nav {
+        width: max-content;
+        min-width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 3px;
+        margin: 0;
+    }
+
+    .admin-sidebar nav a {
+        min-width: 68px;
+        min-height: 55px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        padding: 6px 9px;
+        border-radius: 9px;
+        font-size: 0.59rem;
+        white-space: nowrap;
+    }
+
+    .admin-sidebar nav a svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .admin-sidebar nav a:hover {
+        transform: none;
+    }
+
+    .admin-sidebar nav a.active::before {
+        left: 50%;
+        top: -7px;
+        width: 28px;
+        height: 3px;
+        transform: translateX(-50%);
+        border-radius: 0 0 999px 999px;
+        background: linear-gradient( 90deg, #00aef0, #175cff, #7626e8 );
+    }
+}

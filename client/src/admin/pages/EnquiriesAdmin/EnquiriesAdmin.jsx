@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Eye, Mail, Trash2 } from "lucide-react";
 import api from "../../../services/api";
+import "./EnquiriesAdmin.css";
 
 export default function EnquiriesAdmin() {
     const [items, setItems] = useState([]);
