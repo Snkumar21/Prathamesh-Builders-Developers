@@ -1,29 +1,14 @@
 import { useEffect, useState } from "react";
-import {
-    ImageIcon,
-    MapPin,
-    Pencil,
-    Save,
-    Star,
-    Trash2,
-    Video
-} from "lucide-react";
+import { ImageIcon, MapPin, Pencil, Save, Star, Trash2, Video } from "lucide-react";
 import api from "../../../services/api";
 import "./ProjectsAdmin.css";
-const blank = {
-    title: "",
-    category: "Residential",
-    location: "",
-    description: "",
-    images: [],
-    video: "",
-    featured: false
-};
+
+const blank = { title: "", category: "Residential", location: "", description: "", images: [], video: "", featured: false };
 
 export default function ProjectsAdmin() {
     const [items, setItems] = useState([]);
     const [form, setForm] = useState(blank);
-    const [imageInputs, setImageInputs] = useState(["","","",""]);
+    const [imageInputs, setImageInputs] = useState(Array(10).fill(""));
     const [editing, setEditing] = useState(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -38,38 +23,27 @@ export default function ProjectsAdmin() {
             setItems(data || []);
         } catch (err) {
             console.error(err);
-            setError(
-                "Unable to load projects."
-            );
-        } finally {
-            setLoading(false);
-        }
+            setError( "Unable to load projects." );
+        } finally { setLoading(false); }
     };
-    useEffect(() => {
-        load();
-    }, []);
+    useEffect(() => { load(); }, []);
 
     /* CHANGE FIELD */
-    const change = (field, value) => {
-        setForm((current) => ({...current,[field]: value}));
-    };
+    const change = (field, value) => { setForm((current) => ({...current,[field]: value})); };
 
     /* IMAGE FIELD */
-    const changeImage = (
-        index,
-        value
-    ) => {
-        setImageInputs((current) => {
+    const changeImage = ( index, value ) => {
+        setImageInputs((current) => { 
             const next = [...current];
             next[index] = value;
-            return next;
+            return next; 
         });
     };
 
     /* RESET */
     const resetForm = () => {
         setForm(blank);
-        setImageInputs(["","","",""]);
+        setImageInputs(Array(10).fill(""));
         setEditing(null);
     };
 
@@ -77,18 +51,14 @@ export default function ProjectsAdmin() {
     const save = async (event) => {
         event.preventDefault();
         if (!form.title.trim()) {
-            setError(
-                "Project title is required."
-            );
+            setError( "Project title is required." );
             return;
         }
         const images = imageInputs
             .map((image) => image.trim())
             .filter(Boolean);
-        if (images.length > 4) {
-            setError(
-                "Maximum 4 photos are allowed."
-            );
+        if (images.length > 10) {
+            setError( "Maximum 10 photos are allowed." );
             return;
         }
 
@@ -105,18 +75,11 @@ export default function ProjectsAdmin() {
             }
             resetForm();
             await load();
-            window.setTimeout(() => {
-                setMessage("");
-            }, 3000);
+            window.setTimeout(() => { setMessage(""); }, 3000);
         } catch (err) {
             console.error(err);
-            setError(
-                err.response?.data?.message ||
-                "Unable to save project."
-            );
-        } finally {
-            setSaving(false);
-        }
+            setError( err.response?.data?.message || "Unable to save project." );
+        } finally { setSaving(false); }
     };
 
     /* EDIT */
@@ -132,12 +95,7 @@ export default function ProjectsAdmin() {
             featured: Boolean(item.featured)
         });
         const existingImages = Array.isArray(item.images) ? item.images : [];
-        setImageInputs([
-            existingImages[0] || "",
-            existingImages[1] || "",
-            existingImages[2] || "",
-            existingImages[3] || ""
-        ]);
+        setImageInputs(Array.from( { length: 10 }, (_, index) => existingImages[index] || "" ));
         window.scrollTo({top: 0,behavior: "smooth"});
     };
 
@@ -234,9 +192,7 @@ export default function ProjectsAdmin() {
                         Location
                         <input
                             value={form.location}
-                            onChange={(event) =>
-                                change("location",event.target.value)
-                            }
+                            onChange={(event) => change("location",event.target.value) }
                             placeholder="Pune, Maharashtra"
                         />
                     </label>
@@ -244,9 +200,7 @@ export default function ProjectsAdmin() {
                         Featured Project
                         <select
                             value={ form.featured ? "yes" : "no" }
-                            onChange={(event) =>
-                                change("featured",event.target.value === "yes")
-                            }
+                            onChange={(event) => change("featured",event.target.value === "yes") }
                         >
                             <option value="no">
                                 No
@@ -263,9 +217,7 @@ export default function ProjectsAdmin() {
                     <textarea
                         rows={6}
                         value={form.description}
-                        onChange={(event) =>
-                            change("description",event.target.value)
-                        }
+                        onChange={(event) => change("description",event.target.value)}
                         placeholder="Tell visitors about this project..."
                     />
                 </label>
@@ -278,7 +230,7 @@ export default function ProjectsAdmin() {
                         Project Photos
                     </h4>
                     <p>
-                        Maximum 4 photos.
+                        Maximum 10 photos.
                         Photo 1 will be used as
                         the project cover image.
                     </p>

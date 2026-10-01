@@ -30,9 +30,9 @@ const projectSchema = new mongoose.Schema(
             ],
             validate: {
                 validator: function (images) {
-                    return images.length <= 4;
+                    return images.length <= 10;
                 },
-                message: "A project can have maximum 4 photos."
+                message: "A project can have maximum 10 photos."
             },
             default: []
         },
